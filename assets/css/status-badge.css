@@ -1,0 +1,113 @@
+/* Base styles */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-right: 10px;
+}
+
+/* General status types */
+.status-badge--default {
+    background: #f0f0f0;
+    color: #555;
+}
+
+.status-badge--success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-badge--warning {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-badge--error {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.status-badge--info {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+/* Customer status types */
+.status-badge--active {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-badge--inactive {
+    background: #e2e3e5;
+    color: #383d41;
+}
+
+.status-badge--pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-badge--blocked {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* Commission status types */
+.status-badge--unpaid {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.status-badge--paid {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-badge--revoked {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* Order status types */
+.status-badge--processing {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.status-badge--completed {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-badge--refunded {
+    background: #e0cfef;
+    color: #5a3973;
+}
+
+.status-badge--partially_refunded {
+    background: #d8c9e6;
+    color: #4c2d66;
+}
+
+.status-badge--failed {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.status-badge--cancelled {
+    background: #e2e3e5;
+    color: #383d41;
+}
+
+/* Icon handling */
+.status-badge .status-badge__icon {
+    margin-right: 5px;
+}
+
+.status-badge .status-badge__text {
+    display: inline;
+}

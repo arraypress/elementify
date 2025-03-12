@@ -1,0 +1,72 @@
+{
+  "name": "arraypress/elementify",
+  "version": "1.0.0",
+  "description": "A fluent interface for generating HTML elements in WordPress",
+  "type": "library",
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://github.com/arraypress/elementify/",
+  "authors": [
+    {
+      "name": "David Sherlock",
+      "homepage": "https://arraypress.com/"
+    }
+  ],
+  "require": {
+    "php": ">=7.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "Elementify\\": "src/"
+    },
+    "files": [
+      "src/Functions/Accordion.php",
+      "src/Functions/Badges.php",
+      "src/Functions/Breadcrumbs.php",
+      "src/Functions/Brevity.php",
+      "src/Functions/Card.php",
+      "src/Functions/Common.php",
+      "src/Functions/Core.php",
+      "src/Functions/DatePicker.php",
+      "src/Functions/Form.php",
+      "src/Functions/Layout.php",
+      "src/Functions/List.php",
+      "src/Functions/Media.php",
+      "src/Functions/Modal.php",
+      "src/Functions/Notices.php",
+      "src/Functions/ProgressBar.php",
+      "src/Functions/Seperators.php",
+      "src/Functions/Social.php",
+      "src/Functions/Tooltip.php"
+    ]
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true,
+    "preferred-install": "dist"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "support": {
+    "issues": "https://github.com/arraypress/elementify/issues",
+    "source": "https://github.com/arraypress/elementify"
+  },
+  "keywords": [
+    "wordpress",
+    "html",
+    "elements",
+    "components",
+    "ui",
+    "interface",
+    "builder",
+    "fluent-interface",
+    "forms",
+    "cards",
+    "modals",
+    "notices",
+    "tabs",
+    "accordions",
+    "breadcrumbs",
+    "progress-bar",
+    "status-badge"
+  ]
+}

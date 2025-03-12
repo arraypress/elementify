@@ -1,0 +1,66 @@
+.pagination {
+    margin: 20px 0;
+}
+
+.pagination-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pagination-list li {
+    margin: 0 2px;
+}
+
+.pagination-list a {
+    display: block;
+    padding: 5px 10px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    color: #0073aa;
+    min-width: 30px;
+    text-align: center;
+    border-radius: 3px;
+}
+
+.pagination-list a.is-current {
+    background: #0073aa;
+    color: #fff;
+    border-color: #0073aa;
+}
+
+.pagination-list a.disabled {
+    pointer-events: none;
+    color: #ccc;
+}
+
+.pagination-list .ellipsis {
+    padding: 5px;
+    color: #666;
+}
+
+/* WordPress Admin Pagination Style */
+.tablenav-pages {
+    display: block;
+}
+
+.tablenav-pages .displaying-num {
+    margin-right: 10px;
+}
+
+.tablenav-pages .pagination-links {
+    display: inline-block;
+}
+
+.tablenav-pages .button {
+    padding: 0 5px;
+    font-size: 16px;
+    line-height: 1.5;
+    min-height: 30px;
+    margin: 0 3px;
+}
+
+.tablenav-pages .current-page {
+    font-weight: 600;
+}
