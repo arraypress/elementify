@@ -383,3 +383,59 @@ if ( ! function_exists( 'el_field_render' ) ) {
 		Create::field_render( $input, $label, $description, $attributes );
 	}
 }
+
+if ( ! function_exists( 'el_number' ) ) {
+	/**
+	 * Create a number input.
+	 *
+	 * @param string $name       Input name.
+	 * @param mixed  $value      Input value.
+	 * @param array  $attributes Additional attributes.
+	 *
+	 * @return Input
+	 */
+	function el_number( string $name, $value = '', array $attributes = [] ): Input {
+		return Create::input( 'number', $name, $value, $attributes );
+	}
+}
+
+if ( ! function_exists( 'el_number_render' ) ) {
+	/**
+	 * Create and render a number input.
+	 *
+	 * @param string $name       Input name.
+	 * @param mixed  $value      Input value.
+	 * @param array  $attributes Additional attributes.
+	 */
+	function el_number_render( string $name, $value = '', array $attributes = [] ): void {
+		echo el_number( $name, $value, $attributes )->render();
+	}
+}
+
+if ( ! function_exists( 'el_range' ) ) {
+	/**
+	 * Create a range input.
+	 *
+	 * @param string $name       Input name.
+	 * @param mixed  $value      Input value.
+	 * @param array  $attributes Additional attributes.
+	 *
+	 * @return Input
+	 */
+	function el_range( string $name, $value = '50', array $attributes = [] ): Input {
+		return Create::input( 'range', $name, $value, $attributes );
+	}
+}
+
+if ( ! function_exists( 'el_range_render' ) ) {
+	/**
+	 * Create and render a range input.
+	 *
+	 * @param string $name       Input name.
+	 * @param mixed  $value      Input value.
+	 * @param array  $attributes Additional attributes.
+	 */
+	function el_range_render( string $name, $value = '50', array $attributes = [] ): void {
+		echo el_range( $name, $value, $attributes )->render();
+	}
+}
