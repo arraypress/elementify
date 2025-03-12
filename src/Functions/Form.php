@@ -439,3 +439,31 @@ if ( ! function_exists( 'el_range_render' ) ) {
 		echo el_range( $name, $value, $attributes )->render();
 	}
 }
+
+if ( ! function_exists( 'el_date' ) ) {
+	/**
+	 * Create a date input.
+	 *
+	 * @param string $name       Input name.
+	 * @param mixed  $value      Input value.
+	 * @param array  $attributes Additional attributes.
+	 *
+	 * @return Input
+	 */
+	function el_date( string $name, $value = '', array $attributes = [] ): Input {
+		return Create::input( 'date', $name, $value, $attributes );
+	}
+}
+
+if ( ! function_exists( 'el_date_render' ) ) {
+	/**
+	 * Create and render a date input.
+	 *
+	 * @param string $name       Input name.
+	 * @param mixed  $value      Input value.
+	 * @param array  $attributes Additional attributes.
+	 */
+	function el_date_render( string $name, $value = '', array $attributes = [] ): void {
+		echo el_date( $name, $value, $attributes )->render();
+	}
+}
