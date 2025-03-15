@@ -87,7 +87,7 @@ class Card extends Component {
 
 		// Add variant class if not default
 		if ( $this->variant !== 'default' ) {
-			if (!isset($attributes['class'])) {
+			if ( ! isset( $attributes['class'] ) ) {
 				$attributes['class'] = '';
 			}
 			$attributes['class'] .= " card--{$this->variant}";
@@ -143,18 +143,18 @@ class Card extends Component {
 	 * @return $this
 	 */
 	public function set_header( $content ): self {
-		if (is_string($content)) {
+		if ( is_string( $content ) ) {
 			// For string content, create a header element with proper escaping
-			$header_div = new Element('div', null, ['class' => 'card-header'], false);
+			$header_div = new Element( 'div', null, [ 'class' => 'card-header' ], false );
 			// Add the title as a text element with escaping
-			if (!empty($content)) {
-				$title_element = new Element('h3', $content, [], true);
-				$header_div->add_child($title_element);
+			if ( ! empty( $content ) ) {
+				$title_element = new Element( 'h3', $content, [], true );
+				$header_div->add_child( $title_element );
 			}
 			$this->header = $header_div;
 		} else {
 			// For Element or other content types
-			$this->header = $this->create_header('div', $content);
+			$this->header = $this->create_header( 'div', $content );
 		}
 		$this->build();
 
@@ -169,15 +169,15 @@ class Card extends Component {
 	 * @return $this
 	 */
 	public function set_body( $content ): self {
-		$body_div = new Element('div', null, ['class' => 'card-body'], false);
+		$body_div = new Element( 'div', null, [ 'class' => 'card-body' ], false );
 
-		if (is_string($content)) {
+		if ( is_string( $content ) ) {
 			// For string content, disable escaping to preserve HTML
-			$body_div->set_escape_content(false);
-			$body_div->add_child($content);
+			$body_div->set_escape_content( false );
+			$body_div->add_child( $content );
 		} else {
 			// For Element or other content types
-			$body_div->add_child($content);
+			$body_div->add_child( $content );
 		}
 
 		$this->body = $body_div;
@@ -194,15 +194,15 @@ class Card extends Component {
 	 * @return $this
 	 */
 	public function set_footer( $content ): self {
-		$footer_div = new Element('div', null, ['class' => 'card-footer'], false);
+		$footer_div = new Element( 'div', null, [ 'class' => 'card-footer' ], false );
 
-		if (is_string($content)) {
+		if ( is_string( $content ) ) {
 			// For string content, disable escaping to preserve HTML
-			$footer_div->set_escape_content(false);
-			$footer_div->add_child($content);
+			$footer_div->set_escape_content( false );
+			$footer_div->add_child( $content );
 		} else {
 			// For Element or other content types
-			$footer_div->add_child($content);
+			$footer_div->add_child( $content );
 		}
 
 		$this->footer = $footer_div;
@@ -220,15 +220,15 @@ class Card extends Component {
 	 */
 	public function add_to_body( $content ): self {
 		if ( ! $this->body ) {
-			$this->body = new Element('div', null, ['class' => 'card-body'], false);
+			$this->body = new Element( 'div', null, [ 'class' => 'card-body' ], false );
 		}
 
-		if (is_string($content)) {
+		if ( is_string( $content ) ) {
 			// For string content, disable escaping to preserve HTML
-			$this->body->set_escape_content(false);
+			$this->body->set_escape_content( false );
 		}
 
-		$this->body->add_child($content);
+		$this->body->add_child( $content );
 		$this->build();
 
 		return $this;
@@ -313,4 +313,5 @@ class Card extends Component {
 	public function get_footer(): ?Element {
 		return $this->footer;
 	}
+
 }

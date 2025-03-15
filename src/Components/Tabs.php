@@ -206,4 +206,5 @@ class Tabs extends Component {
 	public function get_content_container(): Element {
 		return $this->content_container;
 	}
+
 }

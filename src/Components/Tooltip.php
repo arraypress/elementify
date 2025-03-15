@@ -218,4 +218,5 @@ class Tooltip extends Component {
 	public function get_tooltip_content(): Element {
 		return $this->tooltip_content;
 	}
+
 }

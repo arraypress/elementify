@@ -288,4 +288,56 @@ trait Lists {
 		self::dropdown( $label, $items, $attributes )->output();
 	}
 
+	/**
+	 * Create a list of links with flexible input format
+	 *
+	 * @param array $links      Array of links in various formats:
+	 *                          - Associative array with keys as URLs and values as link text
+	 *                          - Array of arrays with 'href' and 'text' keys
+	 *                          - Array of arrays with additional attributes
+	 * @param array $list_attrs Attributes for the list element
+	 * @param bool  $ordered    Whether to create an ordered list (true) or unordered list (false)
+	 *
+	 * @return Element
+	 */
+	public static function link_list( array $links, array $list_attrs = [], bool $ordered = false ): Element {
+		$items = [];
+
+		foreach ( $links as $key => $value ) {
+			if ( is_string( $key ) && is_string( $value ) ) {
+				$items[] = self::a( $key, $value );
+			} elseif ( is_array( $value ) && isset( $value['href'], $value['text'] ) ) {
+				$attributes = $value;
+				$href       = $attributes['href'];
+				$text       = $attributes['text'];
+
+				// Remove href and text from attributes
+				unset( $attributes['href'], $attributes['text'] );
+
+				$items[] = self::a( $href, $text, $attributes );
+			} elseif ( $value instanceof Element && $value->get_tag() === 'a' ) {
+				$items[] = $value;
+			}
+		}
+
+		// Create ordered or unordered list based on preference
+		return $ordered ? self::ol( $items, $list_attrs ) : self::ul( $items, $list_attrs );
+	}
+
+	/**
+	 * Create and render a list of links with flexible input format
+	 *
+	 * @param array $links      Array of links in various formats:
+	 *                          - Associative array with keys as URLs and values as link text
+	 *                          - Array of arrays with 'href' and 'text' keys
+	 *                          - Array of arrays with additional attributes
+	 * @param array $list_attrs Attributes for the list element
+	 * @param bool  $ordered    Whether to create an ordered list (true) or unordered list (false)
+	 *
+	 * @return void
+	 */
+	public static function link_list_render( array $links, array $list_attrs = [], bool $ordered = false ): void {
+		self::link_list( $links, $list_attrs, $ordered )->output();
+	}
+
 }

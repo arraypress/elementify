@@ -120,7 +120,7 @@ class DatePicker extends Component {
 		}
 
 		// Fixed: properly create the input with all required parameters
-		$this->input = Create::input('text', $name, $value, $input_attributes);
+		$this->input = Create::input( 'text', $name, $value, $input_attributes );
 
 		// Create calendar container element (will be populated by JS)
 		$this->calendar = Create::div()
@@ -335,4 +335,5 @@ class DatePicker extends Component {
 	public function get_calendar(): Element {
 		return $this->calendar;
 	}
+
 }

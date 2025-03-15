@@ -101,7 +101,7 @@ class Modal extends Component {
 		parent::__construct( 'div', null, $attributes, false );
 
 		// Create content wrapper - explicitly disable escaping
-		$this->content_wrapper = new Element('div', null, ['class' => 'modal-content'], false);
+		$this->content_wrapper = new Element( 'div', null, [ 'class' => 'modal-content' ], false );
 
 		// Set up modal parts if provided
 		if ( ! empty( $title ) ) {
@@ -130,10 +130,10 @@ class Modal extends Component {
 		$this->content_wrapper->children = [];
 
 		// Add close button
-		$close_button = new Element('span', '×', [
-			'class' => 'modal-close',
-			'data-modal' => $this->get_attribute('id')
-		], true);
+		$close_button = new Element( 'span', '×', [
+			'class'      => 'modal-close',
+			'data-modal' => $this->get_attribute( 'id' )
+		], true );
 
 		$this->content_wrapper->add_child( $close_button );
 
@@ -165,15 +165,15 @@ class Modal extends Component {
 	 */
 	public function set_title( $title ): self {
 		// Create a title element with appropriate escaping
-		$title_element = new Element('h3', null, ['class' => 'modal-title'], false);
+		$title_element = new Element( 'h3', null, [ 'class' => 'modal-title' ], false );
 
-		if (is_string($title)) {
+		if ( is_string( $title ) ) {
 			// For string content, escape properly
-			$title_span = new Element('span', $title, [], true);
-			$title_element->add_child($title_span);
+			$title_span = new Element( 'span', $title, [], true );
+			$title_element->add_child( $title_span );
 		} else {
 			// For Element or other content types
-			$title_element->add_child($title);
+			$title_element->add_child( $title );
 		}
 
 		$this->title = $title_element;
@@ -191,15 +191,15 @@ class Modal extends Component {
 	 */
 	public function set_body( $content ): self {
 		// Create a body container that doesn't escape its content
-		$body_div = new Element('div', null, ['class' => 'modal-body'], false);
+		$body_div = new Element( 'div', null, [ 'class' => 'modal-body' ], false );
 
-		if (is_string($content)) {
+		if ( is_string( $content ) ) {
 			// For string content, disable escaping to preserve HTML
-			$body_div->set_escape_content(false);
-			$body_div->add_child($content);
+			$body_div->set_escape_content( false );
+			$body_div->add_child( $content );
 		} else {
 			// For Element or other content types
-			$body_div->add_child($content);
+			$body_div->add_child( $content );
 		}
 
 		$this->body = $body_div;
@@ -217,15 +217,15 @@ class Modal extends Component {
 	 */
 	public function set_footer( $content ): self {
 		// Create a footer container that doesn't escape its content
-		$footer_div = new Element('div', null, ['class' => 'modal-footer'], false);
+		$footer_div = new Element( 'div', null, [ 'class' => 'modal-footer' ], false );
 
-		if (is_string($content)) {
+		if ( is_string( $content ) ) {
 			// For string content, disable escaping to preserve HTML
-			$footer_div->set_escape_content(false);
-			$footer_div->add_child($content);
+			$footer_div->set_escape_content( false );
+			$footer_div->add_child( $content );
 		} else {
 			// For Element or other content types
-			$footer_div->add_child($content);
+			$footer_div->add_child( $content );
 		}
 
 		$this->footer = $footer_div;
@@ -242,7 +242,7 @@ class Modal extends Component {
 	 * @return $this
 	 */
 	public function set_footer_buttons( array $buttons ): self {
-		$footer = new Element('div', null, ['class' => 'modal-footer'], false);
+		$footer = new Element( 'div', null, [ 'class' => 'modal-footer' ], false );
 
 		foreach ( $buttons as $button ) {
 			if ( $button instanceof Element ) {
@@ -289,12 +289,12 @@ class Modal extends Component {
 	 */
 	public function add_to_body( $content ): self {
 		if ( ! $this->body ) {
-			$this->body = new Element('div', null, ['class' => 'modal-body'], false);
+			$this->body = new Element( 'div', null, [ 'class' => 'modal-body' ], false );
 		}
 
-		if (is_string($content)) {
+		if ( is_string( $content ) ) {
 			// For string content, disable escaping to preserve HTML
-			$this->body->set_escape_content(false);
+			$this->body->set_escape_content( false );
 		}
 
 		$this->body->add_child( $content );
@@ -388,4 +388,5 @@ class Modal extends Component {
 	public function get_content_wrapper(): Element {
 		return $this->content_wrapper;
 	}
+
 }

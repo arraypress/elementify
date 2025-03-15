@@ -19,24 +19,7 @@
       "Elementify\\": "src/"
     },
     "files": [
-      "src/Functions/Accordion.php",
-      "src/Functions/Badges.php",
-      "src/Functions/Breadcrumbs.php",
-      "src/Functions/Brevity.php",
-      "src/Functions/Card.php",
-      "src/Functions/Common.php",
-      "src/Functions/Core.php",
-      "src/Functions/DatePicker.php",
-      "src/Functions/Form.php",
-      "src/Functions/Layout.php",
-      "src/Functions/List.php",
-      "src/Functions/Media.php",
-      "src/Functions/Modal.php",
-      "src/Functions/Notices.php",
-      "src/Functions/ProgressBar.php",
-      "src/Functions/Seperators.php",
-      "src/Functions/Social.php",
-      "src/Functions/Tooltip.php"
+      "src/Utilities/Functions.php"
     ]
   },
   "config": {

@@ -10,13 +10,17 @@
  * @version     1.0.0
  */
 declare( strict_types=1 );
+
 namespace Elementify\Components;
+
 use Elementify\Abstracts\Component;
 use Elementify\Create;
 use Elementify\Traits\Component\Parts;
 use Elementify\Traits\Component\SectionContent;
+
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
+
 /**
  * Accordion Component
  *
@@ -25,12 +29,14 @@ defined( 'ABSPATH' ) || exit;
 class Accordion extends Component {
 	use Parts;
 	use SectionContent;
+
 	/**
 	 * Whether multiple sections can be open at once
 	 *
 	 * @var bool
 	 */
 	protected bool $allow_multiple = false;
+
 	/**
 	 * Constructor
 	 *
@@ -55,6 +61,7 @@ class Accordion extends Component {
 		// Build the accordion
 		$this->build();
 	}
+
 	/**
 	 * Build the accordion
 	 */
@@ -77,6 +84,7 @@ class Accordion extends Component {
 			$this->add_child( $content );
 		}
 	}
+
 	/**
 	 * Set whether multiple sections can be open at once
 	 *
@@ -104,8 +112,10 @@ class Accordion extends Component {
 		}
 		// Rebuild accordion
 		$this->build();
+
 		return $this;
 	}
+
 	/**
 	 * Check if multiple sections can be open at once
 	 *

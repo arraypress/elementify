@@ -41,7 +41,9 @@ class Assets {
 		'tabs'         => 'tabs',
 		'social-links' => 'social-links',
 		'tooltip'      => 'tooltip',
-		'datepicker'   => 'date-picker'
+		'datepicker'   => 'date-picker',
+		'range'        => 'range',
+		'toggle'       => 'toggle',
 	];
 
 	/**
@@ -55,7 +57,8 @@ class Assets {
 		'notice',
 		'tabs',
 		'tooltip',
-		'datepicker'
+		'datepicker',
+		'range'
 	];
 
 	/**

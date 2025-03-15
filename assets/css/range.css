@@ -1,0 +1,139 @@
+.elementify-range-container {
+    width: 100%;
+}
+
+.elementify-range-inner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.elementify-range-input {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    background: #e2e8f0;
+    border-radius: 10px;
+    outline: none;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+/* Thumb styles with improved positioning */
+.elementify-range-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid white;
+    background: #2271b1;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: -8px; /* Centers the thumb vertically */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.elementify-range-input::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border: 2px solid white;
+    background: #2271b1;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.elementify-range-input::-ms-thumb {
+    width: 20px;
+    height: 20px;
+    border: 2px solid white;
+    background: #2271b1;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced hover and focus states */
+.elementify-range-input:hover::-webkit-slider-thumb,
+.elementify-range-input:focus::-webkit-slider-thumb {
+    background: #135e96;
+    transform: scale(1.1);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.elementify-range-input:hover::-moz-range-thumb,
+.elementify-range-input:focus::-moz-range-thumb {
+    background: #135e96;
+    transform: scale(1.1);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.elementify-range-input:hover::-ms-thumb,
+.elementify-range-input:focus::-ms-thumb {
+    background: #135e96;
+    transform: scale(1.1);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Improved track styles */
+.elementify-range-input::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.elementify-range-input::-moz-range-track {
+    height: 4px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.elementify-range-input::-ms-track {
+    height: 4px;
+    border-radius: 10px;
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+    cursor: pointer;
+}
+
+/* Modern value display */
+.elementify-range-value {
+    min-width: 48px;
+    padding: 6px 12px;
+    background: white;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+}
+
+/* Focus style for accessibility */
+.elementify-range-input:focus {
+    outline: none;
+}
+
+.elementify-range-input:focus::-webkit-slider-runnable-track {
+    background-color: #e2e8f0;
+}
+
+/* Disabled state */
+.elementify-range-input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.elementify-range-input:disabled::-webkit-slider-thumb,
+.elementify-range-input:disabled::-moz-range-thumb,
+.elementify-range-input:disabled::-ms-thumb {
+    background: #a7aaad;
+    cursor: not-allowed;
+    transform: scale(1);
+    box-shadow: none;
+}
