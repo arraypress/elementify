@@ -1,8 +1,8 @@
 <?php
 /**
- * Elementify Library - Form Elements Trait
+ * Elementify Library - Input Elements Trait
  *
- * A collection of methods for creating form-related HTML elements.
+ * A collection of methods for creating input-related HTML elements.
  *
  * @package     ArrayPress\Elementify
  * @copyright   Copyright (c) 2025, ArrayPress Limited
@@ -12,52 +12,21 @@
 
 declare( strict_types=1 );
 
-namespace Elementify\Traits;
-
-use Elementify\Element;
-use Elementify\Elements\Form;
-use Elementify\Elements\Input;
-use Elementify\Elements\Label;
-use Elementify\Elements\Select;
-use Elementify\Elements\Textarea;
-use Elementify\Elements\Button;
-use Elementify\Elements\Field;
+namespace Elementify\Traits\Form;
 
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
+use Elementify\Components\Range;
+use Elementify\Elements\Input;
+use Elementify\Elements\Textarea;
+
 /**
- * Form Elements Trait
+ * Input Elements Trait
  *
- * Provides methods for creating form-related HTML elements.
+ * Provides methods for creating input-related HTML elements.
  */
-trait Forms {
-
-	/**
-	 * Create a form element
-	 *
-	 * @param string $action     Form action URL
-	 * @param string $method     Form method
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return Form
-	 */
-	public static function form( string $action = '', string $method = 'post', array $attributes = [] ): Form {
-		return new Form( $action, $method, $attributes );
-	}
-
-	/**
-	 * Create and render a form element
-	 *
-	 * @param string $action     Form action URL
-	 * @param string $method     Form method
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function form_render( string $action = '', string $method = 'post', array $attributes = [] ): void {
-		self::form( $action, $method, $attributes )->output();
-	}
+trait Inputs {
 
 	/**
 	 * Create an input element
@@ -360,169 +329,57 @@ trait Forms {
 	}
 
 	/**
-	 * Create a select element
+	 * Create a range with display component
 	 *
-	 * @param string $name           Select name
-	 * @param array  $options        Select options
-	 * @param mixed  $selected_value Selected value(s)
-	 * @param array  $attributes     Element attributes
+	 * @param string $name          Input name
+	 * @param mixed  $value         Input value
+	 * @param mixed  $min           Minimum value
+	 * @param mixed  $max           Maximum value
+	 * @param mixed  $step          Step value
+	 * @param bool   $display_value Whether to display the value
+	 * @param array  $attributes    Element attributes
+	 * @param bool   $include_css   Whether to include built-in CSS
 	 *
-	 * @return Select
+	 * @return Range
 	 */
-	public static function select( string $name, array $options = [], $selected_value = null, array $attributes = [] ): Select {
-		return new Select( $name, $options, $selected_value, $attributes );
+	public static function range(
+		string $name,
+		$value = '50',
+		$min = '0',
+		$max = '100',
+		$step = '1',
+		bool $display_value = true,
+		array $attributes = [],
+		bool $include_css = true
+	): Range {
+		return new Range( $name, $value, $min, $max, $step, $display_value, $attributes, $include_css );
 	}
 
 	/**
-	 * Create and render a select element
+	 * Create and render a range with display component
 	 *
-	 * @param string $name           Select name
-	 * @param array  $options        Select options
-	 * @param mixed  $selected_value Selected value(s)
-	 * @param array  $attributes     Element attributes
+	 * @param string $name          Input name
+	 * @param mixed  $value         Input value
+	 * @param mixed  $min           Minimum value
+	 * @param mixed  $max           Maximum value
+	 * @param mixed  $step          Step value
+	 * @param bool   $display_value Whether to display the value
+	 * @param array  $attributes    Element attributes
+	 * @param bool   $include_css   Whether to include built-in CSS
 	 *
 	 * @return void
 	 */
-	public static function select_render( string $name, array $options = [], $selected_value = null, array $attributes = [] ): void {
-		self::select( $name, $options, $selected_value, $attributes )->output();
-	}
-
-	/**
-	 * Create a button element
-	 *
-	 * @param string $content    Button content
-	 * @param string $type       Button type
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return Button
-	 */
-	public static function button( string $content, string $type = 'submit', array $attributes = [] ): Button {
-		return new Button( $type, $content, $attributes );
-	}
-
-	/**
-	 * Create and render a button element
-	 *
-	 * @param string $content    Button content
-	 * @param string $type       Button type
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function button_render( string $content, string $type = 'submit', array $attributes = [] ): void {
-		self::button( $content, $type, $attributes )->output();
-	}
-
-	/**
-	 * Create a submit button
-	 *
-	 * @param string $content    Button content
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return Button
-	 */
-	public static function submit( string $content = 'Submit', array $attributes = [] ): Button {
-		return self::button( $content, 'submit', $attributes );
-	}
-
-	/**
-	 * Create and render a submit button
-	 *
-	 * @param string $content    Button content
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function submit_render( string $content = 'Submit', array $attributes = [] ): void {
-		self::submit( $content, $attributes )->output();
-	}
-
-	/**
-	 * Create a label element
-	 *
-	 * @param string $for        ID of the associated form control
-	 * @param string $content    Label content
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return Label
-	 */
-	public static function label( string $for, string $content, array $attributes = [] ): Label {
-		return new Label( $for, $content, $attributes );
-	}
-
-	/**
-	 * Create and render a label element
-	 *
-	 * @param string $for        ID of the associated form control
-	 * @param string $content    Label content
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function label_render( string $for, string $content, array $attributes = [] ): void {
-		self::label( $for, $content, $attributes )->output();
-	}
-
-	/**
-	 * Create a field wrapper (label + input + description)
-	 *
-	 * @param string|Element $input       Input element or name
-	 * @param string         $label       Label text
-	 * @param string         $description Description text
-	 * @param array          $attributes  Wrapper attributes
-	 *
-	 * @return Field
-	 */
-	public static function field( $input, string $label = '', string $description = '', array $attributes = [] ): Field {
-		return new Field( $input, $label, $description, $attributes );
-	}
-
-	/**
-	 * Create and render a field wrapper
-	 *
-	 * @param string|Element $input       Input element or name
-	 * @param string         $label       Label text
-	 * @param string         $description Description text
-	 * @param array          $attributes  Wrapper attributes
-	 *
-	 * @return void
-	 */
-	public static function field_render( $input, string $label = '', string $description = '', array $attributes = [] ): void {
-		self::field( $input, $label, $description, $attributes )->output();
-	}
-
-	/**
-	 * Create a range input
-	 *
-	 * @param string $name       Input name
-	 * @param mixed  $value      Input value
-	 * @param mixed  $min        Minimum value
-	 * @param mixed  $max        Maximum value
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return Input
-	 */
-	public static function range( string $name, $value = '50', $min = '0', $max = '100', array $attributes = [] ): Input {
-		$range = new Input( 'range', $name, $value, $attributes );
-		$range->set_min( $min );
-		$range->set_max( $max );
-
-		return $range;
-	}
-
-	/**
-	 * Create and render a range input
-	 *
-	 * @param string $name       Input name
-	 * @param mixed  $value      Input value
-	 * @param mixed  $min        Minimum value
-	 * @param mixed  $max        Maximum value
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function range_render( string $name, $value = '50', $min = '0', $max = '100', array $attributes = [] ): void {
-		self::range( $name, $value, $min, $max, $attributes )->output();
+	public static function range_render(
+		string $name,
+		$value = '50',
+		$min = '0',
+		$max = '100',
+		$step = '1',
+		bool $display_value = true,
+		array $attributes = [],
+		bool $include_css = true
+	): void {
+		self::range( $name, $value, $min, $max, $step, $display_value, $attributes, $include_css )->output();
 	}
 
 	/**
@@ -549,116 +406,6 @@ trait Forms {
 	 */
 	public static function color_render( string $name, string $value = '#000000', array $attributes = [] ): void {
 		self::color( $name, $value, $attributes )->output();
-	}
-
-	/**
-	 * Create a fieldset element
-	 *
-	 * @param mixed  $content    Content of the fieldset
-	 * @param string $legend     Legend text (optional)
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return Element
-	 */
-	public static function fieldset( $content = null, string $legend = '', array $attributes = [] ): Element {
-		$fieldset = self::element( 'fieldset', null, $attributes );
-
-		if ( ! empty( $legend ) ) {
-			$fieldset->add_child( self::element( 'legend', $legend ) );
-		}
-
-		if ( $content !== null ) {
-			$fieldset->add_content( $content );
-		}
-
-		return $fieldset;
-	}
-
-	/**
-	 * Create and render a fieldset element
-	 *
-	 * @param mixed  $content    Content of the fieldset
-	 * @param string $legend     Legend text (optional)
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function fieldset_render( $content = null, string $legend = '', array $attributes = [] ): void {
-		self::fieldset( $content, $legend, $attributes )->output();
-	}
-
-	/**
-	 * Create a datalist element
-	 *
-	 * @param string $id         Datalist ID
-	 * @param array  $options    Array of options
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return Element
-	 */
-	public static function datalist( string $id, array $options, array $attributes = [] ): Element {
-		$datalist = self::element( 'datalist', null, array_merge( [ 'id' => $id ], $attributes ) );
-
-		foreach ( $options as $key => $value ) {
-			$option_attrs = [];
-
-			if ( is_string( $key ) && ! is_numeric( $key ) ) {
-				$option_attrs['value'] = $key;
-				$option_attrs['label'] = $value;
-			} else {
-				$option_attrs['value'] = $value;
-			}
-
-			$datalist->add_child( self::element( 'option', null, $option_attrs ) );
-		}
-
-		return $datalist;
-	}
-
-	/**
-	 * Create and render a datalist element
-	 *
-	 * @param string $id         Datalist ID
-	 * @param array  $options    Array of options
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function datalist_render( string $id, array $options, array $attributes = [] ): void {
-		self::datalist( $id, $options, $attributes )->output();
-	}
-
-	/**
-	 * Create a WordPress nonce field
-	 *
-	 * @param string $action  Action name
-	 * @param string $name    Nonce name
-	 * @param bool   $referer Whether to include the referer field
-	 *
-	 * @return string
-	 */
-	public static function nonce( string $action, string $name = '_wpnonce', bool $referer = true ): string {
-		if ( function_exists( 'wp_nonce_field' ) ) {
-			ob_start();
-			wp_nonce_field( $action, $name, $referer );
-
-			return ob_get_clean();
-		}
-
-		return '';
-	}
-
-	/**
-	 * Output a WordPress nonce field
-	 *
-	 * @param string $action  Action name
-	 * @param string $name    Nonce name
-	 * @param bool   $referer Whether to include the referer field
-	 *
-	 * @return void
-	 */
-	public static function nonce_render( string $action, string $name = '_wpnonce', bool $referer = true ): void {
-		echo self::nonce( $action, $name, $referer );
 	}
 
 }

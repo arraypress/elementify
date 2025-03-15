@@ -22,10 +22,25 @@ defined( 'ABSPATH' ) || exit;
  */
 class Create {
 	use Traits\Core;
-	use Traits\Components;
-	use Traits\Forms;
+	use Traits\Common;
 	use Traits\Headings;
 	use Traits\Layout;
 	use Traits\Lists;
 	use Traits\Media;
+	use Traits\Separators;
+	use Traits\Social;
+	use Traits\Utils;
+
+	use Traits\Form\Core;
+	use Traits\Form\Buttons;
+	use Traits\Form\FieldWrappers;
+	use Traits\Form\Inputs;
+	use Traits\Form\Selects;
+
+	use Traits\Components\Date;
+	use Traits\Components\Interactive;
+	use Traits\Components\Layout;
+	use Traits\Components\Message;
+	use Traits\Components\Navigation;
+
 }

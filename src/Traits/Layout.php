@@ -14,10 +14,10 @@ declare( strict_types=1 );
 
 namespace Elementify\Traits;
 
-use Elementify\Element;
-
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
+
+use Elementify\Element;
 
 /**
  * Layout Elements Trait

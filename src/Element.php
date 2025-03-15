@@ -25,6 +25,13 @@ class Element {
 	/** Properties ************************************************************/
 
 	/**
+	 * Element tag name
+	 *
+	 * @var string
+	 */
+	protected string $tag;
+
+	/**
 	 * Element attributes
 	 *
 	 * @var array
@@ -51,13 +58,6 @@ class Element {
 	 * @var bool
 	 */
 	protected bool $escape_content = false;
-
-	/**
-	 * Element tag name
-	 *
-	 * @var string
-	 */
-	protected string $tag;
 
 	/** Constants *************************************************************/
 
@@ -347,6 +347,54 @@ class Element {
 	}
 
 	/**
+	 * Set multiple attributes at once
+	 *
+	 * @param array $attributes Associative array of attribute names and values
+	 *
+	 * @return $this
+	 */
+	public function set_attributes( array $attributes ): self {
+		foreach ( $attributes as $name => $value ) {
+			$this->set_attribute( $name, $value );
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Remove an attribute
+	 *
+	 * @param string $name Attribute name to remove
+	 *
+	 * @return $this
+	 */
+	public function remove_attribute( string $name ): self {
+		if ( isset( $this->attributes[ $name ] ) ) {
+			unset( $this->attributes[ $name ] );
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Toggle an attribute between on and off states
+	 *
+	 * @param string $name      Attribute name
+	 * @param bool   $condition When true, add the attribute; when false, remove it
+	 *
+	 * @return $this
+	 */
+	public function toggle_attribute( string $name, bool $condition ): self {
+		if ( $condition ) {
+			$this->set_attribute( $name, true );
+		} else {
+			$this->remove_attribute( $name );
+		}
+
+		return $this;
+	}
+
+	/**
 	 * Set ID attribute
 	 *
 	 * @param string $id Element ID
@@ -356,6 +404,40 @@ class Element {
 	public function set_id( string $id ): self {
 		return $this->set_attribute( 'id', $id );
 	}
+
+	/**
+	 * Get a specific attribute value
+	 *
+	 * @param string $name    Attribute name
+	 * @param mixed  $default Default value if attribute doesn't exist
+	 *
+	 * @return mixed
+	 */
+	public function get_attribute( string $name, $default = null ) {
+		return $this->attributes[ $name ] ?? $default;
+	}
+
+	/**
+	 * Check if an attribute exists
+	 *
+	 * @param string $name Attribute name
+	 *
+	 * @return bool
+	 */
+	public function has_attribute( string $name ): bool {
+		return isset( $this->attributes[ $name ] );
+	}
+
+	/**
+	 * Get the element attributes
+	 *
+	 * @return array
+	 */
+	public function get_attributes(): array {
+		return $this->attributes;
+	}
+
+	/** Class Methods *********************************************************/
 
 	/**
 	 * Add one or more classes
@@ -450,6 +532,40 @@ class Element {
 		return $this;
 	}
 
+	/**
+	 * Toggle a class based on a condition
+	 *
+	 * @param string $class     Class name to toggle
+	 * @param bool   $condition When true, add the class; when false, remove it
+	 *
+	 * @return $this
+	 */
+	public function toggle_class( string $class, bool $condition ): self {
+		if ( $condition ) {
+			$this->add_class( $class );
+		} else {
+			$this->remove_class( $class );
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Replace one class with another
+	 *
+	 * @param string $old_class Class to remove
+	 * @param string $new_class Class to add
+	 *
+	 * @return $this
+	 */
+	public function replace_class( string $old_class, string $new_class ): self {
+		$this->remove_class( $old_class );
+		$this->add_class( $new_class );
+
+		return $this;
+	}
+
+	/** Data & Aria Attributes ************************************************/
 
 	/**
 	 * Set data attribute
@@ -496,38 +612,6 @@ class Element {
 		}
 
 		return $this;
-	}
-
-	/**
-	 * Get a specific attribute value
-	 *
-	 * @param string $name    Attribute name
-	 * @param mixed  $default Default value if attribute doesn't exist
-	 *
-	 * @return mixed
-	 */
-	public function get_attribute( string $name, $default = null ) {
-		return $this->attributes[ $name ] ?? $default;
-	}
-
-	/**
-	 * Check if an attribute exists
-	 *
-	 * @param string $name Attribute name
-	 *
-	 * @return bool
-	 */
-	public function has_attribute( string $name ): bool {
-		return isset( $this->attributes[ $name ] );
-	}
-
-	/**
-	 * Get the element attributes
-	 *
-	 * @return array
-	 */
-	public function get_attributes(): array {
-		return $this->attributes;
 	}
 
 	/** Content Management ****************************************************/
@@ -590,6 +674,36 @@ class Element {
 	}
 
 	/**
+	 * Prepend a child to the element
+	 *
+	 * @param string|Element $child Child to prepend
+	 *
+	 * @return $this
+	 */
+	public function prepend_child( $child ): self {
+		if ( $this->is_self_closing ) {
+			return $this;
+		}
+
+		if ( $child instanceof Element || is_scalar( $child ) || is_null( $child ) ) {
+			array_unshift( $this->children, $child );
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Remove all children from the element
+	 *
+	 * @return $this
+	 */
+	public function empty(): self {
+		$this->children = [];
+
+		return $this;
+	}
+
+	/**
 	 * Get the element's children
 	 *
 	 * @return array
@@ -605,6 +719,50 @@ class Element {
 	 */
 	public function get_content_string(): string {
 		return $this->render_content();
+	}
+
+	/** Child Finding & Traversal *********************************************/
+
+	/**
+	 * Find child elements by class, tag, or attribute
+	 *
+	 * @param array $criteria  Search criteria (e.g., ['class' => 'button', 'tag' => 'div'])
+	 * @param bool  $recursive Whether to search recursively
+	 *
+	 * @return array Found elements
+	 */
+	public function find_children( array $criteria, bool $recursive = true ): array {
+		$found = [];
+
+		foreach ( $this->children as $child ) {
+			if ( ! $child instanceof Element ) {
+				continue;
+			}
+
+			$match = true;
+			foreach ( $criteria as $key => $value ) {
+				if ( $key === 'tag' && $child->get_tag() !== $value ) {
+					$match = false;
+					break;
+				} else if ( $key === 'class' && ! $child->has_class( $value ) ) {
+					$match = false;
+					break;
+				} else if ( ! $child->has_attribute( $key ) || $child->get_attribute( $key ) !== $value ) {
+					$match = false;
+					break;
+				}
+			}
+
+			if ( $match ) {
+				$found[] = $child;
+			}
+
+			if ( $recursive ) {
+				$found = array_merge( $found, $child->find_children( $criteria, true ) );
+			}
+		}
+
+		return $found;
 	}
 
 	/** Rendering & Output ****************************************************/
@@ -675,6 +833,17 @@ class Element {
 	}
 
 	/**
+	 * Conditionally render this element
+	 *
+	 * @param bool $condition When true, render normally; when false, return empty string
+	 *
+	 * @return string
+	 */
+	public function render_if( bool $condition ): string {
+		return $condition ? $this->render() : '';
+	}
+
+	/**
 	 * Render the element
 	 *
 	 * @return string
@@ -723,6 +892,29 @@ class Element {
 	}
 
 	/**
+	 * Create a deep clone of this element
+	 *
+	 * @return self
+	 */
+	public function clone(): self {
+		$clone = new static( $this->tag, null, $this->attributes );
+
+		// Clone children
+		foreach ( $this->children as $child ) {
+			if ( $child instanceof Element ) {
+				$clone->add_child( $child->clone() );
+			} else {
+				$clone->add_child( $child );
+			}
+		}
+
+		$clone->escape_content  = $this->escape_content;
+		$clone->is_self_closing = $this->is_self_closing;
+
+		return $clone;
+	}
+
+	/**
 	 * Convert to string when used in string context
 	 *
 	 * @return string
@@ -730,5 +922,4 @@ class Element {
 	public function __toString(): string {
 		return $this->render();
 	}
-
 }

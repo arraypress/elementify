@@ -255,37 +255,4 @@ trait Media {
 		self::iframe( $src, $title, $attributes )->output();
 	}
 
-	/**
-	 * Helper method to get MIME type from file extension
-	 *
-	 * @param string $file File path or URL
-	 *
-	 * @return string MIME type
-	 */
-	private static function get_mime_type( string $file ): string {
-		$extension = strtolower( pathinfo( $file, PATHINFO_EXTENSION ) );
-
-		$mime_types = [
-			// Image types
-			'jpg'  => 'image/jpeg',
-			'jpeg' => 'image/jpeg',
-			'png'  => 'image/png',
-			'gif'  => 'image/gif',
-			'svg'  => 'image/svg+xml',
-			'webp' => 'image/webp',
-
-			// Audio types
-			'mp3'  => 'audio/mpeg',
-			'wav'  => 'audio/wav',
-			'ogg'  => 'audio/ogg',
-
-			// Video types
-			'mp4'  => 'video/mp4',
-			'webm' => 'video/webm',
-			'ogv'  => 'video/ogg'
-		];
-
-		return $mime_types[ $extension ] ?? 'application/octet-stream';
-	}
-
 }

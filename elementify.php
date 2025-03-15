@@ -40,12 +40,26 @@ if ( ! class_exists( 'Elementify\\Element' ) ) {
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Component/Parts.php';
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Component/SectionContent.php';
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Core.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Components.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Forms.php';
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Common.php';
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Headings.php';
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Layout.php';
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Lists.php';
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Media.php';
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Social.php';
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Utils.php';
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Separators.php';
+
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Form/Core.php';
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Form/Buttons.php';
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Form/FieldWrappers.php';
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Form/Inputs.php';
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Form/Selects.php';
+
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Components/Date.php';
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Components/Interactive.php';
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Components/Layout.php';
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Components/Message.php';
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Components/Navigation.php';
 
 		// Base classes
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Element.php';
@@ -75,27 +89,11 @@ if ( ! class_exists( 'Elementify\\Element' ) ) {
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Components/StatusBadge.php';
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Components/Tabs.php';
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Components/Tooltip.php';
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Components/Range.php';
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Components/Toggle.php';
 
 		// Function files
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Functions/Core.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Functions/Common.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Functions/Accordion.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Functions/Badges.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Functions/Breadcrumbs.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Functions/Brevity.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Functions/Card.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Functions/DatePicker.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Functions/Form.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Functions/Layout.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Functions/List.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Functions/Media.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Functions/Modal.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Functions/Notices.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Functions/ProgressBar.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Functions/Seperators.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Functions/Social.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Functions/Tabs.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Functions/Tooltip.php';
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Utilities/Functions.php';
 	}
 
 	// Load Elementify files
