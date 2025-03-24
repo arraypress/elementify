@@ -12,16 +12,15 @@
 
 declare( strict_types=1 );
 
-namespace Elementify\Components;
+namespace Elementify\Components\Notification;
+
+// Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 use Elementify\Abstracts\Component;
 use Elementify\Create;
 use Elementify\Element;
-use Elementify\Assets;
 use Elementify\Traits\Component\Parts;
-
-// Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
 
 /**
  * Notice Component
@@ -214,15 +213,8 @@ class Notice extends Component {
 	public function set_dismissible( bool $dismissible ): self {
 		if ( $dismissible !== $this->dismissible ) {
 			$this->dismissible = $dismissible;
-
-			if ( $dismissible ) {
-				$this->add_class( 'is-dismissible' );
-			} else {
-				$this->remove_class( 'is-dismissible' );
-			}
-
-			// Rebuild notice
-			$this->build();
+			$this->toggle_class( 'is-dismissible', $dismissible );
+			$this->mark_for_rebuild();
 		}
 
 		return $this;
@@ -237,7 +229,7 @@ class Notice extends Component {
 	 */
 	public function set_content( $content ): self {
 		$this->content = $content;
-		$this->build();
+		$this->mark_for_rebuild();
 
 		return $this;
 	}

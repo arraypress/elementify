@@ -1,0 +1,116 @@
+/* Base container */
+.rating {
+    display: inline-block;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    line-height: 1.4;
+}
+
+/* Wrapper */
+.rating-wrapper {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Rating container */
+.rating-container {
+    display: inline-flex;
+    position: relative;
+    unicode-bidi: bidi-override;
+    direction: ltr;
+    white-space: nowrap;
+}
+
+/* Empty (background) stars */
+.rating-empty {
+    display: inline-block;
+    color: #ddd;
+}
+
+/* Filled (foreground) stars */
+.rating-filled {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #ffb900; /* WordPress gold */
+}
+
+/* Star style variants */
+.rating.stars .rating-empty,
+.rating.stars .rating-filled {
+    letter-spacing: 0.1em;
+}
+
+.rating.hearts .rating-empty,
+.rating.hearts .rating-filled {
+    letter-spacing: 0.15em;
+}
+
+.rating.thumbs .rating-empty,
+.rating.thumbs .rating-filled {
+    letter-spacing: 0.2em;
+}
+
+/* Rating value text */
+.rating-value {
+    margin-left: 5px;
+    font-size: 0.9em;
+    color: #50575e;
+}
+
+/* Rating partial wrapper for dashicons */
+.rating-partial-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dashicon styling */
+.rating.dashicons-rating .dashicons {
+    font-size: 18px;
+    width: auto;
+    height: auto;
+    line-height: 1;
+}
+
+.rating.dashicons-rating .dashicons-star-filled,
+.rating.dashicons-rating .dashicons-heart {
+    color: #ffb900; /* WordPress gold */
+}
+
+.rating.dashicons-rating .dashicons-star-empty,
+.rating.dashicons-rating .dashicons-heart-empty {
+    color: #ddd;
+}
+
+.rating.dashicons-rating .dashicons-thumbs-up,
+.rating.dashicons-rating .dashicons-thumbs-down {
+    color: #ffb900; /* WordPress gold */
+}
+
+/* Size variants */
+.rating.small {
+    font-size: 0.85em;
+}
+
+.rating.small .dashicons {
+    font-size: 16px;
+}
+
+.rating.large {
+    font-size: 1.2em;
+}
+
+.rating.large .dashicons {
+    font-size: 22px;
+}
+
+/* Admin-specific styles */
+.wp-admin .rating-filled {
+    color: #ffb900; /* WordPress gold color */
+}
+
+.wp-list-table .rating {
+    line-height: 1.3;
+}

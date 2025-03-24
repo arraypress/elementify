@@ -17,13 +17,14 @@ namespace Elementify\Traits\Components;
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
-use Elementify\Components\Breadcrumbs;
-use Elementify\Components\Tabs;
+use Elementify\Components\Layout\Breadcrumbs;
+use Elementify\Components\Interactive\Tabs;
 
 /**
  * Navigation Components Trait
  *
- * Provides methods for creating and rendering navigation-related HTML components like tabs and breadcrumbs.
+ * Provides methods for creating and rendering navigation-related HTML components
+ * like tabs and breadcrumbs.
  */
 trait Navigation {
 

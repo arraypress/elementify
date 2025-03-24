@@ -1,8 +1,8 @@
 <?php
 /**
- * Elementify Library - List Elements Trait
+ * Elementify Library - Social Elements Trait
  *
- * A collection of methods for creating list HTML elements.
+ * A collection of methods for creating social media HTML elements.
  *
  * @package     ArrayPress\Elementify
  * @copyright   Copyright (c) 2025, ArrayPress Limited
@@ -19,11 +19,13 @@ defined( 'ABSPATH' ) || exit;
 
 use Elementify\Assets;
 use Elementify\Element;
+use Elementify\Utils;
 
 /**
- * List Elements Trait
+ * Social Elements Trait
  *
- * Provides methods for creating list-related HTML elements (ul, ol, li, dl).
+ * Provides methods for creating social media elements including sharing links,
+ * social profile lists, and platform-specific integrations.
  */
 trait Social {
 
@@ -125,6 +127,235 @@ trait Social {
 	 */
 	public static function social_links_render( array $social_profiles, array $list_attrs = [], bool $show_text = true, bool $include_css = true ): void {
 		self::social_links( $social_profiles, $list_attrs, $show_text, $include_css )->output();
+	}
+
+	/**
+	 * Create a WhatsApp link
+	 *
+	 * @param string $phone      Phone number (with country code)
+	 * @param string $message    Optional message to pre-fill
+	 * @param mixed  $content    Link content (defaults to phone if not provided)
+	 * @param array  $attributes Element attributes
+	 *
+	 * @return Element
+	 */
+	public static function whatsapp( string $phone, string $message = '', $content = null, array $attributes = [] ): Element {
+		// Use phone as content if none provided
+		if ( $content === null ) {
+			$content = $phone;
+		}
+
+		// Clean phone number (keep only digits and plus sign)
+		$clean_phone = Utils::clean_phone_number( $phone );
+
+		$url = 'https://wa.me/' . $clean_phone;
+
+		// Add message if provided
+		if ( ! empty( $message ) ) {
+			$url .= '?text=' . rawurlencode( $message );
+		}
+
+		return self::a( $url, $content, $attributes );
+	}
+
+	/**
+	 * Create and render a WhatsApp link
+	 *
+	 * @param string $phone      Phone number (with country code)
+	 * @param string $message    Optional message to pre-fill
+	 * @param mixed  $content    Link content (defaults to phone if not provided)
+	 * @param array  $attributes Element attributes
+	 *
+	 * @return void
+	 */
+	public static function whatsapp_render( string $phone, string $message = '', $content = null, array $attributes = [] ): void {
+		self::whatsapp( $phone, $message, $content, $attributes )->output();
+	}
+
+	/**
+	 * Create a social media sharing link for Twitter/X
+	 *
+	 * @param string $text       Text to share
+	 * @param string $url        URL to share (optional)
+	 * @param string $hashtags   Comma-separated hashtags without # symbol (optional)
+	 * @param mixed  $content    Link content
+	 * @param array  $attributes Element attributes
+	 *
+	 * @return Element
+	 */
+	public static function twitter_share( string $text, string $url = '', string $hashtags = '', $content = 'Share on Twitter', array $attributes = [] ): Element {
+		$share_url = 'https://twitter.com/intent/tweet?text=' . rawurlencode( $text );
+
+		if ( ! empty( $url ) ) {
+			$share_url .= '&url=' . rawurlencode( $url );
+		}
+
+		if ( ! empty( $hashtags ) ) {
+			$share_url .= '&hashtags=' . rawurlencode( $hashtags );
+		}
+
+		return self::external_link( $share_url, $content, $attributes );
+	}
+
+	/**
+	 * Create and render a Twitter/X sharing link
+	 *
+	 * @param string $text       Text to share
+	 * @param string $url        URL to share (optional)
+	 * @param string $hashtags   Comma-separated hashtags without # symbol (optional)
+	 * @param mixed  $content    Link content
+	 * @param array  $attributes Element attributes
+	 *
+	 * @return void
+	 */
+	public static function twitter_share_render( string $text, string $url = '', string $hashtags = '', $content = 'Share on Twitter', array $attributes = [] ): void {
+		self::twitter_share( $text, $url, $hashtags, $content, $attributes )->output();
+	}
+
+	/**
+	 * Create a social media sharing link for Facebook
+	 *
+	 * @param string $url        URL to share
+	 * @param mixed  $content    Link content
+	 * @param array  $attributes Element attributes
+	 *
+	 * @return Element
+	 */
+	public static function facebook_share( string $url, $content = 'Share on Facebook', array $attributes = [] ): Element {
+		$share_url = 'https://www.facebook.com/sharer/sharer.php?u=' . rawurlencode( $url );
+
+		return self::external_link( $share_url, $content, $attributes );
+	}
+
+	/**
+	 * Create and render a Facebook sharing link
+	 *
+	 * @param string $url        URL to share
+	 * @param mixed  $content    Link content
+	 * @param array  $attributes Element attributes
+	 *
+	 * @return void
+	 */
+	public static function facebook_share_render( string $url, $content = 'Share on Facebook', array $attributes = [] ): void {
+		self::facebook_share( $url, $content, $attributes )->output();
+	}
+
+	/**
+	 * Create a social media sharing link for LinkedIn
+	 *
+	 * @param string $url        URL to share
+	 * @param string $title      Title of content to share (optional)
+	 * @param mixed  $content    Link content
+	 * @param array  $attributes Element attributes
+	 *
+	 * @return Element
+	 */
+	public static function linkedin_share( string $url, string $title = '', $content = 'Share on LinkedIn', array $attributes = [] ): Element {
+		$share_url = 'https://www.linkedin.com/sharing/share-offsite/?url=' . rawurlencode( $url );
+
+		if ( ! empty( $title ) ) {
+			$share_url .= '&title=' . rawurlencode( $title );
+		}
+
+		return self::external_link( $share_url, $content, $attributes );
+	}
+
+	/**
+	 * Create and render a LinkedIn sharing link
+	 *
+	 * @param string $url        URL to share
+	 * @param string $title      Title of content to share (optional)
+	 * @param mixed  $content    Link content
+	 * @param array  $attributes Element attributes
+	 *
+	 * @return void
+	 */
+	public static function linkedin_share_render( string $url, string $title = '', $content = 'Share on LinkedIn', array $attributes = [] ): void {
+		self::linkedin_share( $url, $title, $content, $attributes )->output();
+	}
+
+	/**
+	 * Create a generic social media sharing link
+	 *
+	 * @param string $platform   Social media platform
+	 * @param string $url        URL to share
+	 * @param array  $params     Additional parameters for the sharing URL
+	 * @param mixed  $content    Link content
+	 * @param array  $attributes Element attributes
+	 *
+	 * @return Element|null      Returns null if platform is not supported
+	 */
+	public static function social_share( string $platform, string $url, array $params = [], $content = null, array $attributes = [] ): ?Element {
+		$platform = strtolower( $platform );
+
+		// Default content if not provided
+		if ( $content === null ) {
+			$content = 'Share on ' . ucfirst( $platform );
+		}
+
+		switch ( $platform ) {
+			case 'twitter':
+			case 'x':
+				$text     = $params['text'] ?? '';
+				$hashtags = $params['hashtags'] ?? '';
+
+				return self::twitter_share( $text, $url, $hashtags, $content, $attributes );
+
+			case 'facebook':
+				return self::facebook_share( $url, $content, $attributes );
+
+			case 'linkedin':
+				$title = $params['title'] ?? '';
+
+				return self::linkedin_share( $url, $title, $content, $attributes );
+
+			case 'pinterest':
+				$description = $params['description'] ?? '';
+				$media       = $params['media'] ?? '';
+				$share_url   = 'https://pinterest.com/pin/create/button/?url=' . rawurlencode( $url );
+
+				if ( ! empty( $description ) ) {
+					$share_url .= '&description=' . rawurlencode( $description );
+				}
+
+				if ( ! empty( $media ) ) {
+					$share_url .= '&media=' . rawurlencode( $media );
+				}
+
+				return self::external_link( $share_url, $content, $attributes );
+
+			case 'reddit':
+				$title     = $params['title'] ?? '';
+				$share_url = 'https://www.reddit.com/submit?url=' . rawurlencode( $url );
+
+				if ( ! empty( $title ) ) {
+					$share_url .= '&title=' . rawurlencode( $title );
+				}
+
+				return self::external_link( $share_url, $content, $attributes );
+
+			default:
+				return null;
+		}
+	}
+
+	/**
+	 * Create and render a generic social media sharing link
+	 *
+	 * @param string $platform   Social media platform
+	 * @param string $url        URL to share
+	 * @param array  $params     Additional parameters for the sharing URL
+	 * @param mixed  $content    Link content
+	 * @param array  $attributes Element attributes
+	 *
+	 * @return void
+	 */
+	public static function social_share_render( string $platform, string $url, array $params = [], $content = null, array $attributes = [] ): void {
+		$element = self::social_share( $platform, $url, $params, $content, $attributes );
+
+		if ( $element !== null ) {
+			$element->output();
+		}
 	}
 
 }

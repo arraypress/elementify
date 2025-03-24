@@ -1,0 +1,31 @@
+.featured-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.featured-container .dashicons {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    color: #ccc;
+    transition: color 0.2s ease;
+}
+
+.featured-container:hover .dashicons {
+    color: #ffba00;
+}
+
+.featured-container.is-featured .dashicons {
+    color: #ffba00;
+}
+
+.featured-container.featured-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.featured-label {
+    font-size: 14px;
+}

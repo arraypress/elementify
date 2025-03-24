@@ -17,9 +17,9 @@ namespace Elementify\Traits\Components;
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
-use Elementify\Components\Accordion;
-use Elementify\Components\Card;
-use Elementify\Components\Modal;
+use Elementify\Components\Layout\Card;
+use Elementify\Components\Interactive\Accordion;
+use Elementify\Components\Interactive\Modal;
 
 /**
  * Layout Components Trait

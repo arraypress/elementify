@@ -10,15 +10,15 @@
  * @version     1.0.0
  */
 
-namespace Elementify\Components;
+namespace Elementify\Components\Interactive;
+
+// Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 use Elementify\Abstracts\Component;
 use Elementify\Create;
 use Elementify\Element;
 use Elementify\Traits\Component\Parts;
-
-// Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
 
 /**
  * Modal Component
@@ -57,6 +57,13 @@ class Modal extends Component {
 	protected Element $content_wrapper;
 
 	/**
+	 * Modal options
+	 *
+	 * @var array
+	 */
+	protected array $options = [];
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $title       Modal title
@@ -68,6 +75,12 @@ class Modal extends Component {
 	public function __construct( string $title = '', $content = null, array $buttons = [], array $attributes = [], bool $include_css = true ) {
 		// Set base class to modal-overlay
 		$this->base_class = 'modal-overlay';
+
+		// Initialize default options
+		$this->options = [
+			'closeable' => true,
+			'visible'   => false,
+		];
 
 		// Make sure we have an ID - this is critical for proper functioning
 		if ( ! isset( $attributes['id'] ) ) {
@@ -129,13 +142,15 @@ class Modal extends Component {
 		// Reset content wrapper children
 		$this->content_wrapper->children = [];
 
-		// Add close button
-		$close_button = new Element( 'span', '×', [
-			'class'      => 'modal-close',
-			'data-modal' => $this->get_attribute( 'id' )
-		], true );
+		// Add close button if closeable
+		if ( $this->options['closeable'] ) {
+			$close_button = new Element( 'span', '×', [
+				'class'      => 'modal-close',
+				'data-modal' => $this->get_attribute( 'id' )
+			], true );
 
-		$this->content_wrapper->add_child( $close_button );
+			$this->content_wrapper->add_child( $close_button );
+		}
 
 		// Add title if exists
 		if ( $this->title ) {
@@ -177,7 +192,7 @@ class Modal extends Component {
 		}
 
 		$this->title = $title_element;
-		$this->build();
+		$this->mark_for_rebuild();
 
 		return $this;
 	}
@@ -203,7 +218,7 @@ class Modal extends Component {
 		}
 
 		$this->body = $body_div;
-		$this->build();
+		$this->mark_for_rebuild();
 
 		return $this;
 	}
@@ -229,7 +244,7 @@ class Modal extends Component {
 		}
 
 		$this->footer = $footer_div;
-		$this->build();
+		$this->mark_for_rebuild();
 
 		return $this;
 	}
@@ -261,13 +276,13 @@ class Modal extends Component {
 				// Set data attributes
 				if ( isset( $button['data'] ) && is_array( $button['data'] ) ) {
 					foreach ( $button['data'] as $key => $value ) {
-						$btn->set_attribute( "data-{$key}", $value );
+						$btn->set_data( $key, $value );
 					}
 				}
 
 				// Add special modal actions (cancel, confirm, etc.)
 				if ( isset( $button['action'] ) ) {
-					$btn->set_attribute( 'data-modal-action', $button['action'] );
+					$btn->set_data( 'modal-action', $button['action'] );
 				}
 
 				$footer->add_child( $btn );
@@ -275,7 +290,7 @@ class Modal extends Component {
 		}
 
 		$this->footer = $footer;
-		$this->build();
+		$this->mark_for_rebuild();
 
 		return $this;
 	}
@@ -298,7 +313,41 @@ class Modal extends Component {
 		}
 
 		$this->body->add_child( $content );
-		$this->build();
+		$this->mark_for_rebuild();
+
+		return $this;
+	}
+
+	/**
+	 * Set whether the modal can be closed by the user
+	 *
+	 * @param bool $closeable Whether the modal can be closed
+	 *
+	 * @return $this
+	 */
+	public function set_closeable( bool $closeable ): self {
+		return $this->toggle_option( 'closeable', $closeable );
+	}
+
+	/**
+	 * Set the visibility state of the modal
+	 *
+	 * @param bool $visible Whether the modal is visible
+	 *
+	 * @return $this
+	 */
+	public function set_visible( bool $visible ): self {
+		$this->options['visible'] = $visible;
+
+		// Update the style attribute
+		$current_style = $this->get_attribute( 'style', '' );
+		if ( $visible ) {
+			$new_style = preg_replace( '/display:\s*none;?/', 'display: block;', $current_style );
+			$this->set_attribute( 'style', $new_style );
+		} else {
+			$new_style = preg_replace( '/display:\s*block;?/', 'display: none;', $current_style );
+			$this->set_attribute( 'style', $new_style );
+		}
 
 		return $this;
 	}

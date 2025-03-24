@@ -44,6 +44,13 @@ class Assets {
 		'datepicker'   => 'date-picker',
 		'range'        => 'range',
 		'toggle'       => 'toggle',
+		'number'       => 'number',
+		'rating'       => 'rating',
+		'timeago'      => 'time-ago',
+		'taxonomy'     => 'taxonomy',
+		'user'         => 'user',
+		'clipboard'    => 'clipboard',
+		'featured'     => 'featured',
 	];
 
 	/**
@@ -58,7 +65,8 @@ class Assets {
 		'tabs',
 		'tooltip',
 		'datepicker',
-		'range'
+		'range',
+		'clipboard',
 	];
 
 	/**

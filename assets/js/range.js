@@ -1,8 +1,3 @@
-/**
- * Elementify Range With Display Component
- *
- * Handles the functionality of the range slider with value display.
- */
 (function ($) {
     'use strict';
 
@@ -10,7 +5,7 @@
      * Initialize all range with display elements
      */
     function initRangeWithDisplay() {
-        $('.elementify-range-input').each(function () {
+        $('.range-input').each(function () {
             const $input = $(this);
             const $displayElement = $('#' + $input.data('display-id'));
 
@@ -22,7 +17,7 @@
             // Initial update
             updateDisplay($input, $displayElement);
         });
-    }
+    } 
 
     /**
      * Update the display value

@@ -1,8 +1,3 @@
-/**
- * Tabs Component JavaScript
- *
- * Handles tab switching, active states, and content visibility
- */
 document.addEventListener('DOMContentLoaded', function () {
     // Find all tab containers
     const tabContainers = document.querySelectorAll('.tabs-container');

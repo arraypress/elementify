@@ -11,15 +11,15 @@
  */
 declare( strict_types=1 );
 
-namespace Elementify\Components;
+namespace Elementify\Components\Interactive;
+
+// Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 use Elementify\Abstracts\Component;
 use Elementify\Create;
 use Elementify\Traits\Component\Parts;
 use Elementify\Traits\Component\SectionContent;
-
-// Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
 
 /**
  * Accordion Component
@@ -48,16 +48,21 @@ class Accordion extends Component {
 	public function __construct( array $sections = [], bool $allow_multiple = false, array $attributes = [], bool $include_css = true ) {
 		// Set accordion properties
 		$this->allow_multiple = $allow_multiple;
+
 		// Initialize component foundation
 		$this->init_component( 'accordion', $attributes, $include_css );
+
 		// Set data attribute for multiple sections
 		$attributes['data-allow-multiple'] = $allow_multiple ? 'true' : 'false';
+
 		// Initialize with a div element
 		parent::__construct( 'div', null, $attributes );
+
 		// Add sections if provided
 		if ( ! empty( $sections ) ) {
 			$this->add_sections( $sections );
 		}
+
 		// Build the accordion
 		$this->build();
 	}
@@ -67,18 +72,23 @@ class Accordion extends Component {
 	 */
 	protected function build(): void {
 		$this->children = []; // Clear children
+
 		// Add sections
 		foreach ( $this->sections as $section_id => $section ) {
 			$is_active = isset( $section['active'] ) && $section['active'];
+
 			// Create header
 			$header = Create::div( $section['title'] )
-			                ->add_class( 'accordion-header' . ( $is_active ? ' active' : '' ) )
-			                ->set_attribute( 'data-section', $section_id );
+			                ->add_class( 'accordion-header' )
+			                ->toggle_class( 'active', $is_active )
+			                ->set_data( 'section', $section_id );
+
 			// Create content
 			$content = Create::div( $section['content'] )
 			                 ->set_id( $section_id )
 			                 ->add_class( 'accordion-content' )
 			                 ->set_styles( [ 'display' => $is_active ? 'block' : 'none' ] );
+
 			// Add to accordion
 			$this->add_child( $header );
 			$this->add_child( $content );
@@ -94,7 +104,8 @@ class Accordion extends Component {
 	 */
 	public function set_allow_multiple( bool $allow ): self {
 		$this->allow_multiple = $allow;
-		$this->set_attribute( 'data-allow-multiple', $allow ? 'true' : 'false' );
+		$this->set_data( 'allow-multiple', $allow ? 'true' : 'false' );
+
 		// If not allowing multiple and there are multiple active sections,
 		// keep only the first active one
 		if ( ! $allow ) {
@@ -110,8 +121,67 @@ class Accordion extends Component {
 				}
 			}
 		}
+
 		// Rebuild accordion
-		$this->build();
+		$this->mark_for_rebuild();
+
+		return $this;
+	}
+
+	/**
+	 * Add a section
+	 *
+	 * @param string $id      Section ID
+	 * @param string $title   Section title
+	 * @param mixed  $content Section content
+	 * @param bool   $active  Whether the section is active/open
+	 *
+	 * @return $this
+	 */
+	public function add_section( string $id, string $title, $content, bool $active = false ): self {
+		// If setting this section as active and not allowing multiple,
+		// deactivate any currently active sections
+		if ( $active && ! $this->allow_multiple ) {
+			foreach ( $this->sections as $section_id => $section ) {
+				if ( isset( $section['active'] ) && $section['active'] ) {
+					$this->sections[ $section_id ]['active'] = false;
+				}
+			}
+		}
+
+		$this->sections[ $id ] = [
+			'title'   => $title,
+			'content' => $content,
+			'active'  => $active
+		];
+
+		$this->mark_for_rebuild();
+
+		return $this;
+	}
+
+	/**
+	 * Set a section as active/open
+	 *
+	 * @param string $id Section ID
+	 *
+	 * @return $this
+	 */
+	public function set_section_active( string $id ): self {
+		if ( isset( $this->sections[ $id ] ) ) {
+			// If not allowing multiple, deactivate all sections first
+			if ( ! $this->allow_multiple ) {
+				foreach ( $this->sections as $section_id => $section ) {
+					$this->sections[ $section_id ]['active'] = false;
+				}
+			}
+
+			// Set this section as active
+			$this->sections[ $id ]['active'] = true;
+			$this->active_section            = $id;
+
+			$this->mark_for_rebuild();
+		}
 
 		return $this;
 	}

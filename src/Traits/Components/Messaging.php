@@ -1,8 +1,8 @@
 <?php
 /**
- * Elementify Library - Message Components Trait
+ * Elementify Library - Notice Components Trait
  *
- * A collection of methods for creating message and notification-related HTML components.
+ * A collection of methods for creating notification and message HTML components.
  *
  * @package     ArrayPress\Elementify
  * @copyright   Copyright (c) 2025, ArrayPress Limited
@@ -17,17 +17,15 @@ namespace Elementify\Traits\Components;
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
-use Elementify\Components\Notice;
-use Elementify\Components\StatusBadge;
-use Elementify\Components\Tooltip;
+use Elementify\Components\Notification\Notice;
 
 /**
- * Message Components Trait
+ * Messaging Components Trait
  *
- * Provides methods for creating and rendering message and notification-related HTML components
- * such as notices, tooltips, and badges.
+ * Provides methods for creating and rendering notification and message HTML components
+ * such as info, success, warning, and error notices.
  */
-trait Message {
+trait Messaging {
 
 	/**
 	 * Create a notice component
@@ -171,132 +169,4 @@ trait Message {
 		self::error_notice( $content, $dismissible, $attributes, $include_css )->output();
 	}
 
-	/**
-	 * Create a status badge component
-	 *
-	 * @param string $label       Badge label text
-	 * @param string $status      Status type (success, warning, error, info, etc.)
-	 * @param array  $options     Additional options
-	 * @param array  $attributes  Element attributes
-	 * @param bool   $include_css Whether to include built-in CSS (default: true)
-	 *
-	 * @return StatusBadge
-	 */
-	public static function badge( string $label, string $status = 'default', array $options = [], array $attributes = [], bool $include_css = true ): StatusBadge {
-		// If label is empty, use capitalized status as label
-		if ( empty( $label ) ) {
-			$label = ucfirst( str_replace( [ '_', '-' ], ' ', $status ) );
-		}
-
-		return new StatusBadge( $label, $status, $options, $attributes, $include_css );
-	}
-
-	/**
-	 * Create and render a status badge component
-	 *
-	 * @param string $label       Badge label text
-	 * @param string $status      Status type (success, warning, error, info, etc.)
-	 * @param array  $options     Additional options
-	 * @param array  $attributes  Element attributes
-	 * @param bool   $include_css Whether to include built-in CSS (default: true)
-	 *
-	 * @return void
-	 */
-	public static function badge_render( string $label, string $status = 'default', array $options = [], array $attributes = [], bool $include_css = true ): void {
-		self::badge( $label, $status, $options, $attributes, $include_css )->output();
-	}
-
-	/**
-	 * Create a tooltip component
-	 *
-	 * @param mixed  $target      Target element or content
-	 * @param string $tooltip     Tooltip content
-	 * @param array  $options     Options for the tooltip (position, trigger, etc.)
-	 * @param array  $attributes  Element attributes
-	 * @param bool   $include_css Whether to include built-in CSS (default: true)
-	 *
-	 * @return Tooltip
-	 */
-	public static function tooltip( $target, string $tooltip, array $options = [], array $attributes = [], bool $include_css = true ): Tooltip {
-		return new Tooltip( $target, $tooltip, $options, $attributes, $include_css );
-	}
-
-	/**
-	 * Create and render a tooltip component
-	 *
-	 * @param mixed  $target      Target element or content
-	 * @param string $tooltip     Tooltip content
-	 * @param array  $options     Options for the tooltip (position, trigger, etc.)
-	 * @param array  $attributes  Element attributes
-	 * @param bool   $include_css Whether to include built-in CSS (default: true)
-	 *
-	 * @return void
-	 */
-	public static function tooltip_render( $target, string $tooltip, array $options = [], array $attributes = [], bool $include_css = true ): void {
-		self::tooltip( $target, $tooltip, $options, $attributes, $include_css )->output();
-	}
-
-	/**
-	 * Create a tooltip triggered by click
-	 *
-	 * @param mixed  $target      Target element or content
-	 * @param string $tooltip     Tooltip content
-	 * @param array  $options     Additional options
-	 * @param array  $attributes  Element attributes
-	 * @param bool   $include_css Whether to include built-in CSS (default: true)
-	 *
-	 * @return Tooltip
-	 */
-	public static function click_tooltip( $target, string $tooltip, array $options = [], array $attributes = [], bool $include_css = true ): Tooltip {
-		$options['trigger'] = 'click';
-
-		return self::tooltip( $target, $tooltip, $options, $attributes, $include_css );
-	}
-
-	/**
-	 * Create and render a tooltip triggered by click
-	 *
-	 * @param mixed  $target      Target element or content
-	 * @param string $tooltip     Tooltip content
-	 * @param array  $options     Additional options
-	 * @param array  $attributes  Element attributes
-	 * @param bool   $include_css Whether to include built-in CSS (default: true)
-	 *
-	 * @return void
-	 */
-	public static function click_tooltip_render( $target, string $tooltip, array $options = [], array $attributes = [], bool $include_css = true ): void {
-		self::click_tooltip( $target, $tooltip, $options, $attributes, $include_css )->output();
-	}
-
-	/**
-	 * Create a tooltip triggered by focus
-	 *
-	 * @param mixed  $target      Target element or content
-	 * @param string $tooltip     Tooltip content
-	 * @param array  $options     Additional options
-	 * @param array  $attributes  Element attributes
-	 * @param bool   $include_css Whether to include built-in CSS (default: true)
-	 *
-	 * @return Tooltip
-	 */
-	public static function focus_tooltip( $target, string $tooltip, array $options = [], array $attributes = [], bool $include_css = true ): Tooltip {
-		$options['trigger'] = 'focus';
-
-		return self::tooltip( $target, $tooltip, $options, $attributes, $include_css );
-	}
-
-	/**
-	 * Create and render a tooltip triggered by focus
-	 *
-	 * @param mixed  $target      Target element or content
-	 * @param string $tooltip     Tooltip content
-	 * @param array  $options     Additional options
-	 * @param array  $attributes  Element attributes
-	 * @param bool   $include_css Whether to include built-in CSS (default: true)
-	 *
-	 * @return void
-	 */
-	public static function focus_tooltip_render( $target, string $tooltip, array $options = [], array $attributes = [], bool $include_css = true ): void {
-		self::focus_tooltip( $target, $tooltip, $options, $attributes, $include_css )->output();
-	}
 }

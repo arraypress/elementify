@@ -1,0 +1,80 @@
+/* Number color classes */
+.number.positive {
+    color: #28a745; /* Green for positive values */
+}
+
+.number.negative {
+    color: #dc3545; /* Red for negative values */
+}
+
+.number.neutral {
+    color: #6c757d; /* Gray for zero values */
+}
+
+/* Font weight for emphasized numbers */
+.number.bold {
+    font-weight: 600;
+}
+
+/* Different size options */
+.number.small {
+    font-size: 0.875rem;
+}
+
+.number.large {
+    font-size: 1.25rem;
+}
+
+/* Responsive text alignment */
+@media (max-width: 768px) {
+    .number.responsive-align-center {
+        text-align: center;
+    }
+
+    .number.responsive-align-right {
+        text-align: right;
+    }
+}
+
+/* Monospace option for tabular numbers */
+.number.monospace {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+/* Admin-specific styling to match WP admin appearance */
+.wp-admin .number.positive {
+    color: #46b450;
+}
+
+.wp-admin .number.negative {
+    color: #dc3232;
+}
+
+.wp-admin .number.neutral {
+    color: #72777c;
+}
+
+/* Animation for changing numbers */
+.number.animate-change {
+    transition: color 0.3s ease;
+}
+
+/* Additional context classes */
+.number.revenue {
+    font-weight: 600;
+}
+
+.number.percentage:after {
+    content: "%";
+}
+
+/* Currency formatting */
+.number.currency.prefix:before {
+    content: attr(data-currency);
+    margin-right: 2px;
+}
+
+.number.currency.suffix:after {
+    content: attr(data-currency);
+    margin-left: 2px;
+}

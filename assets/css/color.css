@@ -1,0 +1,60 @@
+/* Base container */
+.color-swatch {
+    display: inline-flex;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    line-height: 1.4;
+}
+
+/* Wrapper */
+.color-swatch__wrapper {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Color sample */
+.color-swatch__sample {
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+/* Default square shape */
+.color-swatch__sample.square {
+    border-radius: 3px;
+}
+
+/* Circle shape */
+.color-swatch__sample.circle {
+    border-radius: 50%;
+}
+
+/* Color value text */
+.color-swatch__value {
+    margin-left: 6px;
+    font-family: consolas, monaco, monospace;
+    font-size: 0.9em;
+    color: #50575e;
+}
+
+/* Hover effect - subtle shadow */
+.color-swatch:hover .color-swatch__sample {
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+}
+
+/* Admin specifics */
+.wp-list-table .color-swatch {
+    line-height: 1.3;
+}
+
+/* Different sizes */
+.color-swatch.small .color-swatch__sample {
+    width: 12px !important;
+    height: 12px !important;
+}
+
+.color-swatch.large .color-swatch__sample {
+    width: 28px !important;
+    height: 28px !important;
+}

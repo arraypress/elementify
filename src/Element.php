@@ -59,6 +59,13 @@ class Element {
 	 */
 	protected bool $escape_content = false;
 
+	/**
+	 * Flag indicating if element needs to be rebuilt
+	 *
+	 * @var bool
+	 */
+	protected bool $needs_rebuild = false;
+
 	/** Constants *************************************************************/
 
 	/**
@@ -139,7 +146,6 @@ class Element {
 		'th',
 		'caption',
 		'colgroup',
-		'col',
 
 		// List containers and items
 		'ul',
@@ -157,7 +163,6 @@ class Element {
 		'menuitem',
 		'summary',
 		'button',
-		'fieldset',
 		'keygen',
 		'meter',
 		'progress',
@@ -172,7 +177,6 @@ class Element {
 		'figure',
 		'iframe',
 		'object',
-		'param',
 		'embed',
 
 		// Layout and structural elements
@@ -182,7 +186,6 @@ class Element {
 		'marquee',
 		'nobr',
 		'time',
-		'wbr',
 		'bdi',
 		'bdo',
 		'cite',
@@ -197,6 +200,15 @@ class Element {
 		's',
 		'small',
 		'mark',
+		'code',
+		'kbd',
+		'samp',
+		'var',
+		'strong',
+		'em',
+		'i',
+		'b',
+		'a',
 
 		// Component-specific elements and content containers
 		'card',
@@ -214,7 +226,16 @@ class Element {
 		'tab',
 		'tab-content',
 		'tabs-nav',
-		'tabs-content'
+		'tabs-content',
+		'tooltip',
+		'breadcrumb',
+		'rating',
+		'progress',
+		'notice',
+		'status-badge',
+		'color-swatch',
+		'filesize',
+		'number'
 	];
 
 	/** Constructor & Initialization ******************************************/
@@ -380,13 +401,14 @@ class Element {
 	 * Toggle an attribute between on and off states
 	 *
 	 * @param string $name      Attribute name
+	 * @param mixed  $value     Value to use when setting the attribute
 	 * @param bool   $condition When true, add the attribute; when false, remove it
 	 *
 	 * @return $this
 	 */
-	public function toggle_attribute( string $name, bool $condition ): self {
+	public function toggle_attribute( string $name, $value, bool $condition ): self {
 		if ( $condition ) {
-			$this->set_attribute( $name, true );
+			$this->set_attribute( $name, $value );
 		} else {
 			$this->remove_attribute( $name );
 		}
@@ -765,6 +787,63 @@ class Element {
 		return $found;
 	}
 
+	/** Enhanced Methods ******************************************************/
+
+	/**
+	 * Add tooltip to element
+	 *
+	 * @param string $tooltip_text Tooltip text
+	 *
+	 * @return $this
+	 */
+	public function add_tooltip( string $tooltip_text ): self {
+		if ( ! empty( $tooltip_text ) ) {
+			$this->set_attribute( 'title', $tooltip_text );
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Mark element as needing rebuild
+	 *
+	 * @return $this
+	 */
+	public function mark_for_rebuild(): self {
+		$this->needs_rebuild = true;
+
+		return $this;
+	}
+
+	/**
+	 * Rebuild element if needed - called before render
+	 *
+	 * @return void
+	 */
+	protected function rebuild_if_needed(): void {
+		if ( isset( $this->needs_rebuild ) && $this->needs_rebuild && method_exists( $this, 'build' ) ) {
+			$this->build();
+			$this->needs_rebuild = false;
+		}
+	}
+
+	/**
+	 * Toggle a component option
+	 *
+	 * @param string $option  Option name in options array
+	 * @param bool   $enabled Whether to enable the option
+	 *
+	 * @return $this
+	 */
+	protected function toggle_option( string $option, bool $enabled = true ): self {
+		if ( isset( $this->options[ $option ] ) ) {
+			$this->options[ $option ] = $enabled;
+			$this->mark_for_rebuild();
+		}
+
+		return $this;
+	}
+
 	/** Rendering & Output ****************************************************/
 
 	/**
@@ -849,6 +928,9 @@ class Element {
 	 * @return string
 	 */
 	public function render(): string {
+		// Check if the element needs rebuilding
+		$this->rebuild_if_needed();
+
 		$attributes = $this->build_attributes_string();
 
 		// Self-closing element
@@ -922,4 +1004,5 @@ class Element {
 	public function __toString(): string {
 		return $this->render();
 	}
+
 }

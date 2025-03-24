@@ -1,0 +1,89 @@
+.clipboard-container {
+    display: inline-block;
+    width: 180px;
+    max-width: 100%;
+}
+
+.clipboard-container .clipboard-field {
+    display: inline-flex;
+    align-items: center;
+    background-color: #f9f9f9;
+    background-image: linear-gradient(45deg, #f5f5f5 25%, transparent 25%, transparent 50%, #f5f5f5 50%, #f5f5f5 75%, transparent 75%, transparent);
+    background-size: 4px 4px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    max-width: 100%;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+    transition: all 0.2s ease;
+}
+
+.clipboard-container .clipboard-field:hover {
+    background-color: #fcfcfc;
+    border-color: #c0c0c0;
+}
+
+.clipboard-container .clipboard-text {
+    padding: 6px 8px;
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 13px;
+    color: #23282d;
+    letter-spacing: 0.5px;
+    user-select: all;
+}
+
+.clipboard-container .clipboard-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    border-left: 1px solid rgba(221, 221, 221, 0.5);
+    cursor: pointer;
+    padding: 6px 10px;
+    color: #aaa;
+    transition: all 0.2s ease;
+    min-height: 32px;
+    min-width: 36px;
+}
+
+.clipboard-container .clipboard-button:hover {
+    background-color: rgba(0,0,0,0.03);
+    color: #0073aa;
+}
+
+.clipboard-container .clipboard-button:active {
+    background-color: rgba(0,0,0,0.05);
+}
+
+.clipboard-container .clipboard-button.success {
+    background-color: #f7fcf7;
+    color: #46b450;
+}
+
+.clipboard-container .clipboard-button.error {
+    background-color: #fef7f7;
+    color: #dc3232;
+}
+
+.clipboard-container .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    line-height: 1;
+}
+
+/* Animation for successful copy */
+@keyframes clipboard-flash {
+    0% { background-color: #f9f9f9; }
+    50% { background-color: #ebf9eb; }
+    100% { background-color: #f9f9f9; }
+}
+
+.clipboard-container.copied .clipboard-field {
+    animation: clipboard-flash 1s 1;
+}

@@ -1,8 +1,3 @@
-/**
- * Elementify Modal Component
- *
- * JavaScript for modal components.
- */
 document.addEventListener('DOMContentLoaded', function () {
     // Find all modals
     const modals = document.querySelectorAll('.modal-overlay');

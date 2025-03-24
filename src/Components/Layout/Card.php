@@ -10,15 +10,15 @@
  * @version     1.0.0
  */
 
-namespace Elementify\Components;
+namespace Elementify\Components\Layout;
+
+// Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 use Elementify\Abstracts\Component;
 use Elementify\Create;
 use Elementify\Element;
 use Elementify\Traits\Component\Parts;
-
-// Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
 
 /**
  * Card Component
@@ -154,9 +154,10 @@ class Card extends Component {
 			$this->header = $header_div;
 		} else {
 			// For Element or other content types
-			$this->header = $this->create_header( 'div', $content );
+			$this->header = Create::div()->add_class('card-header');
+			$this->header->add_child($content);
 		}
-		$this->build();
+		$this->mark_for_rebuild();
 
 		return $this;
 	}
@@ -181,7 +182,7 @@ class Card extends Component {
 		}
 
 		$this->body = $body_div;
-		$this->build();
+		$this->mark_for_rebuild();
 
 		return $this;
 	}
@@ -206,7 +207,7 @@ class Card extends Component {
 		}
 
 		$this->footer = $footer_div;
-		$this->build();
+		$this->mark_for_rebuild();
 
 		return $this;
 	}
@@ -229,7 +230,7 @@ class Card extends Component {
 		}
 
 		$this->body->add_child( $content );
-		$this->build();
+		$this->mark_for_rebuild();
 
 		return $this;
 	}
@@ -261,18 +262,22 @@ class Card extends Component {
 	 */
 	public function set_variant( string $variant ): self {
 		// Validate variant
+		$old_variant = $this->variant;
 		$this->variant = in_array( $variant, self::CARD_VARIANTS ) ? $variant : 'default';
 
-		// Remove existing variant classes
-		if ( $this->has_attribute( 'class' ) ) {
-			$this->remove_class( function ( $class ) {
-				return strpos( $class, 'card--' ) === 0;
-			} );
-		}
+		// If variant has changed, update classes
+		if ($old_variant !== $this->variant) {
+			// Remove existing variant classes
+			if ( $this->has_attribute( 'class' ) ) {
+				$this->remove_class( function ( $class ) {
+					return strpos( $class, 'card--' ) === 0;
+				} );
+			}
 
-		// Add the new variant class if not default
-		if ( $this->variant !== 'default' ) {
-			$this->add_class( "card--{$this->variant}" );
+			// Add the new variant class if not default
+			if ( $this->variant !== 'default' ) {
+				$this->add_class( "card--{$this->variant}" );
+			}
 		}
 
 		return $this;

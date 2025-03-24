@@ -17,7 +17,8 @@ namespace Elementify\Traits\Components;
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
-use Elementify\Components\DatePicker;
+use Elementify\Components\Interactive\DatePicker;
+use Elementify\Components\Display\TimeAgo;
 
 /**
  * Date Components Trait
@@ -217,6 +218,34 @@ trait Date {
 		$html .= '</div>';
 
 		return $html;
+	}
+
+	/**
+	 * Create a time ago component
+	 *
+	 * @param mixed $time        Timestamp, date string, or DateTime object
+	 * @param array $options     Additional options
+	 * @param array $attributes  Element attributes
+	 * @param bool  $include_css Whether to include built-in CSS
+	 *
+	 * @return TimeAgo
+	 */
+	public static function timeago( $time, array $options = [], array $attributes = [], bool $include_css = true ): TimeAgo {
+		return new TimeAgo( $time, $options, $attributes, $include_css );
+	}
+
+	/**
+	 * Create and render a time ago component
+	 *
+	 * @param mixed $time        Timestamp, date string, or DateTime object
+	 * @param array $options     Additional options
+	 * @param array $attributes  Element attributes
+	 * @param bool  $include_css Whether to include built-in CSS
+	 *
+	 * @return void
+	 */
+	public static function timeago_render( $time, array $options = [], array $attributes = [], bool $include_css = true ): void {
+		self::timeago( $time, $options, $attributes, $include_css )->output();
 	}
 
 }

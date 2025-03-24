@@ -12,14 +12,14 @@
 
 declare( strict_types=1 );
 
-namespace Elementify\Components;
+namespace Elementify\Components\Interactive;
+
+// Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 use Elementify\Abstracts\Component;
 use Elementify\Create;
 use Elementify\Element;
-
-// Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
 
 /**
  * DatePicker Component
@@ -67,7 +67,7 @@ class DatePicker extends Component {
 	 */
 	public function __construct( string $name = '', string $value = '', array $options = [], array $attributes = [], bool $include_css = true ) {
 		// Default options
-		$defaults = [
+		$this->options = array_merge( [
 			'format'      => 'Y-m-d',         // PHP date format
 			'min_date'    => '',              // Minimum selectable date (YYYY-MM-DD)
 			'max_date'    => '',              // Maximum selectable date (YYYY-MM-DD)
@@ -77,10 +77,9 @@ class DatePicker extends Component {
 			'show_clear'  => true,            // Show clear button
 			'show_today'  => true,            // Show today button
 			'first_day'   => 0,               // First day of week (0 = Sunday, 1 = Monday)
-			'locale'      => '',            // Calendar locale
-		];
+			'locale'      => '',              // Calendar locale
+		], $options );
 
-		$this->options       = array_merge( $defaults, $options );
 		$this->selected_date = $value;
 
 		// Set base class
@@ -111,13 +110,8 @@ class DatePicker extends Component {
 		}
 
 		// Add readonly/disabled attributes if needed
-		if ( $this->options['readonly'] ) {
-			$input_attributes['readonly'] = 'readonly';
-		}
-
-		if ( $this->options['disabled'] ) {
-			$input_attributes['disabled'] = 'disabled';
-		}
+		$input_attributes['readonly'] = $this->options['readonly'] ? 'readonly' : null;
+		$input_attributes['disabled'] = $this->options['disabled'] ? 'disabled' : null;
 
 		// Fixed: properly create the input with all required parameters
 		$this->input = Create::input( 'text', $name, $value, $input_attributes );
@@ -125,10 +119,10 @@ class DatePicker extends Component {
 		// Create calendar container element (will be populated by JS)
 		$this->calendar = Create::div()
 		                        ->add_class( 'datepicker-calendar' )
-		                        ->set_attribute( 'data-first-day', (string) $this->options['first_day'] )
-		                        ->set_attribute( 'data-locale', $this->options['locale'] )
-		                        ->set_attribute( 'data-show-clear', $this->options['show_clear'] ? 'true' : 'false' )
-		                        ->set_attribute( 'data-show-today', $this->options['show_today'] ? 'true' : 'false' );
+		                        ->set_data( 'first-day', (string) $this->options['first_day'] )
+		                        ->set_data( 'locale', $this->options['locale'] )
+		                        ->set_data( 'show-clear', $this->options['show_clear'] ? 'true' : 'false' )
+		                        ->set_data( 'show-today', $this->options['show_today'] ? 'true' : 'false' );
 
 		// Build the datepicker
 		$this->build();
@@ -162,7 +156,7 @@ class DatePicker extends Component {
 	 */
 	public function set_format( string $format ): self {
 		$this->options['format'] = $format;
-		$this->input->set_attribute( 'data-format', $format );
+		$this->input->set_data( 'format', $format );
 
 		return $this;
 	}
@@ -176,7 +170,7 @@ class DatePicker extends Component {
 	 */
 	public function set_min_date( string $date ): self {
 		$this->options['min_date'] = $date;
-		$this->input->set_attribute( 'data-min-date', $date );
+		$this->input->set_data( 'min-date', $date );
 
 		return $this;
 	}
@@ -190,7 +184,7 @@ class DatePicker extends Component {
 	 */
 	public function set_max_date( string $date ): self {
 		$this->options['max_date'] = $date;
-		$this->input->set_attribute( 'data-max-date', $date );
+		$this->input->set_data( 'max-date', $date );
 
 		return $this;
 	}
@@ -232,12 +226,7 @@ class DatePicker extends Component {
 	 */
 	public function set_readonly( bool $readonly = true ): self {
 		$this->options['readonly'] = $readonly;
-
-		if ( $readonly ) {
-			$this->input->set_attribute( 'readonly', 'readonly' );
-		} else {
-			$this->input->remove_attribute( 'readonly' );
-		}
+		$this->input->toggle_attribute( 'readonly', true, $readonly );
 
 		return $this;
 	}
@@ -251,12 +240,7 @@ class DatePicker extends Component {
 	 */
 	public function set_disabled( bool $disabled = true ): self {
 		$this->options['disabled'] = $disabled;
-
-		if ( $disabled ) {
-			$this->input->set_attribute( 'disabled', 'disabled' );
-		} else {
-			$this->input->remove_attribute( 'disabled' );
-		}
+		$this->input->toggle_attribute( 'disabled', true, $disabled );
 
 		return $this;
 	}
@@ -270,7 +254,7 @@ class DatePicker extends Component {
 	 */
 	public function show_clear_button( bool $show = true ): self {
 		$this->options['show_clear'] = $show;
-		$this->calendar->set_attribute( 'data-show-clear', $show ? 'true' : 'false' );
+		$this->calendar->set_data( 'show-clear', $show ? 'true' : 'false' );
 
 		return $this;
 	}
@@ -284,7 +268,7 @@ class DatePicker extends Component {
 	 */
 	public function show_today_button( bool $show = true ): self {
 		$this->options['show_today'] = $show;
-		$this->calendar->set_attribute( 'data-show-today', $show ? 'true' : 'false' );
+		$this->calendar->set_data( 'show-today', $show ? 'true' : 'false' );
 
 		return $this;
 	}
@@ -299,7 +283,7 @@ class DatePicker extends Component {
 	public function set_first_day( int $day ): self {
 		$day                        = max( 0, min( 6, $day ) ); // Ensure day is between 0-6
 		$this->options['first_day'] = $day;
-		$this->calendar->set_attribute( 'data-first-day', (string) $day );
+		$this->calendar->set_data( 'first-day', (string) $day );
 
 		return $this;
 	}
@@ -313,7 +297,7 @@ class DatePicker extends Component {
 	 */
 	public function set_locale( string $locale ): self {
 		$this->options['locale'] = $locale;
-		$this->calendar->set_attribute( 'data-locale', $locale );
+		$this->calendar->set_data( 'locale', $locale );
 
 		return $this;
 	}

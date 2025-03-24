@@ -1,0 +1,50 @@
+/* Base container */
+.timeago {
+    display: inline;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    cursor: default;
+    border-bottom: 1px dotted #c3c4c7;
+    position: relative;
+}
+
+/* Hover effect for tooltip */
+.timeago:hover {
+    border-bottom-style: solid;
+}
+
+/* Past/future variants */
+.timeago.past {
+    color: #50575e;
+}
+
+.timeago.future {
+    color: #2271b1;
+}
+
+/* Highlight variants for various time ranges */
+.timeago.just-now {
+    font-weight: 600;
+    color: #007017;
+}
+
+.timeago.very-recent {
+    color: #135e96;
+}
+
+.timeago.old {
+    color: #757575;
+}
+
+.timeago.very-old {
+    color: #8c8f94;
+}
+
+/* Admin specifics */
+.wp-list-table .timeago {
+    border-bottom: none;
+}
+
+.wp-list-table .timeago:hover {
+    text-decoration: underline;
+    border-bottom: none;
+}

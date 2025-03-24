@@ -12,15 +12,15 @@
 
 declare( strict_types=1 );
 
-namespace Elementify\Components;
+namespace Elementify\Components\Layout;
+
+// Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 use Elementify\Abstracts\Component;
 use Elementify\Create;
 use Elementify\Element;
 use Elementify\Traits\Component\Parts;
-
-// Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
 
 /**
  * Breadcrumbs Component
@@ -38,11 +38,11 @@ class Breadcrumbs extends Component {
 	protected array $items = [];
 
 	/**
-	 * Separator between breadcrumb items
+	 * Breadcrumbs options
 	 *
-	 * @var string
+	 * @var array
 	 */
-	protected string $separator = '/';
+	protected array $options = [];
 
 	/**
 	 * Constructor
@@ -53,8 +53,10 @@ class Breadcrumbs extends Component {
 	 * @param bool   $include_css Whether to include built-in CSS
 	 */
 	public function __construct( array $items = [], string $separator = '/', array $attributes = [], bool $include_css = true ) {
-		// Set breadcrumbs properties
-		$this->separator = $separator;
+		// Set options with default separator
+		$this->options = [
+			'separator' => $separator
+		];
 
 		// Initialize component foundation
 		$this->init_component( 'breadcrumbs', $attributes, $include_css );
@@ -92,10 +94,9 @@ class Breadcrumbs extends Component {
 			// Create list item
 			$li = Create::li();
 
-			if ( $is_last ) {
-				$li->add_class( 'active' );
-				$li->set_attribute( 'aria-current', 'page' );
-			}
+			// Mark current page with appropriate ARIA attributes
+			$li->toggle_class( 'active', $is_last );
+			$li->toggle_attribute( 'aria-current', 'page', $is_last );
 
 			// Create content based on item type
 			if ( is_string( $item ) ) {
@@ -118,8 +119,8 @@ class Breadcrumbs extends Component {
 			}
 
 			// Add separator span if not the last item
-			if ( ! $is_last && ! empty( $this->separator ) ) {
-				$li->add_child( Create::span( $this->separator )->add_class( 'separator' ) );
+			if ( ! $is_last && ! empty( $this->options['separator'] ) ) {
+				$li->add_child( Create::span( $this->options['separator'] )->add_class( 'separator' ) );
 			}
 
 			$list->add_child( $li );
@@ -153,7 +154,7 @@ class Breadcrumbs extends Component {
 	 */
 	public function add_item( $item ): self {
 		$this->items[] = $item;
-		$this->build();
+		$this->mark_for_rebuild();
 
 		return $this;
 	}
@@ -182,7 +183,7 @@ class Breadcrumbs extends Component {
 	public function remove_item( int $index ): self {
 		if ( isset( $this->items[ $index ] ) ) {
 			array_splice( $this->items, $index, 1 );
-			$this->build();
+			$this->mark_for_rebuild();
 		}
 
 		return $this;
@@ -196,8 +197,8 @@ class Breadcrumbs extends Component {
 	 * @return $this
 	 */
 	public function set_separator( string $separator ): self {
-		$this->separator = $separator;
-		$this->build();
+		$this->options['separator'] = $separator;
+		$this->mark_for_rebuild();
 
 		return $this;
 	}
@@ -228,7 +229,7 @@ class Breadcrumbs extends Component {
 	 * @return string
 	 */
 	public function get_separator(): string {
-		return $this->separator;
+		return $this->options['separator'];
 	}
 
 	/**

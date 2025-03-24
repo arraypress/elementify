@@ -12,14 +12,14 @@
 
 declare( strict_types=1 );
 
-namespace Elementify\Components;
+namespace Elementify\Components\Interactive;
+
+// Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 use Elementify\Abstracts\Component;
 use Elementify\Create;
 use Elementify\Element;
-
-// Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
 
 /**
  * Tooltip Component
@@ -63,7 +63,7 @@ class Tooltip extends Component {
 			'html'     => false       // whether tooltip contains HTML
 		];
 
-		$options = array_merge( $defaults, $options );
+		$this->options = array_merge( $defaults, $options );
 
 		// Create the target element if string was provided
 		if ( is_string( $target ) ) {
@@ -78,33 +78,31 @@ class Tooltip extends Component {
 		// Create the tooltip element
 		$this->tooltip_content = Create::div()
 		                               ->add_class( 'tooltip-content' )
-		                               ->add_class( "tooltip-{$options['position']}" )
-		                               ->add_class( "tooltip-theme-{$options['theme']}" );
+		                               ->add_class( "tooltip-{$this->options['position']}" )
+		                               ->add_class( "tooltip-theme-{$this->options['theme']}" );
 
 		// Add arrow if enabled
-		if ( $options['arrow'] ) {
-			$this->tooltip_content->add_class( 'tooltip-arrow' );
-		}
+		$this->tooltip_content->toggle_class( 'tooltip-arrow', $this->options['arrow'] );
 
 		// Set max width if provided
-		if ( $options['max_width'] ) {
-			$this->tooltip_content->set_styles( [ 'max-width' => $options['max_width'] . 'px' ] );
+		if ( $this->options['max_width'] ) {
+			$this->tooltip_content->set_styles( [ 'max-width' => $this->options['max_width'] . 'px' ] );
 		}
 
 		// Add tooltip content
-		if ( $options['html'] ) {
+		if ( $this->options['html'] ) {
 			$this->tooltip_content->add_content( $tooltip )->set_escape_content( false );
 		} else {
 			$this->tooltip_content->add_content( $tooltip )->set_escape_content( true );
 		}
 
 		// Add data attributes for JS functionality
-		$this->target->set_attribute( 'data-tooltip', 'true' );
-		$this->target->set_attribute( 'data-tooltip-position', $options['position'] );
-		$this->target->set_attribute( 'data-tooltip-trigger', $options['trigger'] );
+		$this->target->set_data( 'tooltip', 'true' );
+		$this->target->set_data( 'tooltip-position', $this->options['position'] );
+		$this->target->set_data( 'tooltip-trigger', $this->options['trigger'] );
 
-		if ( $options['delay'] > 0 ) {
-			$this->target->set_attribute( 'data-tooltip-delay', (string) $options['delay'] );
+		if ( $this->options['delay'] > 0 ) {
+			$this->target->set_data( 'tooltip-delay', (string) $this->options['delay'] );
 		}
 
 		// Create the wrapper element that will contain both target and tooltip
@@ -143,7 +141,11 @@ class Tooltip extends Component {
 
 		// Add new position class
 		$this->tooltip_content->add_class( "tooltip-{$position}" );
-		$this->target->set_attribute( 'data-tooltip-position', $position );
+		$this->target->set_data( 'tooltip-position', $position );
+
+		// Save to options and mark for rebuild
+		$this->options['position'] = $position;
+		$this->mark_for_rebuild();
 
 		return $this;
 	}
@@ -159,7 +161,10 @@ class Tooltip extends Component {
 		$valid_triggers = [ 'hover', 'click', 'focus' ];
 		$trigger = in_array( $trigger, $valid_triggers ) ? $trigger : 'hover';
 
-		$this->target->set_attribute( 'data-tooltip-trigger', $trigger );
+		$this->target->set_data( 'tooltip-trigger', $trigger );
+
+		// Save to options
+		$this->options['trigger'] = $trigger;
 
 		return $this;
 	}
@@ -183,6 +188,9 @@ class Tooltip extends Component {
 		// Add new theme class
 		$this->tooltip_content->add_class( "tooltip-theme-{$theme}" );
 
+		// Save to options
+		$this->options['theme'] = $theme;
+
 		return $this;
 	}
 
@@ -197,6 +205,9 @@ class Tooltip extends Component {
 	public function set_content( $content, bool $html_mode = false ): self {
 		$this->tooltip_content->set_content( $content );
 		$this->tooltip_content->set_escape_content( !$html_mode );
+
+		// Save to options
+		$this->options['html'] = $html_mode;
 
 		return $this;
 	}

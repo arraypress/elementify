@@ -12,15 +12,15 @@
 
 declare( strict_types=1 );
 
-namespace Elementify\Components;
+namespace Elementify\Components\Display;
+
+// Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 use Elementify\Abstracts\Component;
 use Elementify\Create;
 use Elementify\Element;
 use Elementify\Traits\Component\Parts;
-
-// Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
 
 /**
  * Status Badge Component
@@ -175,7 +175,7 @@ class StatusBadge extends Component {
 		$icon_wrapper = Create::span()->add_class( 'status-badge__icon' );
 
 		$classes = [];
-		if ( ! empty( $this->options['dashicon'] ) ) {
+		if ( $this->options['dashicon'] ) {
 			$classes[] = 'dashicons';
 			$classes[] = "dashicons-{$this->options['icon']}";
 		} else {
@@ -199,9 +199,7 @@ class StatusBadge extends Component {
 	public function set_icon( string $icon, bool $is_dashicon = true ): self {
 		$this->options['icon']     = $icon;
 		$this->options['dashicon'] = $is_dashicon;
-
-		// Rebuild the badge
-		$this->build();
+		$this->mark_for_rebuild();
 
 		return $this;
 	}
@@ -216,9 +214,7 @@ class StatusBadge extends Component {
 	public function set_position( string $position ): self {
 		if ( in_array( $position, [ 'before', 'after' ] ) ) {
 			$this->options['position'] = $position;
-
-			// Rebuild the badge
-			$this->build();
+			$this->mark_for_rebuild();
 		}
 
 		return $this;
@@ -244,7 +240,7 @@ class StatusBadge extends Component {
 		// Update icon if there's a default for this status and no custom icon set
 		if ( isset( self::$status_icons[ $status ] ) && empty( $this->options['icon'] ) ) {
 			$this->options['icon'] = self::$status_icons[ $status ];
-			$this->build();
+			$this->mark_for_rebuild();
 		}
 
 		return $this;
@@ -259,9 +255,20 @@ class StatusBadge extends Component {
 	 */
 	public function set_label( string $label ): self {
 		$this->label = $label;
-		$this->build();
+		$this->mark_for_rebuild();
 
 		return $this;
+	}
+
+	/**
+	 * Use dashicons for icons
+	 *
+	 * @param bool $use Whether to use dashicons
+	 *
+	 * @return $this
+	 */
+	public function use_dashicons( bool $use = true ): self {
+		return $this->toggle_option( 'dashicon', $use );
 	}
 
 	/**

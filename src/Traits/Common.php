@@ -99,32 +99,6 @@ trait Common {
 	}
 
 	/**
-	 * Create an anchor (a) element
-	 *
-	 * @param string $href       URL
-	 * @param mixed  $content    Element content
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return Element
-	 */
-	public static function a( string $href, $content = null, array $attributes = [] ): Element {
-		return self::element( 'a', $content, array_merge( [ 'href' => $href ], $attributes ) );
-	}
-
-	/**
-	 * Create and render an anchor (a) element
-	 *
-	 * @param string $href       URL
-	 * @param mixed  $content    Element content
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function a_render( string $href, $content = null, array $attributes = [] ): void {
-		self::a( $href, $content, $attributes )->output();
-	}
-
-	/**
 	 * Create a blockquote element
 	 *
 	 * @param mixed  $content    Blockquote content

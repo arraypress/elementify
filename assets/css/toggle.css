@@ -1,11 +1,11 @@
-.elementify-toggle-container {
+.toggle-container {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
 /* Hide the default checkbox */
-.elementify-toggle-input {
+.toggle-input {
     position: absolute;
     opacity: 0;
     width: 0;
@@ -13,7 +13,7 @@
 }
 
 /* Toggle switch container */
-.elementify-toggle-switch {
+.toggle-switch {
     position: relative;
     display: inline-block;
     width: 36px;
@@ -22,7 +22,7 @@
 }
 
 /* Toggle slider (the background) */
-.elementify-toggle-slider {
+.toggle-slider {
     position: absolute;
     top: 0;
     left: 0;
@@ -34,7 +34,7 @@
 }
 
 /* Toggle slider knob */
-.elementify-toggle-slider:before {
+.toggle-slider:before {
     position: absolute;
     content: "";
     height: 16px;
@@ -47,42 +47,42 @@
 }
 
 /* Active/checked state - blue style (Image 1) */
-.elementify-toggle-input:checked + .elementify-toggle-switch .elementify-toggle-slider {
+.toggle-input:checked + .toggle-switch .toggle-slider {
     background-color: #2271b1;
 }
 
-/* Alternate gray style (Image 2) - add class .elementify-toggle-alt to container */
-.elementify-toggle-alt .elementify-toggle-input:checked + .elementify-toggle-switch .elementify-toggle-slider {
+/* Alternate gray style (Image 2) - add class .toggle-alt to container */
+.toggle-alt .toggle-input:checked + .toggle-switch .toggle-slider {
     background-color: #a7aaad;
 }
 
 /* Move the knob when checked */
-.elementify-toggle-input:checked + .elementify-toggle-switch .elementify-toggle-slider:before {
+.toggle-input:checked + .toggle-switch .toggle-slider:before {
     transform: translateX(16px);
 }
 
 /* Focus styles */
-.elementify-toggle-input:focus + .elementify-toggle-switch .elementify-toggle-slider {
+.toggle-input:focus + .toggle-switch .toggle-slider {
     box-shadow: 0 0 0 1px #fff, 0 0 0 3px #2271b1;
 }
 
 /* Disabled state */
-.elementify-toggle-disabled .elementify-toggle-switch {
+.toggle-disabled .toggle-switch {
     cursor: not-allowed;
     opacity: 0.7;
 }
 
-.elementify-toggle-disabled .elementify-toggle-slider {
+.toggle-disabled .toggle-slider {
     background-color: #e2e4e7;
 }
 
 /* Label styling */
-.elementify-toggle-label {
+.toggle-label {
     font-size: 14px;
     color: #1d2327;
 }
 
 /* Disabled label */
-.elementify-toggle-disabled .elementify-toggle-label {
+.toggle-disabled .toggle-label {
     color: #a7aaad;
 }

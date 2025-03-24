@@ -12,15 +12,15 @@
 
 declare( strict_types=1 );
 
-namespace Elementify\Components;
+namespace Elementify\Components\Display;
+
+// Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 use Elementify\Abstracts\Component;
 use Elementify\Create;
 use Elementify\Element;
 use Elementify\Traits\Component\Parts;
-
-// Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
 
 /**
  * Progress Bar Component
@@ -202,9 +202,7 @@ class ProgressBar extends Component {
 	 */
 	public function set_current( $value ): self {
 		$this->current_value = max( 0, $value );
-
-		// Rebuild the progress bar
-		$this->build();
+		$this->mark_for_rebuild();
 
 		return $this;
 	}
@@ -218,9 +216,7 @@ class ProgressBar extends Component {
 	 */
 	public function set_total( $value ): self {
 		$this->total_value = max( 1, $value );
-
-		// Rebuild the progress bar
-		$this->build();
+		$this->mark_for_rebuild();
 
 		return $this;
 	}
@@ -252,12 +248,7 @@ class ProgressBar extends Component {
 	 * @return $this
 	 */
 	public function show_percentage( bool $show = true ): self {
-		$this->options['show_percentage'] = $show;
-
-		// Rebuild the progress bar
-		$this->build();
-
-		return $this;
+		return $this->toggle_option( 'show_percentage', $show );
 	}
 
 	/**
@@ -268,12 +259,7 @@ class ProgressBar extends Component {
 	 * @return $this
 	 */
 	public function show_current( bool $show = true ): self {
-		$this->options['show_current'] = $show;
-
-		// Rebuild the progress bar
-		$this->build();
-
-		return $this;
+		return $this->toggle_option( 'show_current', $show );
 	}
 
 	/**
@@ -284,12 +270,7 @@ class ProgressBar extends Component {
 	 * @return $this
 	 */
 	public function show_total( bool $show = true ): self {
-		$this->options['show_total'] = $show;
-
-		// Rebuild the progress bar
-		$this->build();
-
-		return $this;
+		return $this->toggle_option( 'show_total', $show );
 	}
 
 }

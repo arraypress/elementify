@@ -1,8 +1,3 @@
-/**
- * DatePicker Component JavaScript
- *
- * Handles date selection, calendar navigation, and user interactions
- */
 (function () {
     'use strict';
 
@@ -502,10 +497,8 @@
     function selectDate(date, input) {
         // Format date according to input's format
         const format = input.dataset.format || 'Y-m-d';
-        const formattedDate = formatDate(date, format);
-
         // Update input value
-        input.value = formattedDate;
+        input.value = formatDate(date, format);
 
         // Trigger change event
         const event = new Event('change');
@@ -589,11 +582,7 @@
             return false;
         }
 
-        if (maxDate && timestamp > maxDate.getTime()) {
-            return false;
-        }
-
-        return true;
+        return !(maxDate && timestamp > maxDate.getTime());
     }
 
     /**

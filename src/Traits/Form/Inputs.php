@@ -17,7 +17,7 @@ namespace Elementify\Traits\Form;
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
-use Elementify\Components\Range;
+use Elementify\Components\Interactive\Range;
 use Elementify\Elements\Input;
 use Elementify\Elements\Textarea;
 

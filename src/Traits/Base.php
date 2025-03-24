@@ -24,7 +24,7 @@ use Elementify\Element;
  *
  * Provides methods for creating basic HTML elements like divs, spans, paragraphs, etc.
  */
-trait Core {
+trait Base {
 
 	/**
 	 * Create a generic element

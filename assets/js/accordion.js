@@ -1,15 +1,8 @@
-/**
- * Accordion Component JavaScript
- *
- * Handles accordion section toggling, multiple section support, and content visibility
- */
 document.addEventListener('DOMContentLoaded', function () {
     // Find all accordions
     const accordions = document.querySelectorAll('.accordion');
 
     accordions.forEach(function (accordion) {
-        // Get accordion ID
-        const accordionId = accordion.id;
         // Check if multiple sections can be open
         const allowMultiple = accordion.getAttribute('data-allow-multiple') === 'true';
         // Find all headers

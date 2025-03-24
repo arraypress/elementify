@@ -1,8 +1,3 @@
-/**
- * Tooltip Component JavaScript
- *
- * Handles tooltip positioning, triggers, and accessibility
- */
 (function () {
     'use strict';
 
@@ -192,4 +187,5 @@
             tooltip.classList.add('tooltip-top');
         }
     }
+
 })();

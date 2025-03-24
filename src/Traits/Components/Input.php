@@ -1,8 +1,8 @@
 <?php
 /**
- * Elementify Library - Interactive Components Trait
+ * Elementify Library - Input Components Trait
  *
- * A collection of methods for creating interactive HTML components.
+ * A collection of methods for creating form input HTML components.
  *
  * @package     ArrayPress\Elementify
  * @copyright   Copyright (c) 2025, ArrayPress Limited
@@ -17,46 +17,16 @@ namespace Elementify\Traits\Components;
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
-use Elementify\Components\ProgressBar;
-use Elementify\Components\Toggle;
+use Elementify\Components\Interactive\Featured;
+use Elementify\Components\Interactive\Toggle;
 
 /**
- * Interactive Components Trait
+ * Input Components Trait
  *
- * Provides methods for creating and rendering interactive HTML components
- * such as progress bars and toggles.
+ * Provides methods for creating and rendering HTML form input components
+ * such as toggles and other interactive input elements.
  */
-trait Interactive {
-
-	/**
-	 * Create a progress bar component
-	 *
-	 * @param int|float $current     Current value
-	 * @param int|float $total       Total value (maximum)
-	 * @param array     $options     Additional options
-	 * @param array     $attributes  Element attributes
-	 * @param bool      $include_css Whether to include built-in CSS (default: true)
-	 *
-	 * @return ProgressBar
-	 */
-	public static function progress_bar( $current, $total = 100, array $options = [], array $attributes = [], bool $include_css = true ): ProgressBar {
-		return new ProgressBar( $current, $total, $options, $attributes, $include_css );
-	}
-
-	/**
-	 * Create and render a progress bar component
-	 *
-	 * @param int|float $current     Current value
-	 * @param int|float $total       Total value (maximum)
-	 * @param array     $options     Additional options
-	 * @param array     $attributes  Element attributes
-	 * @param bool      $include_css Whether to include built-in CSS (default: true)
-	 *
-	 * @return void
-	 */
-	public static function progress_bar_render( $current, $total = 100, array $options = [], array $attributes = [], bool $include_css = true ): void {
-		self::progress_bar( $current, $total, $options, $attributes, $include_css )->output();
-	}
+trait Input {
 
 	/**
 	 * Create a toggle component
@@ -106,6 +76,52 @@ trait Interactive {
 		bool $include_css = true
 	): void {
 		self::toggle( $name, $checked, $value, $label, $attributes, $disabled, $include_css )->output();
+	}
+
+	/**
+	 * Create a featured star component
+	 *
+	 * @param string      $name        Featured input name
+	 * @param bool        $featured    Whether the item is featured
+	 * @param string|null $label       Optional label text
+	 * @param array       $attributes  Element attributes
+	 * @param bool        $disabled    Whether the control is disabled
+	 * @param bool        $include_css Whether to include built-in CSS
+	 *
+	 * @return Featured
+	 */
+	public static function featured(
+		string $name,
+		bool $featured = false,
+		?string $label = null,
+		array $attributes = [],
+		bool $disabled = false,
+		bool $include_css = true
+	): Featured {
+		return new Featured( $name, $featured, $label, $attributes, $disabled, $include_css );
+	}
+
+	/**
+	 * Create and render a featured star component
+	 *
+	 * @param string      $name        Featured input name
+	 * @param bool        $featured    Whether the item is featured
+	 * @param string|null $label       Optional label text
+	 * @param array       $attributes  Element attributes
+	 * @param bool        $disabled    Whether the control is disabled
+	 * @param bool        $include_css Whether to include built-in CSS
+	 *
+	 * @return void
+	 */
+	public static function featured_render(
+		string $name,
+		bool $featured = false,
+		?string $label = null,
+		array $attributes = [],
+		bool $disabled = false,
+		bool $include_css = true
+	): void {
+		self::featured( $name, $featured, $label, $attributes, $disabled, $include_css )->output();
 	}
 
 }

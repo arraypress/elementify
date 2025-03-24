@@ -1,8 +1,8 @@
 <?php
 /**
- * Elementify Library - Basic Elements Trait
+ * Elementify Library - Separators Trait
  *
- * A collection of methods for creating basic HTML elements.
+ * A collection of methods for creating HTML separator elements.
  *
  * @package     ArrayPress\Elementify
  * @copyright   Copyright (c) 2025, ArrayPress Limited
@@ -20,9 +20,10 @@ defined( 'ABSPATH' ) || exit;
 use Elementify\Element;
 
 /**
- * Basic Elements Trait
+ * Separators Trait
  *
- * Provides methods for creating basic HTML elements like divs, spans, paragraphs, etc.
+ * Provides methods for creating HTML separator elements like horizontal rules and line breaks.
+ * These elements help structure content by creating visual or logical divisions.
  */
 trait Separators {
 

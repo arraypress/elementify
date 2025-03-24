@@ -12,16 +12,16 @@
 
 declare( strict_types=1 );
 
-namespace Elementify\Components;
+namespace Elementify\Components\Interactive;
+
+// Exit if accessed directly
+defined( 'ABSPATH' ) || exit;
 
 use Elementify\Abstracts\Component;
 use Elementify\Create;
 use Elementify\Element;
 use Elementify\Traits\Component\Parts;
 use Elementify\Traits\Component\SectionContent;
-
-// Exit if accessed directly
-defined( 'ABSPATH' ) || exit;
 
 /**
  * Tabs Component
@@ -100,8 +100,8 @@ class Tabs extends Component {
 			$is_active = $tab_id === $this->active_section;
 
 			$tab_link = Create::a( '#' . $tab_id, $tab['title'] )
-			                  ->set_attribute( 'data-tab', $tab_id )
-			                  ->add_class( $is_active ? 'active' : '' );
+			                  ->set_data( 'tab', $tab_id )
+			                  ->toggle_class( 'active', $is_active );
 
 			$this->nav->add_child( Create::li( $tab_link ) );
 		}
@@ -115,7 +115,8 @@ class Tabs extends Component {
 
 			$content_panel = Create::div( $tab['content'] )
 			                       ->set_id( $tab_id )
-			                       ->add_class( 'tab-content' . ( $is_active ? ' active' : '' ) );
+			                       ->add_class( 'tab-content' )
+			                       ->toggle_class( 'active', $is_active );
 
 			$this->content_container->add_child( $content_panel );
 		}
@@ -133,7 +134,10 @@ class Tabs extends Component {
 	 * @return $this
 	 */
 	public function set_active_tab( string $id ): self {
-		return $this->set_section_active( $id );
+		$this->active_section = $id;
+		$this->mark_for_rebuild();
+
+		return $this;
 	}
 
 	/**
@@ -142,7 +146,7 @@ class Tabs extends Component {
 	 * @return string
 	 */
 	public function get_active_tab(): string {
-		return $this->get_active_section();
+		return $this->active_section;
 	}
 
 	/**
@@ -151,7 +155,7 @@ class Tabs extends Component {
 	 * @return array
 	 */
 	public function get_tabs(): array {
-		return $this->get_sections();
+		return $this->sections;
 	}
 
 	/**
@@ -162,7 +166,7 @@ class Tabs extends Component {
 	 * @return array|null
 	 */
 	public function get_tab( string $id ): ?array {
-		return $this->get_section( $id );
+		return $this->sections[ $id ] ?? null;
 	}
 
 	/**
@@ -175,7 +179,13 @@ class Tabs extends Component {
 	 * @return $this
 	 */
 	public function add_tab( string $id, string $title, $content ): self {
-		return $this->add_section( $id, $title, $content );
+		$this->sections[ $id ] = [
+			'title'   => $title,
+			'content' => $content
+		];
+		$this->mark_for_rebuild();
+
+		return $this;
 	}
 
 	/**
@@ -186,7 +196,19 @@ class Tabs extends Component {
 	 * @return $this
 	 */
 	public function remove_tab( string $id ): self {
-		return $this->remove_section( $id );
+		if ( isset( $this->sections[ $id ] ) ) {
+			unset( $this->sections[ $id ] );
+
+			// If removed tab was active, reset active tab to first available
+			if ( $this->active_section === $id && ! empty( $this->sections ) ) {
+				reset( $this->sections );
+				$this->active_section = key( $this->sections );
+			}
+
+			$this->mark_for_rebuild();
+		}
+
+		return $this;
 	}
 
 	/**
@@ -206,5 +228,4 @@ class Tabs extends Component {
 	public function get_content_container(): Element {
 		return $this->content_container;
 	}
-
 }

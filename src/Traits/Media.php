@@ -18,6 +18,7 @@ namespace Elementify\Traits;
 defined( 'ABSPATH' ) || exit;
 
 use Elementify\Element;
+use Elementify\Utils;
 
 /**
  * Media Elements Trait
@@ -70,12 +71,12 @@ trait Media {
 
 		// Handle single source
 		if ( is_string( $src ) ) {
-			$audio->add_child( self::source( $src, self::get_mime_type( $src ) ) );
+			$audio->add_child( self::source( $src, Utils::get_mime_type( $src ) ) );
 		} // Handle multiple sources
 		elseif ( is_array( $src ) ) {
 			foreach ( $src as $source ) {
 				if ( is_string( $source ) ) {
-					$audio->add_child( self::source( $source, self::get_mime_type( $source ) ) );
+					$audio->add_child( self::source( $source, Utils::get_mime_type( $source ) ) );
 				} elseif ( is_array( $source ) && isset( $source['src'], $source['type'] ) ) {
 					$audio->add_child( self::source( $source['src'], $source['type'] ) );
 				}
@@ -116,12 +117,12 @@ trait Media {
 
 		// Handle single source
 		if ( is_string( $src ) ) {
-			$video->add_child( self::source( $src, self::get_mime_type( $src ) ) );
+			$video->add_child( self::source( $src, Utils::get_mime_type( $src ) ) );
 		} // Handle multiple sources
 		elseif ( is_array( $src ) ) {
 			foreach ( $src as $source ) {
 				if ( is_string( $source ) ) {
-					$video->add_child( self::source( $source, self::get_mime_type( $source ) ) );
+					$video->add_child( self::source( $source, Utils::get_mime_type( $source ) ) );
 				} elseif ( is_array( $source ) && isset( $source['src'], $source['type'] ) ) {
 					$video->add_child( self::source( $source['src'], $source['type'] ) );
 				}
@@ -193,7 +194,7 @@ trait Media {
 			} elseif ( is_array( $source ) && isset( $source['src'] ) ) {
 				$source_elem = self::element( 'source', null, [
 					'srcset' => $source['src'],
-					'type'   => $source['type'] ?? self::get_mime_type( $source['src'] )
+					'type'   => $source['type'] ?? Utils::get_mime_type( $source['src'] )
 				] );
 
 				if ( isset( $source['media'] ) ) {

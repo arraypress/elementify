@@ -12,7 +12,7 @@
 
 declare( strict_types=1 );
 
-namespace Elementify\Components;
+namespace Elementify\Components\Interactive;
 
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
@@ -36,32 +36,11 @@ class Toggle extends Component {
 	protected string $name;
 
 	/**
-	 * Toggle checked state
+	 * Toggle options
 	 *
-	 * @var bool
+	 * @var array
 	 */
-	protected bool $checked;
-
-	/**
-	 * Toggle value when checked
-	 *
-	 * @var string|int
-	 */
-	protected $value;
-
-	/**
-	 * Optional toggle label
-	 *
-	 * @var string|null
-	 */
-	protected ?string $label;
-
-	/**
-	 * Toggle disabled state
-	 *
-	 * @var bool
-	 */
-	protected bool $disabled;
+	protected array $options = [];
 
 	/**
 	 * Constructor
@@ -83,17 +62,21 @@ class Toggle extends Component {
 		bool $disabled = false,
 		bool $include_css = true
 	) {
-		$this->name     = $name;
-		$this->checked  = $checked;
-		$this->value    = $value;
-		$this->label    = $label;
-		$this->disabled = $disabled;
+		$this->name = $name;
+
+		// Store options
+		$this->options = [
+			'checked'  => $checked,
+			'value'    => $value,
+			'label'    => $label,
+			'disabled' => $disabled
+		];
 
 		// Initialize with div element for the container
 		parent::__construct( 'div', null, $attributes );
 
 		// Add base class for styling
-		$this->add_class( 'elementify-toggle-container' );
+		$this->add_class( 'toggle-container' );
 
 		// Initialize component foundation
 		$this->init_component( 'toggle', $attributes, $include_css );
@@ -115,34 +98,38 @@ class Toggle extends Component {
 		$input_attrs = [
 			'type'  => 'checkbox',
 			'name'  => $this->name,
-			'value' => $this->value,
-			'class' => 'elementify-toggle-input',
+			'value' => $this->options['value'],
+			'class' => 'toggle-input',
 			'id'    => 'toggle-' . $this->name,
 		];
 
-		if ( $this->checked ) {
+		// Set checked state if needed
+		if ( $this->options['checked'] ) {
 			$input_attrs['checked'] = 'checked';
 		}
 
-		if ( $this->disabled ) {
+		// Set disabled state if needed
+		if ( $this->options['disabled'] ) {
 			$input_attrs['disabled'] = 'disabled';
-			$this->add_class( 'elementify-toggle-disabled' );
+			$this->toggle_class( 'toggle-disabled', true );
+		} else {
+			$this->toggle_class( 'toggle-disabled', false );
 		}
 
 		// Create the hidden input
-		$input = new Input( 'checkbox', $this->name, $this->value, $input_attrs );
+		$input = new Input( 'checkbox', $this->name, $this->options['value'], $input_attrs );
 
 		// Create the toggle switch visual element
-		$toggle_switch = Create::label( 'toggle-' . $this->name, '', [ 'class' => 'elementify-toggle-switch' ] );
-		$toggle_switch->add_child( Create::span( null, [ 'class' => 'elementify-toggle-slider' ] ) );
+		$toggle_switch = Create::label( 'toggle-' . $this->name, '', [ 'class' => 'toggle-switch' ] );
+		$toggle_switch->add_child( Create::span( null, [ 'class' => 'toggle-slider' ] ) );
 
 		// Add components to the container
 		$this->add_child( $input );
 		$this->add_child( $toggle_switch );
 
 		// Add label if provided
-		if ( $this->label ) {
-			$label_element = Create::span( $this->label, [ 'class' => 'elementify-toggle-label' ] );
+		if ( $this->options['label'] ) {
+			$label_element = Create::span( $this->options['label'], [ 'class' => 'toggle-label' ] );
 			$this->add_child( $label_element );
 		}
 	}
@@ -155,10 +142,7 @@ class Toggle extends Component {
 	 * @return $this
 	 */
 	public function set_checked( bool $checked ): self {
-		$this->checked = $checked;
-		$this->build();
-
-		return $this;
+		return $this->toggle_option( 'checked', $checked );
 	}
 
 	/**
@@ -169,8 +153,8 @@ class Toggle extends Component {
 	 * @return $this
 	 */
 	public function set_value( $value ): self {
-		$this->value = $value;
-		$this->build();
+		$this->options['value'] = $value;
+		$this->mark_for_rebuild();
 
 		return $this;
 	}
@@ -183,8 +167,8 @@ class Toggle extends Component {
 	 * @return $this
 	 */
 	public function set_label( ?string $label ): self {
-		$this->label = $label;
-		$this->build();
+		$this->options['label'] = $label;
+		$this->mark_for_rebuild();
 
 		return $this;
 	}
@@ -197,10 +181,7 @@ class Toggle extends Component {
 	 * @return $this
 	 */
 	public function set_disabled( bool $disabled ): self {
-		$this->disabled = $disabled;
-		$this->build();
-
-		return $this;
+		return $this->toggle_option( 'disabled', $disabled );
 	}
 
 }

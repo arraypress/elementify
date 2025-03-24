@@ -21,26 +21,27 @@ defined( 'ABSPATH' ) || exit;
  * Factory class for creating HTML elements
  */
 class Create {
-	use Traits\Core;
+	use Traits\Base;
 	use Traits\Common;
 	use Traits\Headings;
 	use Traits\Layout;
 	use Traits\Lists;
 	use Traits\Media;
 	use Traits\Separators;
+	use Traits\links;
 	use Traits\Social;
-	use Traits\Utils;
-
+	use Traits\Location;
 	use Traits\Form\Core;
 	use Traits\Form\Buttons;
 	use Traits\Form\FieldWrappers;
 	use Traits\Form\Inputs;
 	use Traits\Form\Selects;
-
 	use Traits\Components\Date;
-	use Traits\Components\Interactive;
+	use Traits\Components\Display;
+	use Traits\Components\Indicators;
+	use Traits\Components\Input;
 	use Traits\Components\Layout;
-	use Traits\Components\Message;
+	use Traits\Components\Messaging;
 	use Traits\Components\Navigation;
-
+	use Traits\Components\Utility;
 }

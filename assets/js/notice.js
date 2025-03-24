@@ -1,8 +1,3 @@
-/**
- * Dismissible Notices JavaScript
- *
- * Handles notice dismissal functionality and visibility
- */
 document.addEventListener('DOMContentLoaded', function () {
     // Find all dismissible notices
     const notices = document.querySelectorAll('.notice.is-dismissible');

@@ -12,14 +12,13 @@
 
 declare( strict_types=1 );
 
-namespace Elementify\Components;
+namespace Elementify\Components\Interactive;
 
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
 use Elementify\Abstracts\Component;
 use Elementify\Create;
-use Elementify\Assets;
 use Elementify\Elements\Input;
 
 /**
@@ -104,7 +103,7 @@ class Range extends Component {
 		parent::__construct( 'div', null, $attributes );
 
 		// Add base class for styling
-		$this->add_class( 'elementify-range-container' );
+		$this->add_class( 'range-container' );
 
 		// Initialize component foundation
 		$this->init_component( 'range', $attributes, $include_css );
@@ -123,22 +122,22 @@ class Range extends Component {
 		$this->children = [];
 
 		// Add inner wrapper for better styling control
-		$inner_wrapper = Create::div( null, [ 'class' => 'elementify-range-inner' ] );
+		$inner_wrapper = Create::div( null, [ 'class' => 'range-inner' ] );
 
 		// Create the range input
 		$input_id   = 'range-' . $this->name;
 		$display_id = 'range-value-' . $this->name;
 
 		// Create the range input directly
-		$range_input = new Input('range', $this->name, $this->value, [
-			'class'           => 'elementify-range-input',
+		$range_input = new Input( 'range', $this->name, $this->value, [
+			'class'           => 'range-input',
 			'id'              => $input_id,
 			'step'            => $this->step,
 			'min'             => $this->min,
 			'max'             => $this->max,
 			'data-display-id' => $display_id,
 			'aria-labelledby' => $display_id
-		]);
+		] );
 
 		$inner_wrapper->add_child( $range_input );
 
@@ -147,7 +146,7 @@ class Range extends Component {
 			$display = Create::span(
 				$this->value,
 				[
-					'class'     => 'elementify-range-value',
+					'class'     => 'range-value',
 					'id'        => $display_id,
 					'aria-live' => 'polite'
 				]
