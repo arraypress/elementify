@@ -108,6 +108,7 @@ if ( ! class_exists( 'Elementify\\Element' ) ) {
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Components/Display/TimeAgo.php';
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Components/Display/User.php';
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Components/Display/NumberFormat.php';
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Components/Display/AttachmentImage.php';
 
 		// Notification Components
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Components/Notification/Notice.php';

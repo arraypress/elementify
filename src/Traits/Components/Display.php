@@ -20,6 +20,7 @@ defined( 'ABSPATH' ) || exit;
 use Elementify\Components\Display\ColorSwatch;
 use Elementify\Components\Display\FileSize;
 use Elementify\Components\Display\NumberFormat;
+use Elementify\Components\Media\AttachmentImage;
 use Elementify\Components\Taxonomy\Taxonomy;
 use Elementify\Components\Display\User;
 
@@ -173,5 +174,30 @@ trait Display {
 		self::number_format( $value, $options, $attributes, $include_css )->output();
 	}
 
+	/**
+	 * Create an attachment image
+	 *
+	 * @param string|int $source     Image source (attachment ID or URL)
+	 * @param array      $options    Image options
+	 * @param array      $attributes HTML attributes
+	 *
+	 * @return AttachmentImage
+	 */
+	public static function attachment_image( $source, array $options = [], array $attributes = [] ): AttachmentImage {
+		return new AttachmentImage( $source, $options, $attributes );
+	}
+
+	/**
+	 * Render an attachment image directly
+	 *
+	 * @param string|int $source     Image source (attachment ID or URL)
+	 * @param array      $options    Image options
+	 * @param array      $attributes HTML attributes
+	 *
+	 * @return void
+	 */
+	public static function attachment_image_render( $source, array $options = [], array $attributes = [] ): void {
+		self::attachment_image( $source, $options, $attributes )->output();
+	}
 
 }

@@ -178,6 +178,7 @@ class Element {
 		'iframe',
 		'object',
 		'embed',
+		'img',
 
 		// Layout and structural elements
 		'template',
@@ -235,7 +236,8 @@ class Element {
 		'status-badge',
 		'color-swatch',
 		'filesize',
-		'number'
+		'number',
+		'attachment-image', // Added our new component
 	];
 
 	/** Constructor & Initialization ******************************************/
