@@ -33,19 +33,6 @@ if ( ! function_exists( 'el_element' ) ) {
 	}
 }
 
-if ( ! function_exists( 'el_element_render' ) ) {
-	/**
-	 * Create and render a generic HTML element.
-	 *
-	 * @param string $tag        HTML tag name.
-	 * @param mixed  $content    Element content.
-	 * @param array  $attributes Element attributes.
-	 */
-	function el_element_render( string $tag, $content = null, array $attributes = [] ): void {
-		Create::element_render( $tag, $content, $attributes );
-	}
-}
-
 if ( ! function_exists( 'el_link' ) ) {
 	/**
 	 * Create a link element (alias for el_a).
@@ -58,18 +45,5 @@ if ( ! function_exists( 'el_link' ) ) {
 	 */
 	function el_link( string $href, $content = null, array $attributes = [] ): Element {
 		return Create::a( $href, $content, $attributes );
-	}
-}
-
-if ( ! function_exists( 'el_link_render' ) ) {
-	/**
-	 * Create and render a link element (alias for el_a_render).
-	 *
-	 * @param string $href       URL.
-	 * @param mixed  $content    Element content.
-	 * @param array  $attributes Element attributes.
-	 */
-	function el_link_render( string $href, $content = null, array $attributes = [] ): void {
-		Create::a_render( $href, $content, $attributes );
 	}
 }
