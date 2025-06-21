@@ -20,9 +20,6 @@ defined( 'ABSPATH' ) || exit;
 use Elementify\Components\Display\ColorSwatch;
 use Elementify\Components\Display\FileSize;
 use Elementify\Components\Display\NumberFormat;
-use Elementify\Components\Media\AttachmentImage;
-use Elementify\Components\Taxonomy\Taxonomy;
-use Elementify\Components\Display\User;
 
 /**
  * Display Components Trait
@@ -31,64 +28,6 @@ use Elementify\Components\Display\User;
  * for presenting data and information visually.
  */
 trait Display {
-
-	/**
-	 * Create a user component
-	 *
-	 * @param int|string|\WP_User $user        User ID, username, email, or WP_User object
-	 * @param array               $options     Additional options
-	 * @param array               $attributes  Element attributes
-	 * @param bool                $include_css Whether to include built-in CSS
-	 *
-	 * @return User
-	 */
-	public static function user( $user, array $options = [], array $attributes = [], bool $include_css = true ): User {
-		return new User( $user, $options, $attributes, $include_css );
-	}
-
-	/**
-	 * Create and render a user component
-	 *
-	 * @param int|string|\WP_User $user        User ID, username, email, or WP_User object
-	 * @param array               $options     Additional options
-	 * @param array               $attributes  Element attributes
-	 * @param bool                $include_css Whether to include built-in CSS
-	 *
-	 * @return void
-	 */
-	public static function user_render( $user, array $options = [], array $attributes = [], bool $include_css = true ): void {
-		self::user( $user, $options, $attributes, $include_css )->output();
-	}
-
-	/**
-	 * Create a taxonomy/terms component
-	 *
-	 * @param mixed  $source      Post ID, term IDs array, or terms array
-	 * @param string $taxonomy    Taxonomy name (category, post_tag, etc.)
-	 * @param array  $options     Additional options
-	 * @param array  $attributes  Element attributes
-	 * @param bool   $include_css Whether to include built-in CSS
-	 *
-	 * @return Taxonomy
-	 */
-	public static function taxonomy( $source, string $taxonomy = 'category', array $options = [], array $attributes = [], bool $include_css = true ): Taxonomy {
-		return new Taxonomy( $source, $taxonomy, $options, $attributes, $include_css );
-	}
-
-	/**
-	 * Create and render a taxonomy/terms component
-	 *
-	 * @param mixed  $source      Post ID, term IDs array, or terms array
-	 * @param string $taxonomy    Taxonomy name (category, post_tag, etc.)
-	 * @param array  $options     Additional options
-	 * @param array  $attributes  Element attributes
-	 * @param bool   $include_css Whether to include built-in CSS
-	 *
-	 * @return void
-	 */
-	public static function taxonomy_render( $source, string $taxonomy = 'category', array $options = [], array $attributes = [], bool $include_css = true ): void {
-		self::taxonomy( $source, $taxonomy, $options, $attributes, $include_css )->output();
-	}
 
 	/**
 	 * Create a color swatch component
@@ -172,32 +111,6 @@ trait Display {
 	 */
 	public static function number_format_render( $value, array $options = [], array $attributes = [], bool $include_css = true ): void {
 		self::number_format( $value, $options, $attributes, $include_css )->output();
-	}
-
-	/**
-	 * Create an attachment image
-	 *
-	 * @param string|int $source     Image source (attachment ID or URL)
-	 * @param array      $options    Image options
-	 * @param array      $attributes HTML attributes
-	 *
-	 * @return AttachmentImage
-	 */
-	public static function attachment_image( $source, array $options = [], array $attributes = [] ): AttachmentImage {
-		return new AttachmentImage( $source, $options, $attributes );
-	}
-
-	/**
-	 * Render an attachment image directly
-	 *
-	 * @param string|int $source     Image source (attachment ID or URL)
-	 * @param array      $options    Image options
-	 * @param array      $attributes HTML attributes
-	 *
-	 * @return void
-	 */
-	public static function attachment_image_render( $source, array $options = [], array $attributes = [] ): void {
-		self::attachment_image( $source, $options, $attributes )->output();
 	}
 
 }

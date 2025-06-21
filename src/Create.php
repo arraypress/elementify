@@ -25,17 +25,17 @@ class Create {
 	use Traits\Base\Common;
 	use Traits\Base\Headings;
 	use Traits\Base\Layout;
+	use Traits\Base\Links;
 	use Traits\Base\Lists;
 	use Traits\Base\Media;
 	use Traits\Base\Separators;
-	use Traits\Base\links;
-	use Traits\Base\Social;
-	use Traits\Base\Location;
+
 	use Traits\Form\Core;
 	use Traits\Form\Buttons;
 	use Traits\Form\FieldWrappers;
 	use Traits\Form\Inputs;
 	use Traits\Form\Selects;
+
 	use Traits\Components\Date;
 	use Traits\Components\Display;
 	use Traits\Components\Indicators;

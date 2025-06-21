@@ -18,7 +18,7 @@ namespace Elementify\Traits\Base;
 defined( 'ABSPATH' ) || exit;
 
 use Elementify\Element;
-use Elementify\Utils;
+use Elementify\Helpers;
 
 /**
  * Links Elements Trait
@@ -292,102 +292,6 @@ trait Links {
 	 */
 	public static function protocol_render( string $protocol, string $path, $content = null, array $attributes = [] ): void {
 		self::protocol( $protocol, $path, $content, $attributes )->output();
-	}
-
-	/**
-	 * Create a Telegram link
-	 *
-	 * @param string $username   Telegram username (without @)
-	 * @param mixed  $content    Link content
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return Element
-	 */
-	public static function telegram( string $username, $content = null, array $attributes = [] ): Element {
-		// Use username as content if none provided
-		if ( $content === null ) {
-			$content = '@' . $username;
-		}
-
-		// Remove @ if it's at the beginning of the username
-		$username = ltrim( $username, '@' );
-
-		return self::a( 'https://t.me/' . $username, $content, $attributes );
-	}
-
-	/**
-	 * Create and render a Telegram link
-	 *
-	 * @param string $username   Telegram username (without @)
-	 * @param mixed  $content    Link content
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function telegram_render( string $username, $content = null, array $attributes = [] ): void {
-		self::telegram( $username, $content, $attributes )->output();
-	}
-
-	/**
-	 * Create a FaceTime link
-	 *
-	 * @param string $contact    Email or phone number for FaceTime
-	 * @param mixed  $content    Link content (defaults to contact if not provided)
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return Element
-	 */
-	public static function facetime( string $contact, $content = null, array $attributes = [] ): Element {
-		// Use contact as content if none provided
-		if ( $content === null ) {
-			$content = $contact;
-		}
-
-		$contact = Helpers::sanitize_contact( $contact );
-
-		return self::a( 'facetime:' . $contact, $content, $attributes );
-	}
-
-	/**
-	 * Create and render a FaceTime link
-	 *
-	 * @param string $contact    Email or phone number for FaceTime
-	 * @param mixed  $content    Link content (defaults to contact if not provided)
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function facetime_render( string $contact, $content = null, array $attributes = [] ): void {
-		self::facetime( $contact, $content, $attributes )->output();
-	}
-
-	/**
-	 * Create a webcal link for calendar events
-	 *
-	 * @param string $url        URL to the calendar file (without webcal:)
-	 * @param mixed  $content    Link content
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return Element
-	 */
-	public static function webcal( string $url, $content = 'Add to Calendar', array $attributes = [] ): Element {
-		// Remove http:// or https:// if present
-		$url = Helpers::strip_protocol( $url );
-
-		return self::a( 'webcal://' . $url, $content, $attributes );
-	}
-
-	/**
-	 * Create and render a webcal link
-	 *
-	 * @param string $url        URL to the calendar file (without webcal:)
-	 * @param mixed  $content    Link content
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function webcal_render( string $url, $content = 'Add to Calendar', array $attributes = [] ): void {
-		self::webcal( $url, $content, $attributes )->output();
 	}
 
 }

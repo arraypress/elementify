@@ -30,25 +30,16 @@ class Assets {
 	 * @var array
 	 */
 	protected static array $components = [
-		'accordion',
 		'breadcrumbs',
 		'card',
-		'modal',
 		'notice',
-		'pagination',
 		'progress-bar',
 		'status-badge',
-		'tabs',
-		'social-links',
-		'tooltip',
-		'date-picker',
 		'range',
 		'toggle',
 		'number',
 		'rating',
 		'time-ago',
-		'taxonomy',
-		'user',
 		'clipboard',
 		'featured',
 	];
@@ -59,12 +50,7 @@ class Assets {
 	 * @var array
 	 */
 	protected static array $js_components = [
-		'accordion',
-		'modal',
 		'notice',
-		'tabs',
-		'tooltip',
-		'date-picker',
 		'range',
 		'clipboard',
 	];

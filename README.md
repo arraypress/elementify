@@ -1,511 +1,627 @@
-# Elementify - A Fluent HTML Element Generator for WordPress
+# Elementify - A Fluent HTML Generator for WordPress
 
-Elementify is a comprehensive PHP library that allows developers to easily create HTML elements and components with proper escaping, self-closing tags, and attribute handling. It offers both an object-oriented and procedural API, making it versatile for different coding preferences.
+[![PHP Version](https://img.shields.io/badge/php-8.0%2B-blue.svg)](https://php.net)
+[![WordPress](https://img.shields.io/badge/wordpress-5.0%2B-blue.svg)](https://wordpress.org)
+[![License](https://img.shields.io/badge/license-GPL--2.0%2B-green.svg)](LICENSE)
 
-## Installation
+Elementify is a powerful PHP library that provides a fluent interface for generating HTML elements and components with proper escaping, self-closing tags, and attribute handling. It offers both object-oriented and procedural APIs, making it perfect for WordPress theme and plugin development.
+
+## 🚀 Features
+
+- **Fluent Interface**: Chainable methods for readable, maintainable code
+- **Automatic XSS Protection**: Smart content escaping based on element context
+- **Self-Closing Tags**: Proper HTML5 self-closing tag handling
+- **Rich Components**: Pre-built UI components like modals, tabs, accordions, and more
+- **WordPress Integration**: Seamless integration with WordPress functions and styles
+- **Dual API**: Both object-oriented and procedural approaches
+- **Asset Management**: Automatic CSS/JS loading for components
+- **Accessibility**: Built-in ARIA attributes and semantic markup
+
+## 📦 Installation
+
+Install via Composer:
 
 ```bash
 composer require arraypress/elementify
 ```
 
-## Basic Usage
+## 🎯 Quick Start
 
-Elementify provides two distinct ways to create HTML elements:
-
-### 1. Object-Oriented Approach (using the `Create` class)
+### Object-Oriented Approach
 
 ```php
 use Elementify\Create;
 
-/// Create a div with classes and content
-$div = Create::div( 'Content here' )
-             ->add_class( 'container' )
-             ->set_id( 'main-content' );
+// Create a card component
+$card = Create::card(
+    'This is the card content with <strong>HTML</strong>.',
+    'Card Title',
+    'Footer content'
+)->add_class('my-card');
 
-/// Render the element
-echo $div->render();
+echo $card->render();
 ```
 
-### 2. Procedural Approach (using utility functions)
+### Procedural Approach
 
 ```php
-// Create a div with classes and content 
-$div = el_div( 'Content here', [ 'class' => 'container', 'id' => 'main-content' ] );
+// Create a form with fields
+$form = el_form('process.php', 'post', ['class' => 'contact-form']);
+$form->add_child(el_field('name', 'Your Name', 'Enter your full name'));
+$form->add_child(el_field(el_email('email'), 'Email', 'We will not share your email'));
+$form->add_child(el_submit('Send Message'));
 
-// Render the element
-echo $div->render();
-
-// Or render directly
-el_div_render( 'Content here', [ 'class' => 'container', 'id' => 'main-content' ] );
+echo $form->render();
 ```
 
-## Creating Basic Elements
+## 📚 Core Concepts
 
-### Text and Container Elements
+### Elements vs Components
 
+**Elements** are basic HTML tags with smart escaping:
 ```php
-// Creating a paragraph
-el_p_render( 'This is a paragraph with <b>bold</b> text', [ 'class' => 'intro' ] );
+// Text elements escape content for XSS protection
+$p = Create::p('User input: <script>alert("xss")</script>');
+// Output: <p>User input: &lt;script&gt;alert("xss")&lt;/script&gt;</p>
 
-// Creating a div
-$container = el_div( null, [ 'class' => 'container' ] );
-$container->add_content( 'First paragraph' );
-$container->add_content( el_p( 'Second paragraph in a p element' ) );
-echo $container->render();
-
-// Creating a span
-el_span_render( 'Inline text', [ 'class' => 'highlight' ] );
-
-// Creating headings
-el_h_render( 1, 'Page Title' );
-el_h_render( 2, 'Section Title', [ 'id' => 'section-1' ] );
+// Container elements preserve HTML structure
+$div = Create::div();
+$div->add_child(Create::p('Safe content'));
+$div->add_child('<strong>HTML preserved</strong>');
 ```
 
-### Links and Anchors
+**Components** are advanced UI elements with built-in functionality:
+```php
+// Components handle complex interactions
+$tabs = Create::tabs([
+    ['id' => 'tab1', 'title' => 'General', 'content' => 'Settings content'],
+    ['id' => 'tab2', 'title' => 'Advanced', 'content' => 'Advanced options']
+], 'tab1');
+```
+
+### Automatic Escaping
+
+Elementify intelligently handles content escaping based on context:
+
+- **Text elements** (p, span, h1-h6): Content is escaped
+- **Container elements** (div, section, article): Content is preserved
+- **Form elements**: Values are escaped, structure is preserved
+- **Components**: Handle their own escaping logic
+
+## 🧱 Basic Elements
+
+### Text Elements
 
 ```php
-// Simple link
-el_a_render( 'https://example.com', 'Visit Example' );
+// Headings
+Create::h1('Page Title');
+Create::h2('Section Title', ['id' => 'section-1']);
 
-// Link with attributes
-echo el_a( 'https://example.com', 'Visit Example', [
-	'class'  => 'button',
-	'target' => '_blank',
-	'rel'    => 'noopener'
-] )->render();
+// Text content
+Create::p('Paragraph with <em>escaped</em> content');
+Create::span('Inline text', ['class' => 'highlight']);
+Create::code('$variable = "value";');
+```
+
+### Layout Elements
+
+```php
+// Semantic layout
+Create::section(
+    Create::article([
+        Create::header(Create::h1('Article Title')),
+        Create::p('Article content goes here.'),
+        Create::footer('Published on ' . date('Y-m-d'))
+    ])
+);
+
+// Flexible containers
+Create::div(['class' => 'container'])
+    ->add_child(Create::p('First paragraph'))
+    ->add_child(Create::p('Second paragraph'));
 ```
 
 ### Lists
 
 ```php
-// Unordered list
-el_ul_render( [
-	'Item 1',
-	'Item 2',
-	el_li( 'Item 3 with <b>bold</b> text' )
-] );
+// Simple lists
+Create::ul(['Item 1', 'Item 2', 'Item 3']);
 
-// Ordered list
-el_ol_render( [
-	'First item',
-	'Second item',
-	'Third item'
-], [ 'class' => 'numbered-list' ] );
+// Complex lists with links
+Create::ul([
+    Create::li(Create::a('/home', 'Home')),
+    Create::li(Create::a('/about', 'About')),
+    Create::li(Create::a('/contact', 'Contact'))
+]);
 
-// Definition list
-el_dl_render( [
-	'HTML' => 'HyperText Markup Language',
-	'CSS'  => 'Cascading Style Sheets',
-	'PHP'  => 'PHP: Hypertext Preprocessor'
-] );
+// Definition lists
+Create::dl([
+    'HTML' => 'HyperText Markup Language',
+    'CSS' => 'Cascading Style Sheets'
+]);
 ```
 
-### Media Elements
-
-```php
-// Image
-el_img_render( 'path/to/image.jpg', 'Alt text description' );
-
-// Picture with responsive sources
-el_picture_render( [
-	[ 'src' => 'small.jpg', 'media' => '(max-width: 600px)' ],
-	[ 'src' => 'medium.jpg', 'media' => '(max-width: 1200px)' ]
-], 'large.jpg', 'Image description' );
-
-// Audio
-el_audio_render( 'path/to/audio.mp3' );
-
-// Video
-el_video_render( 'path/to/video.mp4' );
-
-// Iframe
-el_iframe_render( 'https://www.youtube.com/embed/VIDEO_ID', 'Video title' );
-```
-
-## Form Elements
+## 📝 Form Elements
 
 ### Basic Form Structure
 
 ```php
-// Create a form
-$form = el_form( 'process.php', 'post', [ 'class' => 'contact-form' ] );
+$form = Create::form('submit.php', 'post', ['class' => 'contact-form']);
 
-// Add form fields
-$form->add_child( el_field( 'name', 'Your Name', 'Please enter your full name' ) );
-$form->add_child( el_field( el_email( 'email' ), 'Email Address', 'We will not share your email' ) );
-$form->add_child( el_field( el_textarea( 'message', '' ), 'Your Message' ) );
-$form->add_child( el_submit( 'Send Message', [ 'class' => 'button button-primary' ] ) );
+// Add fields using the field wrapper
+$form->add_child(Create::field('name', 'Full Name', 'Enter your complete name'));
+$form->add_child(Create::field(
+    Create::email('email', '', ['required' => true]),
+    'Email Address',
+    'We will never share your email'
+));
 
-// Add WordPress nonce field
-$form->add_nonce( 'contact_form_nonce' );
+// Add WordPress nonce
+$form->add_nonce('contact_form_action');
 
-// Render the form
-echo $form->render();
+// Add submit button
+$form->add_child(Create::submit('Send Message', ['class' => 'btn btn-primary']));
 ```
 
-### Input Fields
+### Input Types
 
 ```php
-// Text input
-el_text_render( 'username', 'Current value', [ 'placeholder' => 'Enter username' ] );
+// Text inputs
+Create::text('username', 'john_doe', ['placeholder' => 'Username']);
+Create::email('email', '', ['required' => true]);
+Create::password('password');
+Create::number('age', 25, ['min' => 18, 'max' => 100]);
 
-// Email input
-el_email_render( 'user_email', '', [ 'required' => true ] );
+// Choices
+Create::checkbox('newsletter', '1', true);
+Create::radio('size', 'medium', true, ['id' => 'size-medium']);
 
-// Password input
-el_password_render( 'password', [ 'autocomplete' => 'new-password' ] );
-
-// Number input
-el_input_render( 'number', 'quantity', 1, [
-	'min'  => 1,
-	'max'  => 10,
-	'step' => 1
-] );
-
-// Checkbox
-el_checkbox_render( 'subscribe', '1', true, [ 'id' => 'subscribe-checkbox' ] );
-
-// Radio buttons
-el_radio_render( 'size', 'small', false, [ 'id' => 'size-small' ] );
-el_radio_render( 'size', 'medium', true, [ 'id' => 'size-medium' ] );
-el_radio_render( 'size', 'large', false, [ 'id' => 'size-large' ] );
+// Advanced inputs
+Create::range('volume', '75', '0', '100', '5', true); // With value display
+Create::color('theme_color', '#ff6b6b');
+Create::file('upload', ['accept' => 'image/*']);
 ```
 
-### Select Dropdowns
+### Select Elements
 
 ```php
-// Basic select dropdown
-el_select_render(
-	'country',
-	[
-		'us' => 'United States',
-		'ca' => 'Canada',
-		'uk' => 'United Kingdom',
-		'au' => 'Australia'
-	],
-	'us'
-);
+// Basic dropdown
+Create::select('country', [
+    'us' => 'United States',
+    'ca' => 'Canada',
+    'uk' => 'United Kingdom'
+], 'us');
 
-// Select with option groups
-$options = [
-	'Fruits'     => [
-		'apple'  => 'Apple',
-		'banana' => 'Banana',
-		'orange' => 'Orange'
-	],
-	'Vegetables' => [
-		'carrot'  => 'Carrot',
-		'celery'  => 'Celery',
-		'spinach' => 'Spinach'
-	]
-];
-
-$select = el_select( 'food_category', [], 'apple' );
-
-foreach ( $options as $group_label => $group_options ) {
-	$select->add_optgroup( $group_label, $group_options );
-}
-
-echo $select->render();
+// Grouped options
+$select = Create::select('category');
+$select->add_optgroup('Technology', [
+    'web' => 'Web Development',
+    'mobile' => 'Mobile Apps'
+]);
+$select->add_optgroup('Design', [
+    'ui' => 'UI Design',
+    'graphic' => 'Graphic Design'
+]);
 ```
 
-### Textarea
-
-```php
-// Simple textarea
-el_textarea_render( 'description', 'Current content', [
-	'rows'        => 5,
-	'placeholder' => 'Enter description here'
-] );
-
-// Textarea with additional attributes
-echo el_textarea( 'comments', '', [
-	'rows'     => 4,
-	'cols'     => 50,
-	'required' => true,
-	'class'    => 'comment-field'
-] )->render();
-```
-
-### Buttons
-
-```php
-// Submit button
-el_submit_render( 'Save Changes' );
-
-// Button with custom type
-el_button_render( 'Cancel', 'button', [ 'class' => 'button-secondary' ] );
-
-// Button with data attributes
-echo el_button( 'Delete', 'button', [
-	'class'        => 'button button-danger',
-	'data-confirm' => 'Are you sure?'
-] )->render();
-```
-
-## UI Components
-
-### Tabs
-
-```php
-// Basic tabs
-Create::tabs_render( [
-	[
-		'id'      => 'tab1',
-		'title'   => 'General',
-		'content' => 'General settings content here.'
-	],
-	[
-		'id'      => 'tab2',
-		'title'   => 'Advanced',
-		'content' => 'Advanced settings content here.'
-	]
-], 'tab1' );
-
-// Alternative format with ID as key
-el_tabs_flexible_render( [
-	'general'  => [
-		'title'   => 'General',
-		'content' => 'General content'
-	],
-	'advanced' => [
-		'title'   => 'Advanced',
-		'content' => 'Advanced content'
-	]
-], 'general' );
-```
-
-### Accordion
-
-```php
-// Basic accordion
-Create::accordion_render( [
-	[
-		'title'   => 'Section 1',
-		'content' => 'Content for section 1',
-		'active'  => true
-	],
-	[
-		'title'   => 'Section 2',
-		'content' => 'Content for section 2'
-	]
-] );
-
-// Accordion with multiple sections open
-$accordion = Create::accordion( [
-	[
-		'title'   => 'FAQ Item 1',
-		'content' => 'Answer 1',
-		'active'  => true
-	],
-	[
-		'title'   => 'FAQ Item 2',
-		'content' => 'Answer 2',
-		'active'  => true
-	]
-], true ); /// Allow multiple sections to be open
-
-echo $accordion->render();
-```
+## 🎨 UI Components
 
 ### Cards
 
 ```php
-// Basic card
-Create::card_render(
-	'This is the card body content.',
-	'Card Title',
-	'Card Footer'
+// Simple card
+Create::card(
+    'Card content with <strong>HTML</strong> support.',
+    'Card Title',
+    'Optional footer content'
 );
 
-// Card with image and variant
-echo Create::card(
-	'This is a product with high quality materials.',
-	'Product Card',
-	'Price: $99.99',
-	[ 'class' => 'product-card' ],
-	true,
-	'compact'
-)->render();
+// Card with image
+Create::card_advanced(
+    'Product Title',
+    'Product description with features and benefits.',
+    '/images/product.jpg',
+    'Price: $99.99'
+);
 ```
 
 ### Modal Dialogs
 
 ```php
-// Basic modal
 $modal = Create::modal(
-	'Confirmation',
-	'Are you sure you want to delete this item?',
-	[
-		[ 'text' => 'Cancel', 'type' => 'button', 'class' => 'button' ],
-		[ 'text' => 'Delete', 'type' => 'button', 'class' => 'button button-danger' ]
-	]
+    'Confirmation Required',
+    'Are you sure you want to delete this item? This action cannot be undone.',
+    [
+        ['text' => 'Cancel', 'type' => 'button', 'class' => 'btn btn-secondary'],
+        ['text' => 'Delete', 'type' => 'button', 'class' => 'btn btn-danger', 'action' => 'delete']
+    ]
 );
 
-// Create a button to trigger the modal
-echo $modal->create_trigger( 'Delete Item', [ 'class' => 'button button-danger' ] )->render();
-
-// Output the modal
+// Create trigger button and output modal
+echo $modal->create_trigger('Delete Item', ['class' => 'btn btn-danger']);
 echo $modal->render();
 ```
 
-### Notices
+### Tabs
 
 ```php
-// Basic notice types
-Create::notice_render( 'This is a general information notice.', 'info' );
-Create::notice_render( 'Operation completed successfully!', 'success' );
-Create::notice_render( 'Please check your input before proceeding.', 'warning' );
-Create::notice_render( 'An error occurred during the operation.', 'error' );
+// Standard tabs
+Create::tabs([
+    ['id' => 'general', 'title' => 'General Settings', 'content' => $general_content],
+    ['id' => 'advanced', 'title' => 'Advanced Options', 'content' => $advanced_content],
+    ['id' => 'help', 'title' => 'Help & Support', 'content' => $help_content]
+], 'general');
+
+// Flexible format
+Create::tabs_flexible([
+    'settings' => ['title' => 'Settings', 'content' => 'Settings panel'],
+    'tools' => ['title' => 'Tools', 'content' => 'Tools panel']
+], 'settings');
 ```
 
-### Progress Bar
+### Accordion
 
 ```php
-// Basic progress bar
-Create::progress_bar_render( 75, 100 );
-
-// Progress bar with options
-echo Create::progress_bar( 65, 100, [
-	'show_percentage' => true,
-	'show_current'    => true,
-	'show_total'      => true,
-	'size'            => 'large'
-] )->render();
+Create::accordion([
+    ['title' => 'Getting Started', 'content' => 'Welcome guide content', 'active' => true],
+    ['title' => 'Advanced Features', 'content' => 'Advanced documentation'],
+    ['title' => 'Troubleshooting', 'content' => 'Common issues and solutions']
+], true); // Allow multiple sections open
 ```
 
-### Status Badges
+## 📊 Display Components
+
+### Progress & Status
 
 ```php
-// Basic badges
-Create::badge_render( 'Active', 'success' );
-Create::badge_render( 'Pending', 'warning' );
-Create::badge_render( 'Failed', 'error' );
-Create::badge_render( 'Processing', 'info' );
+// Progress bar
+Create::progress_bar(75, 100, [
+    'show_percentage' => true,
+    'show_current' => true,
+    'size' => 'large'
+]);
+
+// Status badges
+Create::badge('Active', 'success');
+Create::badge('Pending Review', 'warning');
+Create::badge('Failed', 'error');
+
+// Boolean indicators
+Create::boolean_icon(true, ['true_icon' => 'yes-alt', 'false_icon' => 'no-alt']);
 ```
+
+### Data Display
+
+```php
+// Numbers with formatting
+Create::number_format(1234567.89, [
+    'decimals' => 2,
+    'prefix' => '$',
+    'short_format' => true // Shows as $1.23M
+]);
+
+// File sizes
+Create::filesize(1234567890, ['decimals' => 1]); // Shows as 1.1 GB
+
+// Color swatches
+Create::color_swatch('#ff6b6b', [
+    'size' => 24,
+    'shape' => 'circle',
+    'show_value' => true
+]);
+
+// Ratings
+Create::rating(4.5, [
+    'max' => 5,
+    'style' => 'stars',
+    'show_value' => true
+]);
+```
+
+### User & Content
+
+```php
+// User display with avatar
+Create::user(123, [
+    'show_avatar' => true,
+    'avatar_size' => 48,
+    'name_type' => 'display_name',
+    'show_role' => true
+]);
+
+// Taxonomy terms
+Create::taxonomy(get_the_ID(), 'category', [
+    'link' => true,
+    'separator' => ', ',
+    'limit' => 3,
+    'show_more' => true
+]);
+
+// Time ago
+Create::timeago('2024-01-15 10:30:00', [
+    'show_tooltip' => true,
+    'cutoff' => 7 * 24 * 3600 // Show absolute date after 1 week
+]);
+```
+
+## 🧭 Navigation Components
 
 ### Breadcrumbs
 
 ```php
-// Basic breadcrumbs
-Create::breadcrumbs_render( [
-	[ 'text' => 'Home', 'url' => '/' ],
-	[ 'text' => 'Products', 'url' => '/products' ],
-	'Current Product'
-] );
+// From array
+Create::breadcrumbs([
+    ['text' => 'Home', 'url' => '/'],
+    ['text' => 'Products', 'url' => '/products'],
+    'Current Product'
+]);
 
-// Breadcrumbs from path
-Create::breadcrumbs_from_path_render(
-	'products/electronics/phones',
-	'https://example.com/'
-);
+// From URL path
+Create::breadcrumbs_from_path('products/electronics/smartphones', 'https://example.com/');
+
+// From URL map
+Create::breadcrumbs_map([
+    '/' => 'Home',
+    '/products' => 'Products',
+    '/products/electronics' => 'Electronics',
+    'Smartphones' // Current page
+]);
 ```
 
-### Tooltip
+## 🔗 Links & Media
+
+### Link Types
 
 ```php
-// Basic tooltip
-echo Create::tooltip( 'Hover me', 'This is a tooltip', [ 'position' => 'top' ] )->render();
+// Basic links
+Create::a('https://example.com', 'Visit Example');
+Create::external_link('https://google.com', 'Google', ['class' => 'external']);
 
-// Tooltip with different position
-echo Create::tooltip( 'Right tooltip', 'Appears to the right', [ 'position' => 'right' ] )->render();
+// Communication links
+Create::mailto('contact@example.com', 'Email Us');
+Create::tel('+1-555-123-4567', 'Call Now');
+Create::whatsapp('+1-555-123-4567', 'Hello!', 'WhatsApp Us');
+
+// Social links
+Create::telegram('username', '@username');
+Create::twitter_share('Check this out!', 'https://example.com', 'awesome,cool');
 ```
 
-### DatePicker
+### Media Elements
 
 ```php
-// Basic date picker
-echo Create::datepicker( 'birthdate', '1990-01-15' )->render();
+// Images
+Create::img('/images/photo.jpg', 'Beautiful landscape');
 
-// Date picker with options
-echo Create::datepicker( 'event_date', '2023-12-25', [
-	'format'      => 'Y-m-d',
-	'min_date'    => '2023-01-01',
-	'max_date'    => '2023-12-31',
-	'placeholder' => 'Select event date'
-] )->render();
+// Responsive images
+Create::picture([
+    ['src' => '/images/small.jpg', 'media' => '(max-width: 600px)'],
+    ['src' => '/images/medium.jpg', 'media' => '(max-width: 1200px)']
+], '/images/large.jpg', 'Responsive image');
+
+// Audio/Video
+Create::audio('/media/podcast.mp3', true); // With controls
+Create::video(['/video/demo.mp4', '/video/demo.webm'], true);
 ```
 
-## Advanced Usage
+## 🛠️ Interactive Components
+
+### Form Enhancements
+
+```php
+// Toggle switches
+Create::toggle('notifications', true, '1', 'Enable Notifications');
+
+// Range sliders with display
+Create::range('volume', '75', '0', '100', '5', true);
+
+// Date pickers
+Create::datepicker('event_date', '2024-12-25', [
+    'format' => 'Y-m-d',
+    'min_date' => '2024-01-01',
+    'max_date' => '2024-12-31'
+]);
+
+// Featured star toggle
+Create::featured('is_featured', true, 'Mark as Featured');
+```
+
+### Utility Components
+
+```php
+// Copy to clipboard
+Create::clipboard('https://example.com/share/abc123', [
+    'display_text' => 'Share Link',
+    'max_length' => 20,
+    'tooltip' => 'Click to copy share link'
+]);
+
+// Tooltips
+Create::tooltip('Hover for info', 'This provides additional context', [
+    'position' => 'top',
+    'theme' => 'dark'
+]);
+```
+
+## 🎭 Social Media Integration
+
+```php
+// Social media links with icons
+Create::social_links([
+    'facebook' => 'https://facebook.com/yourpage',
+    'twitter' => 'https://twitter.com/youraccount',
+    'instagram' => 'https://instagram.com/youraccount',
+    'linkedin' => 'https://linkedin.com/company/yourcompany'
+], ['class' => 'social-footer'], true); // Show text with icons
+
+// Sharing buttons
+Create::facebook_share('https://example.com/article');
+Create::twitter_share('Great article!', 'https://example.com/article', 'tech,web');
+Create::linkedin_share('https://example.com/article', 'Professional Article');
+```
+
+## 🗺️ Location & Maps
+
+```php
+// Map links for different platforms
+Create::google_map('123 Main St, City, State', 'Visit Our Office');
+Create::apple_map('Central Park, New York', 'Meet at Central Park');
+Create::device_map('Times Square, NYC'); // Uses device default map app
+
+// Coordinate-based maps
+Create::coordinates_map(40.7128, -74.0060, 'google', 'New York City');
+```
+
+## 🔔 Notifications
+
+```php
+// Notice types (WordPress compatible)
+Create::notice('Settings saved successfully!', 'success', true); // Dismissible
+Create::warning_notice('Please review your settings before continuing.');
+Create::error_notice('An error occurred while processing your request.');
+Create::info_notice('This feature is currently in beta.');
+```
+
+## ⚙️ Advanced Usage
 
 ### Chaining Methods
 
 ```php
-// Create an element with chained methods
-$div = el_div()
-	->set_id( 'container' )
-	->add_class( 'wrapper' )
-	->set_data( 'role', 'main' )
-	->add_content( 'First paragraph' )
-	->add_content( el_p( 'Second paragraph' ) )
-	->set_attribute( 'aria-label', 'Main content' );
-
-echo $div->render();
+$element = Create::div()
+    ->set_id('main-container')
+    ->add_class(['container', 'fluid'])
+    ->set_data('role', 'main')
+    ->set_styles(['margin' => '20px', 'padding' => '10px'])
+    ->add_child(Create::h1('Welcome'))
+    ->add_child(Create::p('This is the main content area.'));
 ```
 
-### Working with Element Escape Logic
+### Custom Components
 
 ```php
-// Content in text elements is escaped by default
-echo el_p( 'This contains <b>HTML</b> that will be escaped' )->render();
-
-// Container elements don't escape their content
-$div = el_div();
-$div->add_content( '<b>Bold text</b> preserved' );
-$div->add_content( el_p( 'Paragraph with <b>escaped</b> content' ) );
-echo $div->render();
-
-// Explicit control over escaping
-$element = el_element( 'div', 'Content with <b>HTML</b>' )
-	->set_escape_content( true ); /// Force escaping
-echo $element->render();
+// Extend base classes for custom components
+class CustomCard extends \Elementify\Abstracts\Component {
+    protected function build(): void {
+        // Custom component logic
+        $this->add_child(Create::div('Custom content'));
+    }
+}
 ```
 
-## Field Wrappers for Forms
+### Conditional Rendering
 
 ```php
-// Create a complete field with label and description
-echo el_field( 'username', 'Username', 'Enter a unique username' )->render();
+// Render only if condition is met
+$element = Create::div('Content');
+echo $element->render_if($user_is_logged_in);
 
-// Field with a specific input type
-echo el_field(
-	el_email( 'email_address', '', [ 'required' => true ] ),
-	'Email Address',
-	'We will send confirmation to this address'
-)->render();
-
-// Field with a textarea
-echo el_field(
-	el_textarea( 'bio', '', [ 'rows' => 4 ] ),
-	'Biography',
-	'Tell us about yourself'
-)->render();
-
-// Field with a select dropdown
-echo el_field(
-	el_select( 'country', [ 'us' => 'United States', 'ca' => 'Canada' ] ),
-	'Country',
-	'Select your country of residence'
-)->render();
+// Toggle classes based on conditions
+Create::button('Submit')
+    ->toggle_class('disabled', !$form_is_valid)
+    ->toggle_attribute('disabled', true, !$form_is_valid);
 ```
 
-## Benefits Over Manual HTML
+### Asset Management
 
-* **Proper Escaping**: Elements handle content escaping appropriately based on context
-* **Self-Closing Tags**: Automatically manages self-closing tags like `<img>`, `<br>`, etc.
-* **Attribute Handling**: Properly formats attributes, including boolean attributes
-* **Fluent Interface**: Makes code more readable and maintainable
-* **Type Safety**: Uses PHP type hints for better code quality
-* **Built-in Components**: Ready-to-use UI components save development time
+```php
+// Components automatically load their CSS/JS
+Create::datepicker('date'); // Loads datepicker.css and datepicker.js
 
-## Contributing
+// Manual asset loading
+\Elementify\Assets::enqueue(['modal', 'tabs', 'tooltip']);
+\Elementify\Assets::enqueue('all'); // Load all component assets
+```
 
-Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+## 🔒 Security
 
-## License
+Elementify provides automatic XSS protection through intelligent content escaping:
 
-This project is licensed under the GPL2+ License. See the LICENSE file for details.
+- **User-generated content** is automatically escaped
+- **Trusted HTML structures** are preserved
+- **Component content** is handled contextually
+- **WordPress integration** uses `wp_kses_post()` for content filtering
 
-## Support
+```php
+// Safe - content is escaped
+Create::p($_POST['user_input']);
 
-For support, please use the [issue tracker](https://github.com/arraypress/elementify/issues).
+// Safe - HTML structure preserved, content escaped appropriately
+Create::div([
+    Create::h2('Safe Title'),
+    Create::p('User content: ' . $_POST['content'])
+]);
+```
+
+## 🧪 Testing
+
+```php
+// Element inspection
+$element = Create::div('Content');
+$element->has_class('container'); // false
+$element->get_attribute('id', 'default'); // 'default'
+$element->get_children(); // array of child elements
+
+// Content extraction
+$content = $element->get_content_string();
+```
+
+## 📚 WordPress Integration
+
+### Theme Development
+
+```php
+// In template files
+echo Create::card(
+    get_the_content(),
+    get_the_title(),
+    'Posted on ' . get_the_date()
+);
+
+// Navigation menus
+$menu_items = wp_get_nav_menu_items('primary');
+echo Create::menu($menu_items);
+```
+
+### Plugin Development
+
+```php
+// Admin notices
+add_action('admin_notices', function() {
+    Create::success_notice('Plugin activated successfully!', true)->output();
+});
+
+// Settings forms
+function render_settings_form() {
+    $form = Create::form('options.php', 'post');
+    settings_fields('my_plugin_settings');
+    
+    $form->add_child(Create::field('api_key', 'API Key', 'Enter your API key'));
+    $form->add_child(Create::submit('Save Settings'));
+    
+    return $form->render();
+}
+```
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+
+1. Fork the repository
+2. Create a feature branch
+3. Add tests for new functionality
+4. Ensure all tests pass
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the GPL-2.0+ License. See the [LICENSE](LICENSE) file for details.
+
+## 🆘 Support
+
+- **Documentation**: [Full documentation](https://github.com/arraypress/elementify/wiki)
+- **Issues**: [Issue tracker](https://github.com/arraypress/elementify/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/arraypress/elementify/discussions)
+
+---
+
+**Built with ❤️ by [ArrayPress](https://arraypress.com)**
