@@ -51,7 +51,6 @@ class Toggle extends Component {
 	 * @param string|null $label       Optional label text
 	 * @param array       $attributes  Element attributes
 	 * @param bool        $disabled    Whether the toggle is disabled
-	 * @param bool        $include_css Whether to include built-in CSS
 	 */
 	public function __construct(
 		string $name,
@@ -59,8 +58,7 @@ class Toggle extends Component {
 		$value = '1',
 		?string $label = null,
 		array $attributes = [],
-		bool $disabled = false,
-		bool $include_css = true
+		bool $disabled = false
 	) {
 		$this->name = $name;
 
@@ -79,7 +77,7 @@ class Toggle extends Component {
 		$this->add_class( 'toggle-container' );
 
 		// Initialize component foundation
-		$this->init_component( 'toggle', $attributes, $include_css );
+		$this->init_component( 'toggle', $attributes );
 
 		// Build the component structure
 		$this->build();

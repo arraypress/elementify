@@ -34,13 +34,12 @@ trait Layout {
 	 * @param string $title       Optional header title
 	 * @param mixed  $footer      Optional footer content
 	 * @param array  $attributes  Element attributes
-	 * @param bool   $include_css Whether to include built-in CSS (default: true)
 	 * @param string $variant     Card style variant (default, compact, borderless, no-padding)
 	 *
 	 * @return Card
 	 */
-	public static function card( $content = null, string $title = '', $footer = null, array $attributes = [], bool $include_css = true, string $variant = 'no-padding' ): Card {
-		return new Card( $content, $title, $footer, $attributes, $include_css, $variant );
+	public static function card( $content = null, string $title = '', $footer = null, array $attributes = [], string $variant = 'no-padding' ): Card {
+		return new Card( $content, $title, $footer, $attributes, $variant );
 	}
 
 	/**
@@ -51,14 +50,13 @@ trait Layout {
 	 * @param string $image_src   Optional image source URL
 	 * @param mixed  $footer      Optional footer content
 	 * @param array  $attributes  Element attributes
-	 * @param bool   $include_css Whether to include built-in CSS (default: true)
 	 * @param string $variant     Card style variant (default, compact, borderless, no-padding)
 	 *
 	 * @return Card
 	 */
-	public static function card_advanced( string $title, $content, string $image_src = '', $footer = '', array $attributes = [], bool $include_css = true, string $variant = 'default' ): Card {
+	public static function card_advanced( string $title, $content, string $image_src = '', $footer = '', array $attributes = [], string $variant = 'default' ): Card {
 		// Create the card using the standard card method
-		$card = self::card( $content, $title, $footer, $attributes, $include_css, $variant );
+		$card = self::card( $content, $title, $footer, $attributes, $variant );
 
 		// Add image if provided
 		if ( ! empty( $image_src ) ) {

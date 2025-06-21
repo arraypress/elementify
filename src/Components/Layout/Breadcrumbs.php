@@ -50,9 +50,8 @@ class Breadcrumbs extends Component {
 	 * @param array  $items       Array of breadcrumb items
 	 * @param string $separator   Separator between items
 	 * @param array  $attributes  Element attributes
-	 * @param bool   $include_css Whether to include built-in CSS
 	 */
-	public function __construct( array $items = [], string $separator = '/', array $attributes = [], bool $include_css = true ) {
+	public function __construct( array $items = [], string $separator = '/', array $attributes = [] ) {
 		// Set options with default separator
 		$this->options = [
 			'separator'  => $separator,
@@ -60,7 +59,7 @@ class Breadcrumbs extends Component {
 		];
 
 		// Initialize component foundation
-		$this->init_component( 'breadcrumbs', $attributes, $include_css );
+		$this->init_component( 'breadcrumbs', $attributes );
 
 		// Initialize with a nav element
 		parent::__construct( 'nav', null, $attributes );

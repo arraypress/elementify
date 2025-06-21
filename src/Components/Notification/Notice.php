@@ -70,9 +70,8 @@ class Notice extends Component {
 	 * @param string $type        Notice type (info, success, warning, error)
 	 * @param bool   $dismissible Whether the notice can be dismissed
 	 * @param array  $attributes  Element attributes
-	 * @param bool   $include_css Whether to include built-in CSS (ignored - WordPress handles styling)
 	 */
-	public function __construct( $content = null, string $type = 'info', bool $dismissible = false, array $attributes = [], bool $include_css = true ) {
+	public function __construct( $content = null, string $type = 'info', bool $dismissible = false, array $attributes = [] ) {
 		// Store the content
 		$this->content = $content;
 
@@ -115,7 +114,7 @@ class Notice extends Component {
 		parent::__construct( 'div', null, $attributes );
 
 		// Never include CSS/JS - WordPress handles this natively
-		$this->init_component( 'notice', $attributes, false );
+		$this->init_component( 'notice', $attributes );
 
 		// Build the notice structure
 		$this->build();
@@ -140,9 +139,6 @@ class Notice extends Component {
 
 		// Add the paragraph to the notice
 		$this->add_child( $content_paragraph );
-
-		// WordPress automatically handles dismiss buttons for dismissible notices
-		// No need to add our own dismiss button
 	}
 
 	/**
@@ -206,12 +202,11 @@ class Notice extends Component {
 	 * @param mixed $content     Notice content
 	 * @param bool  $dismissible Whether the notice can be dismissed
 	 * @param array $attributes  Element attributes
-	 * @param bool  $include_css Whether to include built-in CSS (ignored)
 	 *
 	 * @return Notice
 	 */
-	public static function info( $content, bool $dismissible = false, array $attributes = [], bool $include_css = true ): Notice {
-		return new Notice( $content, 'info', $dismissible, $attributes, false );
+	public static function info( $content, bool $dismissible = false, array $attributes = [] ): Notice {
+		return new Notice( $content, 'info', $dismissible, $attributes );
 	}
 
 	/**
@@ -220,12 +215,11 @@ class Notice extends Component {
 	 * @param mixed $content     Notice content
 	 * @param bool  $dismissible Whether the notice can be dismissed
 	 * @param array $attributes  Element attributes
-	 * @param bool  $include_css Whether to include built-in CSS (ignored)
 	 *
 	 * @return Notice
 	 */
-	public static function success( $content, bool $dismissible = false, array $attributes = [], bool $include_css = true ): Notice {
-		return new Notice( $content, 'success', $dismissible, $attributes, false );
+	public static function success( $content, bool $dismissible = false, array $attributes = [] ): Notice {
+		return new Notice( $content, 'success', $dismissible, $attributes );
 	}
 
 	/**
@@ -234,12 +228,11 @@ class Notice extends Component {
 	 * @param mixed $content     Notice content
 	 * @param bool  $dismissible Whether the notice can be dismissed
 	 * @param array $attributes  Element attributes
-	 * @param bool  $include_css Whether to include built-in CSS (ignored)
 	 *
 	 * @return Notice
 	 */
-	public static function warning( $content, bool $dismissible = false, array $attributes = [], bool $include_css = true ): Notice {
-		return new Notice( $content, 'warning', $dismissible, $attributes, false );
+	public static function warning( $content, bool $dismissible = false, array $attributes = [] ): Notice {
+		return new Notice( $content, 'warning', $dismissible, $attributes );
 	}
 
 	/**
@@ -248,12 +241,11 @@ class Notice extends Component {
 	 * @param mixed $content     Notice content
 	 * @param bool  $dismissible Whether the notice can be dismissed
 	 * @param array $attributes  Element attributes
-	 * @param bool  $include_css Whether to include built-in CSS (ignored)
 	 *
 	 * @return Notice
 	 */
-	public static function error( $content, bool $dismissible = false, array $attributes = [], bool $include_css = true ): Notice {
-		return new Notice( $content, 'error', $dismissible, $attributes, false );
+	public static function error( $content, bool $dismissible = false, array $attributes = [] ): Notice {
+		return new Notice( $content, 'error', $dismissible, $attributes );
 	}
 
 	/**

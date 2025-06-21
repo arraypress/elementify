@@ -46,12 +46,11 @@ class ColorSwatch extends Component {
 	/**
 	 * Constructor
 	 *
-	 * @param string $color       The color value (hex, rgb, etc.)
-	 * @param array  $options     Additional options
-	 * @param array  $attributes  Element attributes
-	 * @param bool   $include_css Whether to include built-in CSS
+	 * @param string $color      The color value (hex, rgb, etc.)
+	 * @param array  $options    Additional options
+	 * @param array  $attributes Element attributes
 	 */
-	public function __construct( string $color, array $options = [], array $attributes = [], bool $include_css = true ) {
+	public function __construct( string $color, array $options = [], array $attributes = [] ) {
 		// Store color value
 		$this->color = $color;
 
@@ -69,11 +68,11 @@ class ColorSwatch extends Component {
 		// Set base class
 		$this->base_class = 'color-swatch';
 
-		// Initialize component foundation
-		$this->init_component( 'color-swatch', $attributes, $include_css );
-
 		// Initialize with a span element
 		parent::__construct( 'span', null, $attributes );
+
+		// Initialize component foundation
+		$this->init_component( 'color-swatch', $attributes );
 
 		// Add tooltip if provided
 		if ( ! empty( $this->options['tooltip'] ) ) {

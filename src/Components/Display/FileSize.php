@@ -49,9 +49,8 @@ class FileSize extends Component {
 	 * @param int|string $bytes       File size in bytes
 	 * @param array      $options     Additional options
 	 * @param array      $attributes  Element attributes
-	 * @param bool       $include_css Whether to include built-in CSS
 	 */
-	public function __construct( $bytes, array $options = [], array $attributes = [], bool $include_css = true ) {
+	public function __construct( $bytes, array $options = [], array $attributes = [] ) {
 		// Convert to integer
 		$this->bytes = is_numeric( $bytes ) ? (int) $bytes : 0;
 
@@ -69,7 +68,7 @@ class FileSize extends Component {
 		$this->base_class = 'filesize';
 
 		// Initialize component foundation
-		$this->init_component( 'filesize', $attributes, $include_css );
+		$this->init_component( 'filesize', $attributes );
 
 		// Initialize with a span element
 		parent::__construct( 'span', null, $attributes );

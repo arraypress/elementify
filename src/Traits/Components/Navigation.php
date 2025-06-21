@@ -33,12 +33,11 @@ trait Navigation {
 	 * @param array  $items       Array of breadcrumb items
 	 * @param string $separator   Separator between items
 	 * @param array  $attributes  Element attributes
-	 * @param bool   $include_css Whether to include built-in CSS (default: true)
 	 *
 	 * @return Breadcrumbs
 	 */
-	public static function breadcrumbs( array $items = [], string $separator = '/', array $attributes = [], bool $include_css = true ): Breadcrumbs {
-		return new Breadcrumbs( $items, $separator, $attributes, $include_css );
+	public static function breadcrumbs( array $items = [], string $separator = '/', array $attributes = [] ): Breadcrumbs {
+		return new Breadcrumbs( $items, $separator, $attributes );
 	}
 
 	/**
@@ -48,12 +47,11 @@ trait Navigation {
 	 *                            '', 'icon' => '', 'url' => '']]
 	 * @param string $separator   Separator between items
 	 * @param array  $attributes  Element attributes
-	 * @param bool   $include_css Whether to include built-in CSS (default: true)
 	 *
 	 * @return Breadcrumbs
 	 */
-	public static function breadcrumbs_with_icons( array $items = [], string $separator = '›', array $attributes = [], bool $include_css = true ): Breadcrumbs {
-		return new Breadcrumbs( $items, $separator, $attributes, $include_css );
+	public static function breadcrumbs_with_icons( array $items = [], string $separator = '›', array $attributes = [] ): Breadcrumbs {
+		return new Breadcrumbs( $items, $separator, $attributes );
 	}
 
 	/**
@@ -76,11 +74,10 @@ trait Navigation {
 	 *                            The last item can be a string for the current page
 	 * @param string $separator   Separator between items
 	 * @param array  $attributes  Element attributes
-	 * @param bool   $include_css Whether to include built-in CSS (default: true)
 	 *
 	 * @return Breadcrumbs
 	 */
-	public static function breadcrumbs_map( array $path_map, string $separator = '/', array $attributes = [], bool $include_css = true ): Breadcrumbs {
+	public static function breadcrumbs_map( array $path_map, string $separator = '/', array $attributes = [] ): Breadcrumbs {
 		$items        = [];
 		$items_count  = count( $path_map );
 		$current_item = 0;
@@ -105,7 +102,7 @@ trait Navigation {
 			}
 		}
 
-		return self::breadcrumbs( $items, $separator, $attributes, $include_css );
+		return self::breadcrumbs( $items, $separator, $attributes );
 	}
 
 	/**

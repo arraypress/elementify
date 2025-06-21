@@ -34,12 +34,11 @@ trait Messaging {
 	 * @param string $type        Notice type (info, success, warning, error)
 	 * @param bool   $dismissible Whether the notice can be dismissed
 	 * @param array  $attributes  Element attributes
-	 * @param bool   $include_css Whether to include built-in CSS (only for non-admin contexts)
 	 *
 	 * @return Notice
 	 */
-	public static function notice( $content = null, string $type = 'info', bool $dismissible = false, array $attributes = [], bool $include_css = true ): Notice {
-		return new Notice( $content, $type, $dismissible, $attributes, $include_css );
+	public static function notice( $content = null, string $type = 'info', bool $dismissible = false, array $attributes = [] ): Notice {
+		return new Notice( $content, $type, $dismissible, $attributes );
 	}
 
 	/**
@@ -48,12 +47,11 @@ trait Messaging {
 	 * @param mixed $content     Notice content
 	 * @param bool  $dismissible Whether the notice can be dismissed
 	 * @param array $attributes  Element attributes
-	 * @param bool  $include_css Whether to include built-in CSS (only for non-admin contexts)
 	 *
 	 * @return Notice
 	 */
-	public static function info_notice( $content, bool $dismissible = false, array $attributes = [], bool $include_css = true ): Notice {
-		return Notice::info( $content, $dismissible, $attributes, $include_css );
+	public static function info_notice( $content, bool $dismissible = false, array $attributes = [] ): Notice {
+		return Notice::info( $content, $dismissible, $attributes );
 	}
 
 	/**
@@ -62,12 +60,11 @@ trait Messaging {
 	 * @param mixed $content     Notice content
 	 * @param bool  $dismissible Whether the notice can be dismissed
 	 * @param array $attributes  Element attributes
-	 * @param bool  $include_css Whether to include built-in CSS (only for non-admin contexts)
 	 *
 	 * @return Notice
 	 */
-	public static function success_notice( $content, bool $dismissible = false, array $attributes = [], bool $include_css = true ): Notice {
-		return Notice::success( $content, $dismissible, $attributes, $include_css );
+	public static function success_notice( $content, bool $dismissible = false, array $attributes = [] ): Notice {
+		return Notice::success( $content, $dismissible, $attributes );
 	}
 
 	/**
@@ -76,12 +73,11 @@ trait Messaging {
 	 * @param mixed $content     Notice content
 	 * @param bool  $dismissible Whether the notice can be dismissed
 	 * @param array $attributes  Element attributes
-	 * @param bool  $include_css Whether to include built-in CSS (only for non-admin contexts)
 	 *
 	 * @return Notice
 	 */
-	public static function warning_notice( $content, bool $dismissible = false, array $attributes = [], bool $include_css = true ): Notice {
-		return Notice::warning( $content, $dismissible, $attributes, $include_css );
+	public static function warning_notice( $content, bool $dismissible = false, array $attributes = [] ): Notice {
+		return Notice::warning( $content, $dismissible, $attributes );
 	}
 
 	/**
@@ -90,12 +86,11 @@ trait Messaging {
 	 * @param mixed $content     Notice content
 	 * @param bool  $dismissible Whether the notice can be dismissed
 	 * @param array $attributes  Element attributes
-	 * @param bool  $include_css Whether to include built-in CSS (only for non-admin contexts)
 	 *
 	 * @return Notice
 	 */
-	public static function error_notice( $content, bool $dismissible = false, array $attributes = [], bool $include_css = true ): Notice {
-		return Notice::error( $content, $dismissible, $attributes, $include_css );
+	public static function error_notice( $content, bool $dismissible = false, array $attributes = [] ): Notice {
+		return Notice::error( $content, $dismissible, $attributes );
 	}
 
 }

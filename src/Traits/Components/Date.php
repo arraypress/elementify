@@ -32,12 +32,11 @@ trait Date {
 	 * @param mixed $time        Timestamp, date string, or DateTime object
 	 * @param array $options     Additional options
 	 * @param array $attributes  Element attributes
-	 * @param bool  $include_css Whether to include built-in CSS
 	 *
 	 * @return TimeAgo
 	 */
-	public static function timeago( $time, array $options = [], array $attributes = [], bool $include_css = true ): TimeAgo {
-		return new TimeAgo( $time, $options, $attributes, $include_css );
+	public static function timeago( $time, array $options = [], array $attributes = [] ): TimeAgo {
+		return new TimeAgo( $time, $options, $attributes );
 	}
 
 }

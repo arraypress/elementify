@@ -91,9 +91,8 @@ class StatusBadge extends Component {
 	 * @param string $status      Status type (success, warning, error, info, etc.)
 	 * @param array  $options     Additional options
 	 * @param array  $attributes  Element attributes
-	 * @param bool   $include_css Whether to include built-in CSS
 	 */
-	public function __construct( string $label, string $status = 'default', array $options = [], array $attributes = [], bool $include_css = true ) {
+	public function __construct( string $label, string $status = 'default', array $options = [], array $attributes = [] ) {
 		// Store label and status
 		$this->label  = $label;
 		$this->status = $status;
@@ -132,7 +131,7 @@ class StatusBadge extends Component {
 		parent::__construct( 'span', '', $attributes );
 
 		// Initialize component foundation
-		$this->init_component( 'status-badge', $attributes, $include_css );
+		$this->init_component( 'status-badge', $attributes );
 
 		// Build the badge
 		$this->build();

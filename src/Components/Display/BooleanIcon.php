@@ -55,12 +55,11 @@ class BooleanIcon extends Component {
 	/**
 	 * Constructor
 	 *
-	 * @param mixed $value       Value to display
-	 * @param array $options     Component options
-	 * @param array $attributes  Element attributes
-	 * @param bool  $include_css Whether to include built-in CSS
+	 * @param mixed $value      Value to display
+	 * @param array $options    Component options
+	 * @param array $attributes Element attributes
 	 */
-	public function __construct( $value, array $options = [], array $attributes = [], bool $include_css = true ) {
+	public function __construct( $value, array $options = [], array $attributes = [] ) {
 		// Extract options with defaults
 		$this->value = $value;
 
@@ -78,7 +77,7 @@ class BooleanIcon extends Component {
 
 		// Initialize component
 		parent::__construct( 'span', '', $attributes );
-		$this->init_component( 'boolean-icon', $attributes, $include_css );
+		$this->init_component( 'boolean-icon', $attributes );
 
 		// Build the component
 		$this->build();
@@ -219,5 +218,5 @@ class BooleanIcon extends Component {
 	public function use_dashicons( bool $use ): self {
 		return $this->toggle_option( 'use_dashicons', $use );
 	}
-	
+
 }

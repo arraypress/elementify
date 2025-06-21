@@ -58,9 +58,8 @@ class ProgressBar extends Component {
 	 * @param int|float $total       Total value (maximum)
 	 * @param array     $options     Additional options
 	 * @param array     $attributes  Element attributes
-	 * @param bool      $include_css Whether to include built-in CSS
 	 */
-	public function __construct( $current, $total = 100, array $options = [], array $attributes = [], bool $include_css = true ) {
+	public function __construct( $current, $total = 100, array $options = [], array $attributes = [] ) {
 		// Set current and total values
 		$this->current_value = max( 0, $current );
 		$this->total_value   = max( 1, $total ); // Prevent division by zero
@@ -78,7 +77,7 @@ class ProgressBar extends Component {
 		$this->base_class = 'progress-bar';
 
 		// Initialize component foundation
-		$this->init_component( 'progress-bar', $attributes, $include_css );
+		$this->init_component( 'progress-bar', $attributes );
 
 		// Add size class
 		$this->add_class( $this->get_size_class() );
@@ -141,9 +140,9 @@ class ProgressBar extends Component {
 			}
 			$label_text .= "{$this->current_value} / {$this->total_value}";
 		} else if ( $this->options['show_current'] ) {
-			$label_text .= (string) $this->current_value;
+			$label_text .= $this->current_value;
 		} else if ( $this->options['show_total'] ) {
-			$label_text .= (string) $this->total_value;
+			$label_text .= $this->total_value;
 		}
 
 		// Return null if no label content

@@ -48,9 +48,8 @@ class TimeAgo extends Component {
 	 * @param mixed $time        Timestamp, date string, or DateTime object
 	 * @param array $options     Additional options
 	 * @param array $attributes  Element attributes
-	 * @param bool  $include_css Whether to include built-in CSS
 	 */
-	public function __construct( $time, array $options = [], array $attributes = [], bool $include_css = true ) {
+	public function __construct( $time, array $options = [], array $attributes = [] ) {
 		// Convert time to timestamp
 		$this->timestamp = $this->get_timestamp( $time );
 
@@ -68,7 +67,7 @@ class TimeAgo extends Component {
 		$this->base_class = 'timeago';
 
 		// Initialize component foundation
-		$this->init_component( 'time-ago', $attributes, $include_css );
+		$this->init_component( 'time-ago', $attributes );
 
 		// Initialize with a span element
 		parent::__construct( 'span', null, $attributes );

@@ -35,12 +35,11 @@ trait Display {
 	 * @param string $color       The color value (hex, rgb, etc.)
 	 * @param array  $options     Additional options
 	 * @param array  $attributes  Element attributes
-	 * @param bool   $include_css Whether to include built-in CSS
 	 *
 	 * @return ColorSwatch
 	 */
-	public static function color_swatch( string $color, array $options = [], array $attributes = [], bool $include_css = true ): ColorSwatch {
-		return new ColorSwatch( $color, $options, $attributes, $include_css );
+	public static function color_swatch( string $color, array $options = [], array $attributes = [] ): ColorSwatch {
+		return new ColorSwatch( $color, $options, $attributes );
 	}
 
 	/**
@@ -49,12 +48,11 @@ trait Display {
 	 * @param int|string $bytes       File size in bytes
 	 * @param array      $options     Additional options
 	 * @param array      $attributes  Element attributes
-	 * @param bool       $include_css Whether to include built-in CSS
 	 *
 	 * @return FileSize
 	 */
-	public static function filesize( $bytes, array $options = [], array $attributes = [], bool $include_css = true ): FileSize {
-		return new FileSize( $bytes, $options, $attributes, $include_css );
+	public static function filesize( $bytes, array $options = [], array $attributes = [] ): FileSize {
+		return new FileSize( $bytes, $options, $attributes );
 	}
 
 	/**
@@ -63,12 +61,11 @@ trait Display {
 	 * @param float|int|string|null $value       The numeric value
 	 * @param array                 $options     Additional options
 	 * @param array                 $attributes  Element attributes
-	 * @param bool                  $include_css Whether to include built-in CSS
 	 *
 	 * @return NumberFormat
 	 */
-	public static function number_format( $value, array $options = [], array $attributes = [], bool $include_css = true ): NumberFormat {
-		return new NumberFormat( $value, $options, $attributes, $include_css );
+	public static function number_format( $value, array $options = [], array $attributes = [] ): NumberFormat {
+		return new NumberFormat( $value, $options, $attributes );
 	}
 
 }

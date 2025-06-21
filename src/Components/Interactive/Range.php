@@ -89,8 +89,7 @@ class Range extends Component {
 		$max = '100',
 		$step = '1',
 		bool $display_value = true,
-		array $attributes = [],
-		bool $include_css = true
+		array $attributes = []
 	) {
 		$this->name          = $name;
 		$this->value         = $value;
@@ -106,7 +105,7 @@ class Range extends Component {
 		$this->add_class( 'range-container' );
 
 		// Initialize component foundation
-		$this->init_component( 'range', $attributes, $include_css );
+		$this->init_component( 'range', $attributes );
 
 		// Build the component structure
 		$this->build();

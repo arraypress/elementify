@@ -47,13 +47,11 @@ class Clipboard extends Component {
 	 * @param string $text        The text to display and copy
 	 * @param array  $options     Component options
 	 * @param array  $attributes  Element attributes
-	 * @param bool   $include_css Whether to include built-in CSS
 	 */
 	public function __construct(
 		string $text,
 		array $options = [],
-		array $attributes = [],
-		bool $include_css = true
+		array $attributes = []
 	) {
 		// Store text and options
 		$this->text = $text;
@@ -85,7 +83,7 @@ class Clipboard extends Component {
 		}
 
 		// Initialize component foundation
-		$this->init_component( 'clipboard', $attributes, $include_css );
+		$this->init_component( 'clipboard', $attributes );
 
 		// Build the component structure
 		$this->build();

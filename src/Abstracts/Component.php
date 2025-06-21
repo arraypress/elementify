@@ -18,7 +18,6 @@ namespace Elementify\Abstracts;
 defined( 'ABSPATH' ) || exit;
 
 use Elementify\Element;
-use Elementify\Assets;
 
 /**
  * Abstract Component
@@ -29,18 +28,11 @@ use Elementify\Assets;
 abstract class Component extends Element {
 
 	/**
-	 * Component type/name used for class prefixes and asset loading
+	 * Component type/name used for class prefixes
 	 *
 	 * @var string
 	 */
 	protected string $component_type;
-
-	/**
-	 * Whether to include built-in CSS
-	 *
-	 * @var bool
-	 */
-	protected bool $include_css = true;
 
 	/**
 	 * Component default base class
@@ -72,27 +64,22 @@ abstract class Component extends Element {
 	 *
 	 * Sets up common properties and behaviors for all components.
 	 *
-	 * @param string  $component_type The component type name
-	 * @param array  &$attributes     The HTML element attributes passed by reference
-	 * @param bool    $include_css    Whether to include component CSS
+	 * @param string $component_type The component type name
+	 * @param array  &$attributes    The HTML element attributes passed by reference
 	 *
 	 * @return void
 	 */
-	protected function init_component( string $component_type, array &$attributes, bool $include_css = true ): void {
+	protected function init_component( string $component_type, array &$attributes ): void {
 		// Store component type
 		$this->component_type = $component_type;
+
 		// Set base class if not already set
 		if ( empty( $this->base_class ) ) {
 			$this->base_class = $component_type;
 		}
-		// Set CSS inclusion flag
-		$this->include_css = $include_css;
+
 		// Prepare base classes
 		$this->prepare_base_class( $attributes );
-		// Load component assets if enabled
-		if ( $include_css ) {
-			Assets::enqueue( $component_type );
-		}
 	}
 
 	/**
@@ -128,8 +115,8 @@ abstract class Component extends Element {
 	/**
 	 * Add content to the element with explicit escaping control
 	 *
-	 * @param mixed $content    Content to add
-	 * @param bool  $escape     Whether to escape the content
+	 * @param mixed $content Content to add
+	 * @param bool  $escape  Whether to escape the content
 	 *
 	 * @return $this
 	 */
@@ -207,42 +194,13 @@ abstract class Component extends Element {
 			}
 
 			$attributes['class'] = implode( ' ', $classes );
-		} // Add base class to array class attribute
+		}
+		// Add base class to array class attribute
 		elseif ( is_array( $attributes['class'] ) ) {
 			if ( ! in_array( $this->base_class, $attributes['class'] ) ) {
 				$attributes['class'][] = $this->base_class;
 			}
 		}
-	}
-
-	/**
-	 * Enable or disable built-in CSS
-	 *
-	 * @param bool $include_css Whether to include built-in CSS
-	 *
-	 * @return $this
-	 */
-	public function set_include_css( bool $include_css ): self {
-		$this->include_css = $include_css;
-
-		// Enqueue or dequeue assets based on setting
-		if ( $include_css ) {
-			Assets::enqueue( $this->component_type );
-		}
-
-		// Rebuild component to apply changes
-		$this->build();
-
-		return $this;
-	}
-
-	/**
-	 * Check if built-in CSS is enabled
-	 *
-	 * @return bool
-	 */
-	public function is_css_included(): bool {
-		return $this->include_css;
 	}
 
 	/**

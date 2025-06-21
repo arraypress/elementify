@@ -49,9 +49,8 @@ class Rating extends Component {
 	 * @param float $rating      Rating value
 	 * @param array $options     Additional options
 	 * @param array $attributes  Element attributes
-	 * @param bool  $include_css Whether to include built-in CSS
 	 */
-	public function __construct( float $rating, array $options = [], array $attributes = [], bool $include_css = true ) {
+	public function __construct( float $rating, array $options = [], array $attributes = [] ) {
 		// Store rating value
 		$this->rating = $rating;
 
@@ -75,7 +74,7 @@ class Rating extends Component {
 		$this->base_class = 'rating';
 
 		// Initialize component foundation
-		$this->init_component( 'rating', $attributes, $include_css );
+		$this->init_component( 'rating', $attributes );
 
 		// Initialize with a div element
 		parent::__construct( 'div', null, $attributes );

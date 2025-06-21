@@ -49,15 +49,13 @@ class Featured extends Component {
 	 * @param string|null $label       Optional label text
 	 * @param array       $attributes  Element attributes
 	 * @param bool        $disabled    Whether the featured control is disabled
-	 * @param bool        $include_css Whether to include built-in CSS
 	 */
 	public function __construct(
 		string $name,
 		bool $featured = false,
 		?string $label = null,
 		array $attributes = [],
-		bool $disabled = false,
-		bool $include_css = true
+		bool $disabled = false
 	) {
 		$this->name = $name;
 
@@ -75,7 +73,7 @@ class Featured extends Component {
 		$this->add_class( 'featured-container' );
 
 		// Initialize component foundation
-		$this->init_component( 'featured', $attributes, $include_css );
+		$this->init_component( 'featured', $attributes );
 
 		// Build the component structure
 		$this->build();

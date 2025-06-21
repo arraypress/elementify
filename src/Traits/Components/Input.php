@@ -37,7 +37,6 @@ trait Input {
 	 * @param string|null $label       Optional label text
 	 * @param array       $attributes  Element attributes
 	 * @param bool        $disabled    Whether the toggle is disabled
-	 * @param bool        $include_css Whether to include built-in CSS
 	 *
 	 * @return Toggle
 	 */
@@ -47,10 +46,9 @@ trait Input {
 		$value = '1',
 		?string $label = null,
 		array $attributes = [],
-		bool $disabled = false,
-		bool $include_css = true
+		bool $disabled = false
 	): Toggle {
-		return new Toggle( $name, $checked, $value, $label, $attributes, $disabled, $include_css );
+		return new Toggle( $name, $checked, $value, $label, $attributes, $disabled );
 	}
 
 	/**
@@ -61,7 +59,6 @@ trait Input {
 	 * @param string|null $label       Optional label text
 	 * @param array       $attributes  Element attributes
 	 * @param bool        $disabled    Whether the control is disabled
-	 * @param bool        $include_css Whether to include built-in CSS
 	 *
 	 * @return Featured
 	 */
@@ -70,10 +67,9 @@ trait Input {
 		bool $featured = false,
 		?string $label = null,
 		array $attributes = [],
-		bool $disabled = false,
-		bool $include_css = true
+		bool $disabled = false
 	): Featured {
-		return new Featured( $name, $featured, $label, $attributes, $disabled, $include_css );
+		return new Featured( $name, $featured, $label, $attributes, $disabled );
 	}
 
 }

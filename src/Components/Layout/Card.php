@@ -75,15 +75,14 @@ class Card extends Component {
 	 * @param string $title       Optional header title
 	 * @param mixed  $footer      Optional footer content
 	 * @param array  $attributes  Element attributes
-	 * @param bool   $include_css Whether to include built-in CSS
 	 * @param string $variant     Card style variant (default, compact, borderless, no-padding)
 	 */
-	public function __construct( $content = null, string $title = '', $footer = null, array $attributes = [], bool $include_css = true, string $variant = 'compact' ) {
+	public function __construct( $content = null, string $title = '', $footer = null, array $attributes = [], string $variant = 'compact' ) {
 		// Set style variant
 		$this->set_variant( $variant );
 
 		// Initialize component foundation
-		$this->init_component( 'card', $attributes, $include_css );
+		$this->init_component( 'card', $attributes );
 
 		// Add variant class if not default
 		if ( $this->variant !== 'default' ) {
