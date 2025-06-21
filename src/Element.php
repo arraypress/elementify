@@ -237,7 +237,7 @@ class Element {
 		'color-swatch',
 		'filesize',
 		'number',
-		'attachment-image', // Added our new component
+		'attachment-image'
 	];
 
 	/** Constructor & Initialization ******************************************/

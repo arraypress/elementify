@@ -12,13 +12,12 @@
 
 declare( strict_types=1 );
 
-namespace Elementify\Traits;
+namespace Elementify\Traits\Base;
 
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
 use Elementify\Element;
-use Elementify\Utils;
 
 /**
  * Location Trait

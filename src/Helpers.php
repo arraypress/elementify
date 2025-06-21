@@ -22,7 +22,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * Provides utility methods for common operations.
  */
-class Utils {
+class Helpers {
 
 	/**
 	 * Helper method to get MIME type from file extension

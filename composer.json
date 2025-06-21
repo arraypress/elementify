@@ -19,7 +19,7 @@
       "Elementify\\": "src/"
     },
     "files": [
-      "src/Utilities/Functions.php"
+      "src/Utilities.php"
     ]
   },
   "config": {

@@ -387,4 +387,5 @@ class Taxonomy extends Component {
 	public function get_terms(): array {
 		return $this->terms;
 	}
+
 }

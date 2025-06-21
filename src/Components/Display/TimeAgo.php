@@ -68,7 +68,7 @@ class TimeAgo extends Component {
 		$this->base_class = 'timeago';
 
 		// Initialize component foundation
-		$this->init_component( 'timeago', $attributes, $include_css );
+		$this->init_component( 'time-ago', $attributes, $include_css );
 
 		// Initialize with a span element
 		parent::__construct( 'span', null, $attributes );

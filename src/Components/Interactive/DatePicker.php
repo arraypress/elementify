@@ -86,7 +86,7 @@ class DatePicker extends Component {
 		$this->base_class = 'datepicker-wrapper';
 
 		// Initialize component foundation
-		$this->init_component( 'datepicker', $attributes, $include_css );
+		$this->init_component( 'date-picker', $attributes, $include_css );
 
 		// Initialize with div element
 		parent::__construct( 'div', null, $attributes );

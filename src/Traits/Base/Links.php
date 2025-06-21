@@ -12,7 +12,7 @@
 
 declare( strict_types=1 );
 
-namespace Elementify\Traits;
+namespace Elementify\Traits\Base;
 
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
@@ -103,7 +103,7 @@ trait Links {
 		}
 
 		// Remove any non-numeric characters for the href but keep them for display
-		$clean_phone = Utils::clean_phone_number( $phone );
+		$clean_phone = Helpers::clean_phone_number( $phone );
 
 		return self::a( 'tel:' . $clean_phone, $content, $attributes );
 	}
@@ -138,7 +138,7 @@ trait Links {
 		}
 
 		// Remove any non-numeric characters for the href
-		$clean_phone = Utils::clean_phone_number( $phone );
+		$clean_phone = Helpers::clean_phone_number( $phone );
 		$href        = 'sms:' . $clean_phone;
 
 		// Add message if provided
@@ -343,7 +343,7 @@ trait Links {
 			$content = $contact;
 		}
 
-		$contact = Utils::sanitize_contact( $contact );
+		$contact = Helpers::sanitize_contact( $contact );
 
 		return self::a( 'facetime:' . $contact, $content, $attributes );
 	}
@@ -372,7 +372,7 @@ trait Links {
 	 */
 	public static function webcal( string $url, $content = 'Add to Calendar', array $attributes = [] ): Element {
 		// Remove http:// or https:// if present
-		$url = Utils::strip_protocol( $url );
+		$url = Helpers::strip_protocol( $url );
 
 		return self::a( 'webcal://' . $url, $content, $attributes );
 	}

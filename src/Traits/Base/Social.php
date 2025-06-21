@@ -12,7 +12,7 @@
 
 declare( strict_types=1 );
 
-namespace Elementify\Traits;
+namespace Elementify\Traits\Base;
 
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
@@ -146,7 +146,7 @@ trait Social {
 		}
 
 		// Clean phone number (keep only digits and plus sign)
-		$clean_phone = Utils::clean_phone_number( $phone );
+		$clean_phone = Helpers::clean_phone_number( $phone );
 
 		$url = 'https://wa.me/' . $clean_phone;
 
