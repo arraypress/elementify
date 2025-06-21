@@ -41,19 +41,6 @@ trait Links {
 	}
 
 	/**
-	 * Create and render an anchor (a) element
-	 *
-	 * @param string $href       URL
-	 * @param mixed  $content    Element content
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function a_render( string $href, $content = null, array $attributes = [] ): void {
-		self::a( $href, $content, $attributes )->output();
-	}
-
-	/**
 	 * Create a mailto link
 	 *
 	 * @param string $email      Email address
@@ -75,19 +62,6 @@ trait Links {
 	}
 
 	/**
-	 * Create and render a mailto link
-	 *
-	 * @param string $email      Email address
-	 * @param mixed  $content    Link content (defaults to email address if not provided)
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function mailto_render( string $email, $content = null, array $attributes = [] ): void {
-		self::mailto( $email, $content, $attributes )->output();
-	}
-
-	/**
 	 * Create a tel (telephone) link
 	 *
 	 * @param string $phone      Phone number
@@ -106,19 +80,6 @@ trait Links {
 		$clean_phone = Helpers::clean_phone_number( $phone );
 
 		return self::a( 'tel:' . $clean_phone, $content, $attributes );
-	}
-
-	/**
-	 * Create and render a tel (telephone) link
-	 *
-	 * @param string $phone      Phone number
-	 * @param mixed  $content    Link content (defaults to phone number if not provided)
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function tel_render( string $phone, $content = null, array $attributes = [] ): void {
-		self::tel( $phone, $content, $attributes )->output();
 	}
 
 	/**
@@ -150,20 +111,6 @@ trait Links {
 	}
 
 	/**
-	 * Create and render an sms link
-	 *
-	 * @param string $phone      Phone number
-	 * @param string $message    Optional default message
-	 * @param mixed  $content    Link content (defaults to phone number if not provided)
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function sms_render( string $phone, string $message = '', $content = null, array $attributes = [] ): void {
-		self::sms( $phone, $message, $content, $attributes )->output();
-	}
-
-	/**
 	 * Create a download link
 	 *
 	 * @param string $url        URL to the downloadable file
@@ -182,20 +129,6 @@ trait Links {
 		}
 
 		return self::a( $url, $content, $attributes );
-	}
-
-	/**
-	 * Create and render a download link
-	 *
-	 * @param string $url        URL to the downloadable file
-	 * @param string $filename   Suggested filename for download (optional)
-	 * @param mixed  $content    Link content
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function download_render( string $url, string $filename = '', $content = null, array $attributes = [] ): void {
-		self::download( $url, $filename, $content, $attributes )->output();
 	}
 
 	/**
@@ -218,19 +151,6 @@ trait Links {
 	}
 
 	/**
-	 * Create and render an external link
-	 *
-	 * @param string $url        URL
-	 * @param mixed  $content    Element content
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function external_link_render( string $url, $content = null, array $attributes = [] ): void {
-		self::external_link( $url, $content, $attributes )->output();
-	}
-
-	/**
 	 * Create an anchor link to a section within the page
 	 *
 	 * @param string $section    ID of the section (without #)
@@ -246,19 +166,6 @@ trait Links {
 		}
 
 		return self::a( '#' . $section, $content, $attributes );
-	}
-
-	/**
-	 * Create and render an anchor link to a section within the page
-	 *
-	 * @param string $section    ID of the section (without #)
-	 * @param mixed  $content    Link content
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function anchor_render( string $section, $content = null, array $attributes = [] ): void {
-		self::anchor( $section, $content, $attributes )->output();
 	}
 
 	/**
@@ -278,20 +185,6 @@ trait Links {
 		}
 
 		return self::a( $protocol . ':' . $path, $content, $attributes );
-	}
-
-	/**
-	 * Create and render a link with a custom protocol handler
-	 *
-	 * @param string $protocol   Protocol (without colon)
-	 * @param string $path       Path or identifier for the protocol
-	 * @param mixed  $content    Link content
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function protocol_render( string $protocol, string $path, $content = null, array $attributes = [] ): void {
-		self::protocol( $protocol, $path, $content, $attributes )->output();
 	}
 
 }

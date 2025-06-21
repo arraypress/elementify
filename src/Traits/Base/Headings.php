@@ -41,19 +41,6 @@ trait Headings {
 	}
 
 	/**
-	 * Create and render a heading element (h1-h6)
-	 *
-	 * @param int   $level      Heading level (1-6)
-	 * @param mixed $content    Element content
-	 * @param array $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function heading_render( int $level, $content = null, array $attributes = [] ): void {
-		self::heading( $level, $content, $attributes )->output();
-	}
-
-	/**
 	 * Create h1 element
 	 *
 	 * @param mixed $content    Element content
@@ -63,18 +50,6 @@ trait Headings {
 	 */
 	public static function h1( $content = null, array $attributes = [] ): Element {
 		return self::heading( 1, $content, $attributes );
-	}
-
-	/**
-	 * Create and render h1 element
-	 *
-	 * @param mixed $content    Element content
-	 * @param array $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function h1_render( $content = null, array $attributes = [] ): void {
-		self::h1( $content, $attributes )->output();
 	}
 
 	/**
@@ -90,18 +65,6 @@ trait Headings {
 	}
 
 	/**
-	 * Create and render h2 element
-	 *
-	 * @param mixed $content    Element content
-	 * @param array $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function h2_render( $content = null, array $attributes = [] ): void {
-		self::h2( $content, $attributes )->output();
-	}
-
-	/**
 	 * Create h3 element
 	 *
 	 * @param mixed $content    Element content
@@ -111,18 +74,6 @@ trait Headings {
 	 */
 	public static function h3( $content = null, array $attributes = [] ): Element {
 		return self::heading( 3, $content, $attributes );
-	}
-
-	/**
-	 * Create and render h3 element
-	 *
-	 * @param mixed $content    Element content
-	 * @param array $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function h3_render( $content = null, array $attributes = [] ): void {
-		self::h3( $content, $attributes )->output();
 	}
 
 	/**
@@ -138,18 +89,6 @@ trait Headings {
 	}
 
 	/**
-	 * Create and render h4 element
-	 *
-	 * @param mixed $content    Element content
-	 * @param array $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function h4_render( $content = null, array $attributes = [] ): void {
-		self::h4( $content, $attributes )->output();
-	}
-
-	/**
 	 * Create h5 element
 	 *
 	 * @param mixed $content    Element content
@@ -162,18 +101,6 @@ trait Headings {
 	}
 
 	/**
-	 * Create and render h5 element
-	 *
-	 * @param mixed $content    Element content
-	 * @param array $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function h5_render( $content = null, array $attributes = [] ): void {
-		self::h5( $content, $attributes )->output();
-	}
-
-	/**
 	 * Create h6 element
 	 *
 	 * @param mixed $content    Element content
@@ -183,18 +110,6 @@ trait Headings {
 	 */
 	public static function h6( $content = null, array $attributes = [] ): Element {
 		return self::heading( 6, $content, $attributes );
-	}
-
-	/**
-	 * Create and render h6 element
-	 *
-	 * @param mixed $content    Element content
-	 * @param array $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function h6_render( $content = null, array $attributes = [] ): void {
-		self::h6( $content, $attributes )->output();
 	}
 
 }

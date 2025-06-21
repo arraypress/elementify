@@ -39,18 +39,6 @@ trait Layout {
 	}
 
 	/**
-	 * Create and render a section element
-	 *
-	 * @param mixed $content    Section content
-	 * @param array $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function section_render( $content = null, array $attributes = [] ): void {
-		self::section( $content, $attributes )->output();
-	}
-
-	/**
 	 * Create an article element
 	 *
 	 * @param mixed $content    Article content
@@ -60,18 +48,6 @@ trait Layout {
 	 */
 	public static function article( $content = null, array $attributes = [] ): Element {
 		return self::element( 'article', $content, $attributes );
-	}
-
-	/**
-	 * Create and render an article element
-	 *
-	 * @param mixed $content    Article content
-	 * @param array $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function article_render( $content = null, array $attributes = [] ): void {
-		self::article( $content, $attributes )->output();
 	}
 
 	/**
@@ -87,18 +63,6 @@ trait Layout {
 	}
 
 	/**
-	 * Create and render a header element
-	 *
-	 * @param mixed $content    Header content
-	 * @param array $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function header_render( $content = null, array $attributes = [] ): void {
-		self::header( $content, $attributes )->output();
-	}
-
-	/**
 	 * Create a footer element
 	 *
 	 * @param mixed $content    Footer content
@@ -108,18 +72,6 @@ trait Layout {
 	 */
 	public static function footer( $content = null, array $attributes = [] ): Element {
 		return self::element( 'footer', $content, $attributes );
-	}
-
-	/**
-	 * Create and render a footer element
-	 *
-	 * @param mixed $content    Footer content
-	 * @param array $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function footer_render( $content = null, array $attributes = [] ): void {
-		self::footer( $content, $attributes )->output();
 	}
 
 	/**
@@ -135,18 +87,6 @@ trait Layout {
 	}
 
 	/**
-	 * Create and render a nav element
-	 *
-	 * @param mixed $content    Nav content
-	 * @param array $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function nav_render( $content = null, array $attributes = [] ): void {
-		self::nav( $content, $attributes )->output();
-	}
-
-	/**
 	 * Create a main element
 	 *
 	 * @param mixed $content    Element content
@@ -159,18 +99,6 @@ trait Layout {
 	}
 
 	/**
-	 * Create and render a main element
-	 *
-	 * @param mixed $content    Element content
-	 * @param array $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function main_render( $content = null, array $attributes = [] ): void {
-		self::main( $content, $attributes )->output();
-	}
-
-	/**
 	 * Create an aside element
 	 *
 	 * @param mixed $content    Element content
@@ -180,18 +108,6 @@ trait Layout {
 	 */
 	public static function aside( $content = null, array $attributes = [] ): Element {
 		return self::element( 'aside', $content, $attributes );
-	}
-
-	/**
-	 * Create and render an aside element
-	 *
-	 * @param mixed $content    Element content
-	 * @param array $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function aside_render( $content = null, array $attributes = [] ): void {
-		self::aside( $content, $attributes )->output();
 	}
 
 	/**
@@ -212,19 +128,6 @@ trait Layout {
 		}
 
 		return $figure;
-	}
-
-	/**
-	 * Create and render a figure with optional caption
-	 *
-	 * @param mixed  $content    Figure content
-	 * @param string $caption    Figure caption
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function figure_render( $content, string $caption = '', array $attributes = [] ): void {
-		self::figure( $content, $caption, $attributes )->output();
 	}
 
 	/**
@@ -273,19 +176,6 @@ trait Layout {
 	}
 
 	/**
-	 * Create and render a table element
-	 *
-	 * @param array $data       Table data
-	 * @param array $headers    Table headers
-	 * @param array $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function table_render( array $data = [], array $headers = [], array $attributes = [] ): void {
-		self::table( $data, $headers, $attributes )->output();
-	}
-
-	/**
 	 * Create a details/summary expandable section
 	 *
 	 * @param string $summary    Summary text
@@ -305,20 +195,6 @@ trait Layout {
 		$details->add_content( $content );
 
 		return $details;
-	}
-
-	/**
-	 * Create and render a details/summary expandable section
-	 *
-	 * @param string $summary    Summary text
-	 * @param mixed  $content    Detailed content
-	 * @param bool   $open       Whether the section is open by default
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function details_render( string $summary, $content, bool $open = false, array $attributes = [] ): void {
-		self::details( $summary, $content, $open, $attributes )->output();
 	}
 
 }

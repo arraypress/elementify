@@ -44,22 +44,6 @@ trait Layout {
 	}
 
 	/**
-	 * Create and render a card component
-	 *
-	 * @param mixed  $content     Card content (body content)
-	 * @param string $title       Optional header title
-	 * @param mixed  $footer      Optional footer content
-	 * @param array  $attributes  Element attributes
-	 * @param bool   $include_css Whether to include built-in CSS (default: true)
-	 * @param string $variant     Card style variant (default, compact, borderless, no-padding)
-	 *
-	 * @return void
-	 */
-	public static function card_render( $content = null, string $title = '', $footer = null, array $attributes = [], bool $include_css = true, string $variant = 'no-padding' ): void {
-		self::card( $content, $title, $footer, $attributes, $include_css, $variant )->output();
-	}
-
-	/**
 	 * Create a card component with image support and reordered parameters
 	 *
 	 * @param string $title       Card title
@@ -82,23 +66,6 @@ trait Layout {
 		}
 
 		return $card;
-	}
-
-	/**
-	 * Create and render a card component with image support and reordered parameters
-	 *
-	 * @param string $title       Card title
-	 * @param mixed  $content     Card content
-	 * @param string $image_src   Optional image source URL
-	 * @param mixed  $footer      Optional footer content
-	 * @param array  $attributes  Element attributes
-	 * @param bool   $include_css Whether to include built-in CSS (default: true)
-	 * @param string $variant     Card style variant (default, compact, borderless, no-padding)
-	 *
-	 * @return void
-	 */
-	public static function card_advanced_render( string $title, $content, string $image_src = '', $footer = '', array $attributes = [], bool $include_css = true, string $variant = 'default' ): void {
-		self::card_advanced( $title, $content, $image_src, $footer, $attributes, $include_css, $variant )->output();
 	}
 
 }

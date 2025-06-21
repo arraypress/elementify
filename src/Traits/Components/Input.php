@@ -54,31 +54,6 @@ trait Input {
 	}
 
 	/**
-	 * Create and render a toggle component
-	 *
-	 * @param string      $name        Toggle input name
-	 * @param bool        $checked     Whether the toggle is checked
-	 * @param string|int  $value       Value when checked
-	 * @param string|null $label       Optional label text
-	 * @param array       $attributes  Element attributes
-	 * @param bool        $disabled    Whether the toggle is disabled
-	 * @param bool        $include_css Whether to include built-in CSS
-	 *
-	 * @return void
-	 */
-	public static function toggle_render(
-		string $name,
-		bool $checked = false,
-		$value = '1',
-		?string $label = null,
-		array $attributes = [],
-		bool $disabled = false,
-		bool $include_css = true
-	): void {
-		self::toggle( $name, $checked, $value, $label, $attributes, $disabled, $include_css )->output();
-	}
-
-	/**
 	 * Create a featured star component
 	 *
 	 * @param string      $name        Featured input name
@@ -99,29 +74,6 @@ trait Input {
 		bool $include_css = true
 	): Featured {
 		return new Featured( $name, $featured, $label, $attributes, $disabled, $include_css );
-	}
-
-	/**
-	 * Create and render a featured star component
-	 *
-	 * @param string      $name        Featured input name
-	 * @param bool        $featured    Whether the item is featured
-	 * @param string|null $label       Optional label text
-	 * @param array       $attributes  Element attributes
-	 * @param bool        $disabled    Whether the control is disabled
-	 * @param bool        $include_css Whether to include built-in CSS
-	 *
-	 * @return void
-	 */
-	public static function featured_render(
-		string $name,
-		bool $featured = false,
-		?string $label = null,
-		array $attributes = [],
-		bool $disabled = false,
-		bool $include_css = true
-	): void {
-		self::featured( $name, $featured, $label, $attributes, $disabled, $include_css )->output();
 	}
 
 }

@@ -42,19 +42,6 @@ trait FieldWrappers {
 	}
 
 	/**
-	 * Create and render a label element
-	 *
-	 * @param string $for        ID of the associated form control
-	 * @param string $content    Label content
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function label_render( string $for, string $content, array $attributes = [] ): void {
-		self::label( $for, $content, $attributes )->output();
-	}
-
-	/**
 	 * Create a field wrapper (label + input + description)
 	 *
 	 * @param string|Element $input       Input element or name
@@ -66,20 +53,6 @@ trait FieldWrappers {
 	 */
 	public static function field( $input, string $label = '', string $description = '', array $attributes = [] ): Field {
 		return new Field( $input, $label, $description, $attributes );
-	}
-
-	/**
-	 * Create and render a field wrapper
-	 *
-	 * @param string|Element $input       Input element or name
-	 * @param string         $label       Label text
-	 * @param string         $description Description text
-	 * @param array          $attributes  Wrapper attributes
-	 *
-	 * @return void
-	 */
-	public static function field_render( $input, string $label = '', string $description = '', array $attributes = [] ): void {
-		self::field( $input, $label, $description, $attributes )->output();
 	}
 
 }

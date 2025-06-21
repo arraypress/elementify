@@ -42,20 +42,6 @@ trait Selects {
 	}
 
 	/**
-	 * Create and render a select element
-	 *
-	 * @param string $name           Select name
-	 * @param array  $options        Select options
-	 * @param mixed  $selected_value Selected value(s)
-	 * @param array  $attributes     Element attributes
-	 *
-	 * @return void
-	 */
-	public static function select_render( string $name, array $options = [], $selected_value = null, array $attributes = [] ): void {
-		self::select( $name, $options, $selected_value, $attributes )->output();
-	}
-
-	/**
 	 * Create a datalist element
 	 *
 	 * @param string $id         Datalist ID
@@ -81,19 +67,6 @@ trait Selects {
 		}
 
 		return $datalist;
-	}
-
-	/**
-	 * Create and render a datalist element
-	 *
-	 * @param string $id         Datalist ID
-	 * @param array  $options    Array of options
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function datalist_render( string $id, array $options, array $attributes = [] ): void {
-		self::datalist( $id, $options, $attributes )->output();
 	}
 
 }

@@ -18,7 +18,7 @@ namespace Elementify\Traits\Base;
 defined( 'ABSPATH' ) || exit;
 
 use Elementify\Element;
-use Elementify\Utils;
+use Elementify\Helpers;
 
 /**
  * Media Elements Trait
@@ -38,19 +38,6 @@ trait Media {
 	 */
 	public static function img( string $src, string $alt = '', array $attributes = [] ): Element {
 		return self::element( 'img', null, array_merge( [ 'src' => $src, 'alt' => $alt ], $attributes ) );
-	}
-
-	/**
-	 * Create and render an image element
-	 *
-	 * @param string $src        Image URL
-	 * @param string $alt        Alternative text
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function img_render( string $src, string $alt = '', array $attributes = [] ): void {
-		self::img( $src, $alt, $attributes )->output();
 	}
 
 	/**
@@ -87,19 +74,6 @@ trait Media {
 	}
 
 	/**
-	 * Create and render an audio element
-	 *
-	 * @param string|array $src        Audio source URL or array of sources
-	 * @param bool         $controls   Whether to show audio controls
-	 * @param array        $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function audio_render( $src, bool $controls = true, array $attributes = [] ): void {
-		self::audio( $src, $controls, $attributes )->output();
-	}
-
-	/**
 	 * Create a video element
 	 *
 	 * @param string|array $src        Video source URL or array of sources
@@ -133,19 +107,6 @@ trait Media {
 	}
 
 	/**
-	 * Create and render a video element
-	 *
-	 * @param string|array $src        Video source URL or array of sources
-	 * @param bool         $controls   Whether to show video controls
-	 * @param array        $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function video_render( $src, bool $controls = true, array $attributes = [] ): void {
-		self::video( $src, $controls, $attributes )->output();
-	}
-
-	/**
 	 * Create a source element for audio/video
 	 *
 	 * @param string $src        Source URL
@@ -159,19 +120,6 @@ trait Media {
 			'src'  => $src,
 			'type' => $type
 		], $attributes ) );
-	}
-
-	/**
-	 * Create and render a source element for audio/video
-	 *
-	 * @param string $src        Source URL
-	 * @param string $type       MIME type
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function source_render( string $src, string $type, array $attributes = [] ): void {
-		self::source( $src, $type, $attributes )->output();
 	}
 
 	/**
@@ -212,20 +160,6 @@ trait Media {
 	}
 
 	/**
-	 * Create and render a picture element
-	 *
-	 * @param array  $sources    Array of source elements or arrays with src and media attributes
-	 * @param string $img_src    Fallback image source
-	 * @param string $alt        Alternative text for the image
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function picture_render( array $sources, string $img_src, string $alt = '', array $attributes = [] ): void {
-		self::picture( $sources, $img_src, $alt, $attributes )->output();
-	}
-
-	/**
 	 * Create an iframe element
 	 *
 	 * @param string $src        Source URL
@@ -241,19 +175,6 @@ trait Media {
 			'frameborder' => '0',
 			'loading'     => 'lazy'
 		], $attributes ) );
-	}
-
-	/**
-	 * Create and render an iframe element
-	 *
-	 * @param string $src        Source URL
-	 * @param string $title      Title for accessibility
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function iframe_render( string $src, string $title, array $attributes = [] ): void {
-		self::iframe( $src, $title, $attributes )->output();
 	}
 
 }

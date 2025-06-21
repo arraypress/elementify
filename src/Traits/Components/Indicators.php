@@ -46,21 +46,6 @@ trait Indicators {
 	}
 
 	/**
-	 * Create and render a progress bar component
-	 *
-	 * @param int|float $current     Current value
-	 * @param int|float $total       Total value (maximum)
-	 * @param array     $options     Additional options
-	 * @param array     $attributes  Element attributes
-	 * @param bool      $include_css Whether to include built-in CSS (default: true)
-	 *
-	 * @return void
-	 */
-	public static function progress_bar_render( $current, $total = 100, array $options = [], array $attributes = [], bool $include_css = true ): void {
-		self::progress_bar( $current, $total, $options, $attributes, $include_css )->output();
-	}
-
-	/**
 	 * Create a rating component
 	 *
 	 * @param float $rating      Rating value
@@ -72,20 +57,6 @@ trait Indicators {
 	 */
 	public static function rating( float $rating, array $options = [], array $attributes = [], bool $include_css = true ): Rating {
 		return new Rating( $rating, $options, $attributes, $include_css );
-	}
-
-	/**
-	 * Create and render a rating component
-	 *
-	 * @param float $rating      Rating value
-	 * @param array $options     Additional options
-	 * @param array $attributes  Element attributes
-	 * @param bool  $include_css Whether to include built-in CSS
-	 *
-	 * @return void
-	 */
-	public static function rating_render( float $rating, array $options = [], array $attributes = [], bool $include_css = true ): void {
-		self::rating( $rating, $options, $attributes, $include_css )->output();
 	}
 
 	/**
@@ -109,21 +80,6 @@ trait Indicators {
 	}
 
 	/**
-	 * Create and render a status badge component
-	 *
-	 * @param string $label       Badge label text
-	 * @param string $status      Status type (success, warning, error, info, etc.)
-	 * @param array  $options     Additional options
-	 * @param array  $attributes  Element attributes
-	 * @param bool   $include_css Whether to include built-in CSS (default: true)
-	 *
-	 * @return void
-	 */
-	public static function badge_render( string $label, string $status = 'default', array $options = [], array $attributes = [], bool $include_css = true ): void {
-		self::badge( $label, $status, $options, $attributes, $include_css )->output();
-	}
-
-	/**
 	 * Create a boolean icon component
 	 *
 	 * @param mixed $value       Value to check
@@ -135,20 +91,6 @@ trait Indicators {
 	 */
 	public static function boolean_icon( $value, array $options = [], array $attributes = [], bool $include_css = true ): BooleanIcon {
 		return new BooleanIcon( $value, $options, $attributes, $include_css );
-	}
-
-	/**
-	 * Create and render a boolean icon component
-	 *
-	 * @param mixed $value       Value to check
-	 * @param array $options     Component options
-	 * @param array $attributes  Element attributes
-	 * @param bool  $include_css Whether to include built-in CSS
-	 *
-	 * @return void
-	 */
-	public static function boolean_icon_render( $value, array $options = [], array $attributes = [], bool $include_css = true ): void {
-		self::boolean_icon( $value, $options, $attributes, $include_css )->output();
 	}
 
 }

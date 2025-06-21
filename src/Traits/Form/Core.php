@@ -41,19 +41,6 @@ trait Core {
 	}
 
 	/**
-	 * Create and render a form element
-	 *
-	 * @param string $action     Form action URL
-	 * @param string $method     Form method
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function form_render( string $action = '', string $method = 'post', array $attributes = [] ): void {
-		self::form( $action, $method, $attributes )->output();
-	}
-
-	/**
 	 * Create a fieldset element
 	 *
 	 * @param mixed  $content    Content of the fieldset
@@ -77,19 +64,6 @@ trait Core {
 	}
 
 	/**
-	 * Create and render a fieldset element
-	 *
-	 * @param mixed  $content    Content of the fieldset
-	 * @param string $legend     Legend text (optional)
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function fieldset_render( $content = null, string $legend = '', array $attributes = [] ): void {
-		self::fieldset( $content, $legend, $attributes )->output();
-	}
-
-	/**
 	 * Create a WordPress nonce field
 	 *
 	 * @param string $action  Action name
@@ -107,19 +81,6 @@ trait Core {
 		}
 
 		return '';
-	}
-
-	/**
-	 * Output a WordPress nonce field
-	 *
-	 * @param string $action  Action name
-	 * @param string $name    Nonce name
-	 * @param bool   $referer Whether to include the referer field
-	 *
-	 * @return void
-	 */
-	public static function nonce_render( string $action, string $name = '_wpnonce', bool $referer = true ): void {
-		echo self::nonce( $action, $name, $referer );
 	}
 
 }

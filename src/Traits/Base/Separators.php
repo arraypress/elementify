@@ -39,17 +39,6 @@ trait Separators {
 	}
 
 	/**
-	 * Create and render a horizontal rule element
-	 *
-	 * @param array $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function hr_render( array $attributes = [] ): void {
-		self::hr( $attributes )->output();
-	}
-
-	/**
 	 * Create a line break element or multiple line breaks
 	 *
 	 * @param int   $count      Number of line breaks to create (default: 1)
@@ -74,30 +63,6 @@ trait Separators {
 		}
 
 		return $container;
-	}
-
-	/**
-	 * Create and render a line break element or multiple line breaks
-	 *
-	 * @param int   $count      Number of line breaks to create (default: 1)
-	 * @param array $attributes Element attributes (applies to each br element)
-	 *
-	 * @return void
-	 */
-	public static function br_render( int $count = 1, array $attributes = [] ): void {
-		if ( $count <= 0 ) {
-			return;
-		}
-
-		if ( $count === 1 ) {
-			self::element( 'br', null, $attributes )->output();
-			return;
-		}
-
-		// For multiple breaks, render each one independently
-		for ( $i = 0; $i < $count; $i++ ) {
-			self::element( 'br', null, $attributes )->output();
-		}
 	}
 
 }

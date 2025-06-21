@@ -40,17 +40,4 @@ trait Utility {
 		return new Clipboard( $text, $options, $attributes );
 	}
 
-	/**
-	 * Create and render a simple clipboard component
-	 *
-	 * @param string $text       The text to copy
-	 * @param array  $options    Component options
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function clipboard_render( string $text, array $options = [], array $attributes = [] ): void {
-		self::clipboard( $text, $options, $attributes )->output();
-	}
-
 }

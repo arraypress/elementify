@@ -15,7 +15,6 @@ declare( strict_types=1 );
 namespace Elementify\Traits\Component;
 
 use Elementify\Element;
-use Elementify\Create;
 use LogicException;
 
 // Exit if accessed directly
@@ -86,7 +85,6 @@ trait Parts {
 	 * @return Element The header element
 	 */
 	protected function create_header( string $tag = 'div', $content = null, array $attributes = [] ): Element {
-		// Headers typically contain text that should be escaped
 		return $this->create_part( $tag, $content, 'header', $attributes, false );
 	}
 
@@ -100,7 +98,6 @@ trait Parts {
 	 * @return Element The body element
 	 */
 	protected function create_body( string $tag = 'div', $content = null, array $attributes = [] ): Element {
-		// Bodies are containers that shouldn't escape their content
 		return $this->create_part( $tag, $content, 'body', $attributes, false );
 	}
 
@@ -114,7 +111,6 @@ trait Parts {
 	 * @return Element The footer element
 	 */
 	protected function create_footer( string $tag = 'div', $content = null, array $attributes = [] ): Element {
-		// Footers are containers that shouldn't escape their content
 		return $this->create_part( $tag, $content, 'footer', $attributes, false );
 	}
 
@@ -128,7 +124,6 @@ trait Parts {
 	 * @return Element The title element
 	 */
 	protected function create_title( $content, int $level = 3, array $attributes = [] ): Element {
-		// Titles typically contain text that should be escaped
 		return $this->create_part( "h{$level}", $content, 'title', $attributes, true );
 	}
 
@@ -142,7 +137,6 @@ trait Parts {
 	 * @return Element The content element
 	 */
 	protected function create_content( string $tag = 'div', $content = null, array $attributes = [] ): Element {
-		// Content containers shouldn't escape their content
 		return $this->create_part( $tag, $content, 'content', $attributes, false );
 	}
 
@@ -158,7 +152,7 @@ trait Parts {
 	 * @return Element The container element
 	 */
 	protected function create_container( string $tag = 'div', $content = null, array $attributes = [] ): Element {
-		// Containers should never escape their content
 		return $this->create_part( $tag, $content, 'container', $attributes, false );
 	}
+
 }

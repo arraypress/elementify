@@ -39,17 +39,4 @@ trait Base {
 		return new Element( $tag, $content, $attributes );
 	}
 
-	/**
-	 * Create and render a generic element
-	 *
-	 * @param string $tag        HTML tag
-	 * @param mixed  $content    Element content
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function element_render( string $tag, $content = null, array $attributes = [] ): void {
-		self::element( $tag, $content, $attributes )->output();
-	}
-
 }

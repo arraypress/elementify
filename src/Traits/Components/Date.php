@@ -40,18 +40,4 @@ trait Date {
 		return new TimeAgo( $time, $options, $attributes, $include_css );
 	}
 
-	/**
-	 * Create and render a time ago component
-	 *
-	 * @param mixed $time        Timestamp, date string, or DateTime object
-	 * @param array $options     Additional options
-	 * @param array $attributes  Element attributes
-	 * @param bool  $include_css Whether to include built-in CSS
-	 *
-	 * @return void
-	 */
-	public static function timeago_render( $time, array $options = [], array $attributes = [], bool $include_css = true ): void {
-		self::timeago( $time, $options, $attributes, $include_css )->output();
-	}
-
 }

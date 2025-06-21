@@ -53,18 +53,6 @@ trait Lists {
 	}
 
 	/**
-	 * Create and render an unordered list element
-	 *
-	 * @param array $items      List items
-	 * @param array $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function ul_render( array $items = [], array $attributes = [] ): void {
-		self::ul( $items, $attributes )->output();
-	}
-
-	/**
 	 * Create an ordered list element
 	 *
 	 * @param array $items      List items
@@ -91,18 +79,6 @@ trait Lists {
 	}
 
 	/**
-	 * Create and render an ordered list element
-	 *
-	 * @param array $items      List items
-	 * @param array $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function ol_render( array $items = [], array $attributes = [] ): void {
-		self::ol( $items, $attributes )->output();
-	}
-
-	/**
 	 * Create a list item element
 	 *
 	 * @param mixed $content    Element content
@@ -112,18 +88,6 @@ trait Lists {
 	 */
 	public static function li( $content = null, array $attributes = [] ): Element {
 		return self::element( 'li', $content, $attributes );
-	}
-
-	/**
-	 * Create and render a list item element
-	 *
-	 * @param mixed $content    Element content
-	 * @param array $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function li_render( $content = null, array $attributes = [] ): void {
-		self::li( $content, $attributes )->output();
 	}
 
 	/**
@@ -143,18 +107,6 @@ trait Lists {
 		}
 
 		return $dl;
-	}
-
-	/**
-	 * Create and render a definition list
-	 *
-	 * @param array $items      Array of terms and definitions
-	 * @param array $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function dl_render( array $items = [], array $attributes = [] ): void {
-		self::dl( $items, $attributes )->output();
 	}
 
 	/**
@@ -205,18 +157,6 @@ trait Lists {
 		}
 
 		return $menu;
-	}
-
-	/**
-	 * Create and render a menu (navigation list)
-	 *
-	 * @param array $items      Array of menu items
-	 * @param array $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function menu_render( array $items, array $attributes = [] ): void {
-		self::menu( $items, $attributes )->output();
 	}
 
 	/**
@@ -276,19 +216,6 @@ trait Lists {
 	}
 
 	/**
-	 * Create and render a dropdown menu
-	 *
-	 * @param string $label      Dropdown label
-	 * @param array  $items      Array of dropdown items
-	 * @param array  $attributes Element attributes
-	 *
-	 * @return void
-	 */
-	public static function dropdown_render( string $label, array $items, array $attributes = [] ): void {
-		self::dropdown( $label, $items, $attributes )->output();
-	}
-
-	/**
 	 * Create a list of links with flexible input format
 	 *
 	 * @param array $links      Array of links in various formats:
@@ -322,22 +249,6 @@ trait Lists {
 
 		// Create ordered or unordered list based on preference
 		return $ordered ? self::ol( $items, $list_attrs ) : self::ul( $items, $list_attrs );
-	}
-
-	/**
-	 * Create and render a list of links with flexible input format
-	 *
-	 * @param array $links      Array of links in various formats:
-	 *                          - Associative array with keys as URLs and values as link text
-	 *                          - Array of arrays with 'href' and 'text' keys
-	 *                          - Array of arrays with additional attributes
-	 * @param array $list_attrs Attributes for the list element
-	 * @param bool  $ordered    Whether to create an ordered list (true) or unordered list (false)
-	 *
-	 * @return void
-	 */
-	public static function link_list_render( array $links, array $list_attrs = [], bool $ordered = false ): void {
-		self::link_list( $links, $list_attrs, $ordered )->output();
 	}
 
 }
