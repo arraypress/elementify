@@ -20,6 +20,7 @@ defined( 'ABSPATH' ) || exit;
 use Elementify\Abstracts\Component;
 use Elementify\Create;
 use Elementify\Traits\Component\Parts;
+use WP_User;
 
 /**
  * User Component
@@ -46,17 +47,17 @@ class User extends Component {
 	/**
 	 * WP_User object
 	 *
-	 * @var \WP_User|null
+	 * @var WP_User|null
 	 */
 	protected $user = null;
 
 	/**
 	 * Constructor
 	 *
-	 * @param int|string|\WP_User $user        User ID, username, email, or WP_User object
-	 * @param array               $options     Additional options
-	 * @param array               $attributes  Element attributes
-	 * @param bool                $include_css Whether to include built-in CSS
+	 * @param int|string|WP_User $user        User ID, username, email, or WP_User object
+	 * @param array              $options     Additional options
+	 * @param array              $attributes  Element attributes
+	 * @param bool               $include_css Whether to include built-in CSS
 	 */
 	public function __construct( $user, array $options = [], array $attributes = [], bool $include_css = true ) {
 		// Get user
@@ -93,13 +94,13 @@ class User extends Component {
 	/**
 	 * Get WP_User object from user ID, username, email, or WP_User object
 	 *
-	 * @param int|string|\WP_User $user
+	 * @param int|string|WP_User $user
 	 *
-	 * @return \WP_User|null
+	 * @return WP_User|null
 	 */
 	protected function get_user_object( $user ) {
 		// If it's already a WP_User object
-		if ( $user instanceof \WP_User ) {
+		if ( $user instanceof WP_User ) {
 			return $user;
 		}
 
@@ -347,7 +348,7 @@ class User extends Component {
 	/**
 	 * Get the user object
 	 *
-	 * @return \WP_User|null
+	 * @return WP_User|null
 	 */
 	public function get_user() {
 		return $this->user;

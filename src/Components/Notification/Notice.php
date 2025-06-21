@@ -70,7 +70,7 @@ class Notice extends Component {
 	 * @param string $type        Notice type (info, success, warning, error)
 	 * @param bool   $dismissible Whether the notice can be dismissed
 	 * @param array  $attributes  Element attributes
-	 * @param bool   $include_css Whether to include built-in CSS (only for non-admin contexts)
+	 * @param bool   $include_css Whether to include built-in CSS (ignored - WordPress handles styling)
 	 */
 	public function __construct( $content = null, string $type = 'info', bool $dismissible = false, array $attributes = [], bool $include_css = true ) {
 		// Store the content
@@ -114,14 +114,8 @@ class Notice extends Component {
 		// Initialize with a div element
 		parent::__construct( 'div', null, $attributes );
 
-		// Check if we're in WordPress admin
-		$in_admin = $this->is_wordpress_admin();
-
-		// Only include CSS if we're not in admin
-		$actually_include_css = $include_css && ! $in_admin;
-
-		// Initialize component foundation
-		$this->init_component( 'notice', $attributes, $actually_include_css );
+		// Never include CSS/JS - WordPress handles this natively
+		$this->init_component( 'notice', $attributes, false );
 
 		// Build the notice structure
 		$this->build();
@@ -147,36 +141,8 @@ class Notice extends Component {
 		// Add the paragraph to the notice
 		$this->add_child( $content_paragraph );
 
-		// Add dismiss button if needed
-		if ( $this->dismissible ) {
-			$this->add_dismiss_button();
-		}
-	}
-
-	/**
-	 * Helper method to safely check if we're in WordPress admin context
-	 *
-	 * @return bool Whether we're in the WordPress admin
-	 */
-	protected function is_wordpress_admin(): bool {
-		return function_exists( 'is_admin' ) && is_admin();
-	}
-
-	/**
-	 * Add dismiss button to notice
-	 */
-	protected function add_dismiss_button(): void {
-		// WordPress handles dismiss button for us in admin
-		if ( $this->is_wordpress_admin() ) {
-			return;
-		}
-
-		// Add dismiss button for non-admin context
-		$dismiss_button = Create::button( '×', 'button' )
-		                        ->add_class( 'notice-dismiss' )
-		                        ->set_attribute( 'aria-label', 'Dismiss this notice' );
-
-		$this->add_child( $dismiss_button );
+		// WordPress automatically handles dismiss buttons for dismissible notices
+		// No need to add our own dismiss button
 	}
 
 	/**
@@ -240,12 +206,12 @@ class Notice extends Component {
 	 * @param mixed $content     Notice content
 	 * @param bool  $dismissible Whether the notice can be dismissed
 	 * @param array $attributes  Element attributes
-	 * @param bool  $include_css Whether to include built-in CSS (only for non-admin contexts)
+	 * @param bool  $include_css Whether to include built-in CSS (ignored)
 	 *
 	 * @return Notice
 	 */
 	public static function info( $content, bool $dismissible = false, array $attributes = [], bool $include_css = true ): Notice {
-		return new Notice( $content, 'info', $dismissible, $attributes, $include_css );
+		return new Notice( $content, 'info', $dismissible, $attributes, false );
 	}
 
 	/**
@@ -254,12 +220,12 @@ class Notice extends Component {
 	 * @param mixed $content     Notice content
 	 * @param bool  $dismissible Whether the notice can be dismissed
 	 * @param array $attributes  Element attributes
-	 * @param bool  $include_css Whether to include built-in CSS (only for non-admin contexts)
+	 * @param bool  $include_css Whether to include built-in CSS (ignored)
 	 *
 	 * @return Notice
 	 */
 	public static function success( $content, bool $dismissible = false, array $attributes = [], bool $include_css = true ): Notice {
-		return new Notice( $content, 'success', $dismissible, $attributes, $include_css );
+		return new Notice( $content, 'success', $dismissible, $attributes, false );
 	}
 
 	/**
@@ -268,12 +234,12 @@ class Notice extends Component {
 	 * @param mixed $content     Notice content
 	 * @param bool  $dismissible Whether the notice can be dismissed
 	 * @param array $attributes  Element attributes
-	 * @param bool  $include_css Whether to include built-in CSS (only for non-admin contexts)
+	 * @param bool  $include_css Whether to include built-in CSS (ignored)
 	 *
 	 * @return Notice
 	 */
 	public static function warning( $content, bool $dismissible = false, array $attributes = [], bool $include_css = true ): Notice {
-		return new Notice( $content, 'warning', $dismissible, $attributes, $include_css );
+		return new Notice( $content, 'warning', $dismissible, $attributes, false );
 	}
 
 	/**
@@ -282,12 +248,12 @@ class Notice extends Component {
 	 * @param mixed $content     Notice content
 	 * @param bool  $dismissible Whether the notice can be dismissed
 	 * @param array $attributes  Element attributes
-	 * @param bool  $include_css Whether to include built-in CSS (only for non-admin contexts)
+	 * @param bool  $include_css Whether to include built-in CSS (ignored)
 	 *
 	 * @return Notice
 	 */
 	public static function error( $content, bool $dismissible = false, array $attributes = [], bool $include_css = true ): Notice {
-		return new Notice( $content, 'error', $dismissible, $attributes, $include_css );
+		return new Notice( $content, 'error', $dismissible, $attributes, false );
 	}
 
 	/**

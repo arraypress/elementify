@@ -37,16 +37,14 @@ if ( ! class_exists( 'Elementify\\Element' ) ) {
 		// Traits
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Component/Parts.php';
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Component/SectionContent.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Base.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Common.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Headings.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Layout.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Lists.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Media.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Social.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Separators.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Links.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Location.php';
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Base/Base.php';
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Base/Common.php';
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Base/Headings.php';
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Base/Layout.php';
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Base/Lists.php';
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Base/Media.php';
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Base/Separators.php';
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Base/Links.php';
 
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Form/Core.php';
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Traits/Form/Buttons.php';
@@ -68,7 +66,7 @@ if ( ! class_exists( 'Elementify\\Element' ) ) {
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Element.php';
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Assets.php';
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Create.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Utils.php';
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Helpers.php';
 
 		// Abstracts
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Abstracts/Component.php';
@@ -82,13 +80,7 @@ if ( ! class_exists( 'Elementify\\Element' ) ) {
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Elements/Select.php';
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Elements/Textarea.php';
 
-		// Components
 		// Interactive Components
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Components/Interactive/Accordion.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Components/Interactive/DatePicker.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Components/Interactive/Modal.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Components/Interactive/Tabs.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Components/Interactive/Tooltip.php';
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Components/Interactive/Range.php';
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Components/Interactive/Toggle.php';
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Components/Interactive/Clipboard.php';
@@ -108,16 +100,12 @@ if ( ! class_exists( 'Elementify\\Element' ) ) {
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Components/Display/TimeAgo.php';
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Components/Display/User.php';
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Components/Display/NumberFormat.php';
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Components/Display/AttachmentImage.php';
 
 		// Notification Components
 		require_once ELEMENTIFY_LOADER_PATH . 'src/Components/Notification/Notice.php';
 
-		// Taxonomy Components
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Components/Taxonomy/Taxonomy.php';
-
 		// Function files
-		require_once ELEMENTIFY_LOADER_PATH . 'src/Utilities/Functions.php';
+		require_once ELEMENTIFY_LOADER_PATH . 'src/Utilities.php';
 	}
 
 	// Load Elementify files

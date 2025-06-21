@@ -23,7 +23,7 @@ use Elementify\Components\Layout\Breadcrumbs;
  * Navigation Components Trait
  *
  * Provides methods for creating and rendering navigation-related HTML components
- * like breadcrumbs.
+ * like breadcrumbs with icon support.
  */
 trait Navigation {
 
@@ -53,6 +53,35 @@ trait Navigation {
 	 */
 	public static function breadcrumbs_render( array $items = [], string $separator = '/', array $attributes = [], bool $include_css = true ): void {
 		self::breadcrumbs( $items, $separator, $attributes, $include_css )->output();
+	}
+
+	/**
+	 * Create breadcrumbs with icons using a simplified API
+	 *
+	 * @param array  $items       Array of items in format: [['icon', 'text', 'url'], ['icon', 'text']] or [['text' =>
+	 *                            '', 'icon' => '', 'url' => '']]
+	 * @param string $separator   Separator between items
+	 * @param array  $attributes  Element attributes
+	 * @param bool   $include_css Whether to include built-in CSS (default: true)
+	 *
+	 * @return Breadcrumbs
+	 */
+	public static function breadcrumbs_with_icons( array $items = [], string $separator = '›', array $attributes = [], bool $include_css = true ): Breadcrumbs {
+		return new Breadcrumbs( $items, $separator, $attributes, $include_css );
+	}
+
+	/**
+	 * Create and render breadcrumbs with icons
+	 *
+	 * @param array  $items       Array of items in format: [['icon', 'text', 'url'], ['icon', 'text']]
+	 * @param string $separator   Separator between items
+	 * @param array  $attributes  Element attributes
+	 * @param bool   $include_css Whether to include built-in CSS (default: true)
+	 *
+	 * @return void
+	 */
+	public static function breadcrumbs_with_icons_render( array $items = [], string $separator = '›', array $attributes = [], bool $include_css = true ): void {
+		self::breadcrumbs_with_icons( $items, $separator, $attributes, $include_css )->output();
 	}
 
 	/**
@@ -133,6 +162,104 @@ trait Navigation {
 	 */
 	public static function breadcrumbs_map_render( array $path_map, string $separator = '/', array $attributes = [], bool $include_css = true ): void {
 		self::breadcrumbs_map( $path_map, $separator, $attributes, $include_css )->output();
+	}
+
+	/**
+	 * Create a breadcrumb from a path string (compatible with your existing method)
+	 * This method provides backward compatibility with your existing Breadcrumb class API
+	 *
+	 * @param string      $base_url   Base URL for the breadcrumb links
+	 * @param string      $base_label Label for the base URL
+	 * @param string|null $base_icon  Optional. Dashicon for the base. Default null.
+	 * @param string      $path       Forward slash separated path string
+	 * @param string      $separator  Optional. Separator between items. Default '›'.
+	 * @param array       $classes    Optional. CSS classes for container. Default empty array.
+	 *
+	 * @return Breadcrumbs
+	 */
+	public static function breadcrumbs_legacy(
+		string $base_url,
+		string $base_label,
+		?string $base_icon = null,
+		string $path = '',
+		string $separator = '›',
+		array $classes = []
+	): Breadcrumbs {
+		return Breadcrumbs::from_path_legacy( $base_url, $base_label, $base_icon, $path, $separator, $classes );
+	}
+
+	/**
+	 * Create and render a breadcrumb from a path string
+	 *
+	 * @param string      $base_url   Base URL for the breadcrumb links
+	 * @param string      $base_label Label for the base URL
+	 * @param string|null $base_icon  Optional. Dashicon for the base. Default null.
+	 * @param string      $path       Forward slash separated path string
+	 * @param string      $separator  Optional. Separator between items. Default '›'.
+	 * @param array       $classes    Optional. CSS classes for container. Default empty array.
+	 *
+	 * @return void
+	 */
+	public static function breadcrumbs_legacy_render(
+		string $base_url,
+		string $base_label,
+		?string $base_icon = null,
+		string $path = '',
+		string $separator = '›',
+		array $classes = []
+	): void {
+		self::breadcrumbs_legacy( $base_url, $base_label, $base_icon, $path, $separator, $classes )->output();
+	}
+
+	/**
+	 * Create a back button/link component
+	 *
+	 * @param string      $url     The URL for the back link
+	 * @param string      $label   Optional. Label for the back button. Default 'Back'.
+	 * @param string|null $icon    Optional. Dashicon class. Default 'arrow-left-alt'.
+	 * @param array       $classes Optional. CSS classes. Default empty array.
+	 *
+	 * @return string HTML for the back button
+	 */
+	public static function back_button(
+		string $url,
+		string $label = 'Back',
+		?string $icon = 'arrow-left-alt',
+		array $classes = []
+	): string {
+		$button_classes = array_merge( [ 'button' ], $classes );
+
+		$content = '';
+		if ( $icon ) {
+			$content .= self::span()->add_class( "dashicons dashicons-{$icon}" )->set_attribute( 'style', 'margin-top: 3px;' )->render() . ' ';
+		}
+		$content .= $label;
+
+		$back_button = self::div(
+			self::a( $url, $content, [ 'class' => implode( ' ', $button_classes ) ] ),
+			[ 'class' => 'breadcrumb-back-button' ]
+		);
+
+		return $back_button->render();
+	}
+
+	/**
+	 * Create and render a back button/link component
+	 *
+	 * @param string      $url     The URL for the back link
+	 * @param string      $label   Optional. Label for the back button. Default 'Back'.
+	 * @param string|null $icon    Optional. Dashicon class. Default 'arrow-left-alt'.
+	 * @param array       $classes Optional. CSS classes. Default empty array.
+	 *
+	 * @return void
+	 */
+	public static function back_button_render(
+		string $url,
+		string $label = 'Back',
+		?string $icon = 'arrow-left-alt',
+		array $classes = []
+	): void {
+		echo self::back_button( $url, $label, $icon, $classes );
 	}
 
 }
