@@ -15,6 +15,8 @@ declare( strict_types=1 );
 namespace Elementify;
 
 // Exit if accessed directly
+use BadMethodCallException;
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -996,6 +998,63 @@ class Element {
 		$clone->is_self_closing = $this->is_self_closing;
 
 		return $clone;
+	}
+
+	/**
+	 * Magic method to enable fluent child element creation
+	 *
+	 * Allows calling Create methods directly on an element to add children fluently.
+	 * Example: $div->h4('Title')->p('Content')
+	 *
+	 * @param string $method Method name (should match a Create class method)
+	 * @param array  $args   Arguments to pass to the Create method
+	 *
+	 * @return $this For method chaining
+	 * @throws BadMethodCallException If method doesn't exist in Create class
+	 */
+	public function __call( string $method, array $args ): self {
+		if ( method_exists( 'Elementify\\Create', $method ) ) {
+			$child = call_user_func_array( [ 'Elementify\\Create', $method ], $args );
+
+			// Add the new element as a child
+			$this->add_child( $child );
+
+			// Return this element for continued chaining
+			return $this;
+		}
+
+		throw new BadMethodCallException( "Method '{$method}' not found in Create class" );
+	}
+
+	/**
+	 * Add multiple children from an array while maintaining fluent interface
+	 *
+	 * @param array $children Array of elements or content to add as children
+	 *
+	 * @return $this For method chaining
+	 */
+	public function add_children( array $children ): self {
+		foreach ( $children as $child ) {
+			$this->add_child( $child );
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Conditionally add a child element
+	 *
+	 * @param mixed $child     Child to add
+	 * @param bool  $condition When true, add the child; when false, skip
+	 *
+	 * @return $this For method chaining
+	 */
+	public function add_child_if( $child, bool $condition ): self {
+		if ( $condition ) {
+			$this->add_child( $child );
+		}
+
+		return $this;
 	}
 
 	/**
