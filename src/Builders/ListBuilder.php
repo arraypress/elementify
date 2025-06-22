@@ -92,6 +92,24 @@ class ListBuilder extends Element {
 	}
 
 	/**
+	 * Add a current/active item (non-clickable)
+	 *
+	 * @param string $text       Item text
+	 * @param array  $attributes Item attributes
+	 *
+	 * @return $this For method chaining
+	 */
+	public function current( string $text, array $attributes = [] ): self {
+		$this->items[] = [
+			'type'       => 'current',
+			'text'       => $text,
+			'attributes' => array_merge( [ 'class' => 'current active' ], $attributes )
+		];
+
+		return $this;
+	}
+
+	/**
 	 * Add a submenu (nested list)
 	 *
 	 * @param string $label      Submenu label
@@ -256,6 +274,11 @@ class ListBuilder extends Element {
 					}
 					break;
 
+				case 'header':
+				case 'current':
+					$li = Create::li( $item_data['text'], $item_data['attributes'] );
+					break;
+
 				case 'submenu':
 					$submenu_list = Create::ul();
 
@@ -283,9 +306,6 @@ class ListBuilder extends Element {
 					$li = Create::li( null, [ 'class' => $item_data['class'] ] );
 					break;
 
-				case 'header':
-					$li = Create::li( $item_data['text'], $item_data['attributes'] );
-					break;
 			}
 
 			if ( $li ) {

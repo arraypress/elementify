@@ -326,12 +326,36 @@ class TableBuilder extends Element {
 				if ( ! empty( $this->actions ) ) {
 					$actions_cell = Create::element( 'td', null, [ 'class' => 'actions' ] );
 
-					foreach ( $this->actions as $action ) {
+					foreach ( $this->actions as $index => $action ) {
 						if ( is_string( $action ) ) {
-							$button = Create::button( ucfirst( $action ), 'button', [ 'class' => "action-{$action}" ] );
+							$classes = [ 'button' ];
+
+							// Add WordPress button classes based on action type
+							if ( $action === 'edit' ) {
+								$classes[] = 'button-secondary';
+							} elseif ( $action === 'delete' ) {
+								$classes[] = 'button-secondary';
+								$classes[] = 'button-link-delete';
+							} else {
+								$classes[] = 'button-secondary';
+							}
+
+							$button = Create::button( ucfirst( $action ), 'button', [
+								'class' => implode( ' ', $classes ) . " action-{$action}"
+							] );
 							$actions_cell->add_child( $button );
+
+							// Add spacing between buttons
+							if ( $index < count( $this->actions ) - 1 ) {
+								$actions_cell->add_child( ' ' );
+							}
 						} elseif ( is_array( $action ) && isset( $action['text'], $action['url'] ) ) {
-							$link = Create::a( $action['url'], $action['text'], $action['attributes'] ?? [] );
+							$classes    = $action['classes'] ?? [ 'button', 'button-secondary' ];
+							$attributes = array_merge(
+								[ 'class' => is_array( $classes ) ? implode( ' ', $classes ) : $classes ],
+								$action['attributes'] ?? []
+							);
+							$link       = Create::a( $action['url'], $action['text'], $attributes );
 							$actions_cell->add_child( $link );
 						}
 					}

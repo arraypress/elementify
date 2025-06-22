@@ -42,6 +42,9 @@ class Assets {
 		'time-ago',
 		'clipboard',
 		'featured',
+		'modal',
+		'color',
+		'user',
 	];
 
 	/**
@@ -53,6 +56,7 @@ class Assets {
 		'notice',
 		'range',
 		'clipboard',
+		'modal',
 	];
 
 	/**
