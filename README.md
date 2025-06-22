@@ -1,21 +1,22 @@
-# Elementify - A Fluent HTML Generator for WordPress
+# Elementify - A Fluent HTML Builder for WordPress
 
-[![PHP Version](https://img.shields.io/badge/php-8.0%2B-blue.svg)](https://php.net)
+[![PHP Version](https://img.shields.io/badge/php-7.4%2B-blue.svg)](https://php.net)
 [![WordPress](https://img.shields.io/badge/wordpress-5.0%2B-blue.svg)](https://wordpress.org)
 [![License](https://img.shields.io/badge/license-GPL--2.0%2B-green.svg)](LICENSE)
 
-Elementify is a powerful PHP library that provides a fluent interface for generating HTML elements and components with proper escaping, self-closing tags, and attribute handling. It offers both object-oriented and procedural APIs, making it perfect for WordPress theme and plugin development.
+Elementify is a powerful PHP library that provides a fluent interface for generating HTML elements and components with proper escaping, self-closing tags, and attribute handling. Built specifically for WordPress, it offers both object-oriented and procedural APIs, making it perfect for theme and plugin development.
 
-## 🚀 Features
+## 🚀 Key Features
 
 - **Fluent Interface**: Chainable methods for readable, maintainable code
-- **Automatic XSS Protection**: Smart content escaping based on element context
+- **Automatic XSS Protection**: Intelligent content escaping based on element context
 - **Self-Closing Tags**: Proper HTML5 self-closing tag handling
-- **Rich Components**: Pre-built UI components like modals, tabs, accordions, and more
+- **Rich Components**: Pre-built UI components like cards, progress bars, notices, and more
 - **WordPress Integration**: Seamless integration with WordPress functions and styles
 - **Dual API**: Both object-oriented and procedural approaches
 - **Asset Management**: Automatic CSS/JS loading for components
 - **Accessibility**: Built-in ARIA attributes and semantic markup
+- **Type Safety**: PHP 7.4+ type hints for better code quality
 
 ## 📦 Installation
 
@@ -46,12 +47,8 @@ echo $card->render();
 
 ```php
 // Create a form with fields
-$form = el_form('process.php', 'post', ['class' => 'contact-form']);
-$form->add_child(el_field('name', 'Your Name', 'Enter your full name'));
-$form->add_child(el_field(el_email('email'), 'Email', 'We will not share your email'));
-$form->add_child(el_submit('Send Message'));
-
-echo $form->render();
+$form = el_create_element('form', null, ['action' => 'process.php', 'method' => 'post']);
+// Note: Procedural functions are limited - use Create class for full functionality
 ```
 
 ## 📚 Core Concepts
@@ -72,11 +69,11 @@ $div->add_child('<strong>HTML preserved</strong>');
 
 **Components** are advanced UI elements with built-in functionality:
 ```php
-// Components handle complex interactions
-$tabs = Create::tabs([
-    ['id' => 'tab1', 'title' => 'General', 'content' => 'Settings content'],
-    ['id' => 'tab2', 'title' => 'Advanced', 'content' => 'Advanced options']
-], 'tab1');
+// Components handle complex interactions and styling
+$progressBar = Create::progress_bar(75, 100, [
+    'show_percentage' => true,
+    'size' => 'large'
+]);
 ```
 
 ### Automatic Escaping
@@ -94,20 +91,20 @@ Elementify intelligently handles content escaping based on context:
 
 ```php
 // Headings
-Create::h1('Page Title');
-Create::h2('Section Title', ['id' => 'section-1']);
+$h1 = Create::h1('Page Title');
+$h2 = Create::h2('Section Title', ['id' => 'section-1']);
 
 // Text content
-Create::p('Paragraph with <em>escaped</em> content');
-Create::span('Inline text', ['class' => 'highlight']);
-Create::code('$variable = "value";');
+$p = Create::p('Paragraph with <em>escaped</em> content');
+$span = Create::span('Inline text', ['class' => 'highlight']);
+$code = Create::code('$variable = "value";');
 ```
 
 ### Layout Elements
 
 ```php
 // Semantic layout
-Create::section(
+$page = Create::section(
     Create::article([
         Create::header(Create::h1('Article Title')),
         Create::p('Article content goes here.'),
@@ -116,7 +113,7 @@ Create::section(
 );
 
 // Flexible containers
-Create::div(['class' => 'container'])
+$container = Create::div(['class' => 'container'])
     ->add_child(Create::p('First paragraph'))
     ->add_child(Create::p('Second paragraph'));
 ```
@@ -125,17 +122,17 @@ Create::div(['class' => 'container'])
 
 ```php
 // Simple lists
-Create::ul(['Item 1', 'Item 2', 'Item 3']);
+$ul = Create::ul(['Item 1', 'Item 2', 'Item 3']);
 
 // Complex lists with links
-Create::ul([
+$navList = Create::ul([
     Create::li(Create::a('/home', 'Home')),
     Create::li(Create::a('/about', 'About')),
     Create::li(Create::a('/contact', 'Contact'))
 ]);
 
 // Definition lists
-Create::dl([
+$dl = Create::dl([
     'HTML' => 'HyperText Markup Language',
     'CSS' => 'Cascading Style Sheets'
 ]);
@@ -167,200 +164,196 @@ $form->add_child(Create::submit('Send Message', ['class' => 'btn btn-primary']))
 
 ```php
 // Text inputs
-Create::text('username', 'john_doe', ['placeholder' => 'Username']);
-Create::email('email', '', ['required' => true]);
-Create::password('password');
-Create::number('age', 25, ['min' => 18, 'max' => 100]);
+$username = Create::text('username', 'john_doe', ['placeholder' => 'Username']);
+$email = Create::email('email', '', ['required' => true]);
+$password = Create::password('password');
+$number = Create::number('age', 25, ['min' => 18, 'max' => 100]);
 
 // Choices
-Create::checkbox('newsletter', '1', true);
-Create::radio('size', 'medium', true, ['id' => 'size-medium']);
+$checkbox = Create::checkbox('newsletter', '1', true);
+$radio = Create::radio('size', 'medium', true, ['id' => 'size-medium']);
 
 // Advanced inputs
-Create::range('volume', '75', '0', '100', '5', true); // With value display
-Create::color('theme_color', '#ff6b6b');
-Create::file('upload', ['accept' => 'image/*']);
+$range = Create::range('volume', '75', '0', '100', '5', true); // With value display
+$color = Create::color('theme_color', '#ff6b6b');
+$file = Create::file('upload', ['accept' => 'image/*']);
 ```
 
 ### Select Elements
 
 ```php
 // Basic dropdown
-Create::select('country', [
+$select = Create::select('country', [
     'us' => 'United States',
     'ca' => 'Canada',
     'uk' => 'United Kingdom'
 ], 'us');
 
 // Grouped options
-$select = Create::select('category');
-$select->add_optgroup('Technology', [
+$categorySelect = Create::select('category');
+$categorySelect->add_optgroup('Technology', [
     'web' => 'Web Development',
     'mobile' => 'Mobile Apps'
 ]);
-$select->add_optgroup('Design', [
+$categorySelect->add_optgroup('Design', [
     'ui' => 'UI Design',
     'graphic' => 'Graphic Design'
 ]);
 ```
 
-## 🎨 UI Components
+## 🎨 Available Components
 
-### Cards
+### Layout Components
+
+#### Cards
 
 ```php
 // Simple card
-Create::card(
+$card = Create::card(
     'Card content with <strong>HTML</strong> support.',
     'Card Title',
     'Optional footer content'
 );
 
-// Card with image
-Create::card_advanced(
+// Advanced card with image
+$advancedCard = Create::card_advanced(
     'Product Title',
     'Product description with features and benefits.',
     '/images/product.jpg',
     'Price: $99.99'
 );
+
+// Card variants
+$compactCard = Create::card('Content', 'Title', null, [], 'compact');
+$borderlessCard = Create::card('Content', 'Title', null, [], 'borderless');
+$noPaddingCard = Create::card('Content', 'Title', null, [], 'no-padding');
 ```
 
-### Modal Dialogs
+### Display Components
+
+#### Progress Bars
 
 ```php
-$modal = Create::modal(
-    'Confirmation Required',
-    'Are you sure you want to delete this item? This action cannot be undone.',
-    [
-        ['text' => 'Cancel', 'type' => 'button', 'class' => 'btn btn-secondary'],
-        ['text' => 'Delete', 'type' => 'button', 'class' => 'btn btn-danger', 'action' => 'delete']
-    ]
-);
-
-// Create trigger button and output modal
-echo $modal->create_trigger('Delete Item', ['class' => 'btn btn-danger']);
-echo $modal->render();
-```
-
-### Tabs
-
-```php
-// Standard tabs
-Create::tabs([
-    ['id' => 'general', 'title' => 'General Settings', 'content' => $general_content],
-    ['id' => 'advanced', 'title' => 'Advanced Options', 'content' => $advanced_content],
-    ['id' => 'help', 'title' => 'Help & Support', 'content' => $help_content]
-], 'general');
-
-// Flexible format
-Create::tabs_flexible([
-    'settings' => ['title' => 'Settings', 'content' => 'Settings panel'],
-    'tools' => ['title' => 'Tools', 'content' => 'Tools panel']
-], 'settings');
-```
-
-### Accordion
-
-```php
-Create::accordion([
-    ['title' => 'Getting Started', 'content' => 'Welcome guide content', 'active' => true],
-    ['title' => 'Advanced Features', 'content' => 'Advanced documentation'],
-    ['title' => 'Troubleshooting', 'content' => 'Common issues and solutions']
-], true); // Allow multiple sections open
-```
-
-## 📊 Display Components
-
-### Progress & Status
-
-```php
-// Progress bar
-Create::progress_bar(75, 100, [
+// Basic progress bar
+$progress = Create::progress_bar(75, 100, [
     'show_percentage' => true,
     'show_current' => true,
     'size' => 'large'
 ]);
 
-// Status badges
-Create::badge('Active', 'success');
-Create::badge('Pending Review', 'warning');
-Create::badge('Failed', 'error');
-
-// Boolean indicators
-Create::boolean_icon(true, ['true_icon' => 'yes-alt', 'false_icon' => 'no-alt']);
+// Customizing progress bar
+$customProgress = Create::progress_bar(45, 100)
+    ->set_size('small')
+    ->show_percentage(true)
+    ->show_current(true);
 ```
 
-### Data Display
+#### Status Badges
 
 ```php
-// Numbers with formatting
-Create::number_format(1234567.89, [
+// Status badges
+$successBadge = Create::badge('Active', 'success');
+$warningBadge = Create::badge('Pending Review', 'warning');
+$errorBadge = Create::badge('Failed', 'error');
+$infoBadge = Create::badge('Processing', 'info');
+
+// Custom badge with icon
+$customBadge = Create::badge('Custom Status', 'default', ['icon' => 'yes']);
+```
+
+#### Rating Display
+
+```php
+// Star rating
+$rating = Create::rating(4.5, [
+    'max' => 5,
+    'style' => 'stars',
+    'show_value' => true,
+    'precision' => 1
+]);
+
+// Different rating styles
+$heartRating = Create::rating(3, ['style' => 'hearts', 'max' => 5]);
+$thumbsRating = Create::rating(1, ['style' => 'thumbs', 'max' => 1]);
+
+// Using dashicons
+$dashiconRating = Create::rating(4, [
+    'dashicons' => true,
+    'style' => 'stars'
+]);
+```
+
+#### Boolean Icons
+
+```php
+// Boolean indicator
+$checkIcon = Create::boolean_icon(true, [
+    'true_icon' => 'yes-alt',
+    'false_icon' => 'no-alt'
+]);
+
+// Custom boolean display
+$customBoolean = Create::boolean_icon($user_active, [
+    'true_label' => 'Active User',
+    'false_label' => 'Inactive User'
+]);
+```
+
+#### Data Display
+
+```php
+// Number formatting
+$revenue = Create::number_format(1234567.89, [
     'decimals' => 2,
     'prefix' => '$',
     'short_format' => true // Shows as $1.23M
 ]);
 
 // File sizes
-Create::filesize(1234567890, ['decimals' => 1]); // Shows as 1.1 GB
+$fileSize = Create::filesize(1234567890, ['decimals' => 1]); // Shows as 1.1 GB
 
 // Color swatches
-Create::color_swatch('#ff6b6b', [
+$colorSwatch = Create::color_swatch('#ff6b6b', [
     'size' => 24,
     'shape' => 'circle',
     'show_value' => true
 ]);
 
-// Ratings
-Create::rating(4.5, [
-    'max' => 5,
-    'style' => 'stars',
-    'show_value' => true
+// Time ago display
+$timeAgo = Create::timeago('2024-01-15 10:30:00', [
+    'show_tooltip' => true,
+    'cutoff' => 7 * 24 * 3600 // Show absolute date after 1 week
 ]);
-```
 
-### User & Content
-
-```php
 // User display with avatar
-Create::user(123, [
+$userDisplay = Create::user(123, [
     'show_avatar' => true,
     'avatar_size' => 48,
     'name_type' => 'display_name',
     'show_role' => true
 ]);
-
-// Taxonomy terms
-Create::taxonomy(get_the_ID(), 'category', [
-    'link' => true,
-    'separator' => ', ',
-    'limit' => 3,
-    'show_more' => true
-]);
-
-// Time ago
-Create::timeago('2024-01-15 10:30:00', [
-    'show_tooltip' => true,
-    'cutoff' => 7 * 24 * 3600 // Show absolute date after 1 week
-]);
 ```
 
-## 🧭 Navigation Components
+### Navigation Components
 
-### Breadcrumbs
+#### Breadcrumbs
 
 ```php
 // From array
-Create::breadcrumbs([
+$breadcrumbs = Create::breadcrumbs([
     ['text' => 'Home', 'url' => '/'],
     ['text' => 'Products', 'url' => '/products'],
     'Current Product'
 ]);
 
 // From URL path
-Create::breadcrumbs_from_path('products/electronics/smartphones', 'https://example.com/');
+$pathBreadcrumbs = Create::breadcrumbs_from_path(
+    'products/electronics/smartphones', 
+    'https://example.com/'
+);
 
 // From URL map
-Create::breadcrumbs_map([
+$mapBreadcrumbs = Create::breadcrumbs_map([
     '/' => 'Home',
     '/products' => 'Products',
     '/products/electronics' => 'Electronics',
@@ -368,144 +361,85 @@ Create::breadcrumbs_map([
 ]);
 ```
 
-## 🔗 Links & Media
+### Interactive Components
 
-### Link Types
+#### Toggle Switch
 
 ```php
-// Basic links
-Create::a('https://example.com', 'Visit Example');
-Create::external_link('https://google.com', 'Google', ['class' => 'external']);
+// Basic toggle
+$toggle = Create::toggle('notifications', true, '1', 'Enable Notifications');
 
-// Communication links
-Create::mailto('contact@example.com', 'Email Us');
-Create::tel('+1-555-123-4567', 'Call Now');
-Create::whatsapp('+1-555-123-4567', 'Hello!', 'WhatsApp Us');
-
-// Social links
-Create::telegram('username', '@username');
-Create::twitter_share('Check this out!', 'https://example.com', 'awesome,cool');
+// Disabled toggle
+$disabledToggle = Create::toggle('feature', false, '1', 'Feature Toggle', [], true);
 ```
 
-### Media Elements
+#### Featured Star
 
 ```php
-// Images
-Create::img('/images/photo.jpg', 'Beautiful landscape');
+// Featured indicator
+$featured = Create::featured('is_featured', true, 'Mark as Featured');
 
-// Responsive images
-Create::picture([
-    ['src' => '/images/small.jpg', 'media' => '(max-width: 600px)'],
-    ['src' => '/images/medium.jpg', 'media' => '(max-width: 1200px)']
-], '/images/large.jpg', 'Responsive image');
-
-// Audio/Video
-Create::audio('/media/podcast.mp3', true); // With controls
-Create::video(['/video/demo.mp4', '/video/demo.webm'], true);
+// Disabled featured control
+$disabledFeatured = Create::featured('featured', false, 'Featured', [], true);
 ```
 
-## 🛠️ Interactive Components
-
-### Form Enhancements
+#### Range Slider
 
 ```php
-// Toggle switches
-Create::toggle('notifications', true, '1', 'Enable Notifications');
+// Range with value display
+$rangeSlider = Create::range('volume', '75', '0', '100', '5', true);
 
-// Range sliders with display
-Create::range('volume', '75', '0', '100', '5', true);
-
-// Date pickers
-Create::datepicker('event_date', '2024-12-25', [
-    'format' => 'Y-m-d',
-    'min_date' => '2024-01-01',
-    'max_date' => '2024-12-31'
-]);
-
-// Featured star toggle
-Create::featured('is_featured', true, 'Mark as Featured');
+// Customized range
+$customRange = Create::range('price', '50', '0', '200', '10', true)
+    ->set_value('75')
+    ->set_display_value(true);
 ```
 
-### Utility Components
+#### Clipboard
 
 ```php
-// Copy to clipboard
-Create::clipboard('https://example.com/share/abc123', [
+// Simple clipboard component
+$clipboard = Create::clipboard('https://example.com/share/abc123', [
     'display_text' => 'Share Link',
     'max_length' => 20,
     'tooltip' => 'Click to copy share link'
 ]);
-
-// Tooltips
-Create::tooltip('Hover for info', 'This provides additional context', [
-    'position' => 'top',
-    'theme' => 'dark'
-]);
 ```
 
-## 🎭 Social Media Integration
+### Notification Components
+
+#### Notices
 
 ```php
-// Social media links with icons
-Create::social_links([
-    'facebook' => 'https://facebook.com/yourpage',
-    'twitter' => 'https://twitter.com/youraccount',
-    'instagram' => 'https://instagram.com/youraccount',
-    'linkedin' => 'https://linkedin.com/company/yourcompany'
-], ['class' => 'social-footer'], true); // Show text with icons
+// Different notice types
+$successNotice = Create::success_notice('Settings saved successfully!', true); // Dismissible
+$warningNotice = Create::warning_notice('Please review your settings before continuing.');
+$errorNotice = Create::error_notice('An error occurred while processing your request.');
+$infoNotice = Create::info_notice('This feature is currently in beta.');
 
-// Sharing buttons
-Create::facebook_share('https://example.com/article');
-Create::twitter_share('Great article!', 'https://example.com/article', 'tech,web');
-Create::linkedin_share('https://example.com/article', 'Professional Article');
-```
-
-## 🗺️ Location & Maps
-
-```php
-// Map links for different platforms
-Create::google_map('123 Main St, City, State', 'Visit Our Office');
-Create::apple_map('Central Park, New York', 'Meet at Central Park');
-Create::device_map('Times Square, NYC'); // Uses device default map app
-
-// Coordinate-based maps
-Create::coordinates_map(40.7128, -74.0060, 'google', 'New York City');
-```
-
-## 🔔 Notifications
-
-```php
-// Notice types (WordPress compatible)
-Create::notice('Settings saved successfully!', 'success', true); // Dismissible
-Create::warning_notice('Please review your settings before continuing.');
-Create::error_notice('An error occurred while processing your request.');
-Create::info_notice('This feature is currently in beta.');
+// Generic notice
+$customNotice = Create::notice('Custom message', 'info', false);
 ```
 
 ## ⚙️ Advanced Usage
 
-### Chaining Methods
+### Method Chaining
+
+All elements support extensive method chaining for clean, readable code:
 
 ```php
-$element = Create::div()
+$complexElement = Create::div()
     ->set_id('main-container')
     ->add_class(['container', 'fluid'])
     ->set_data('role', 'main')
+    ->set_aria('label', 'Main content area')
     ->set_styles(['margin' => '20px', 'padding' => '10px'])
-    ->add_child(Create::h1('Welcome'))
-    ->add_child(Create::p('This is the main content area.'));
-```
+    ->add_child(Create::h1('Welcome')->add_class('hero-title'))
+    ->add_child(Create::p('This is the main content area.'))
+    ->toggle_class('active', $is_active)
+    ->toggle_attribute('hidden', true, $is_hidden);
 
-### Custom Components
-
-```php
-// Extend base classes for custom components
-class CustomCard extends \Elementify\Abstracts\Component {
-    protected function build(): void {
-        // Custom component logic
-        $this->add_child(Create::div('Custom content'));
-    }
-}
+echo $complexElement->render();
 ```
 
 ### Conditional Rendering
@@ -515,20 +449,50 @@ class CustomCard extends \Elementify\Abstracts\Component {
 $element = Create::div('Content');
 echo $element->render_if($user_is_logged_in);
 
-// Toggle classes based on conditions
-Create::button('Submit')
+// Toggle classes and attributes based on conditions
+$button = Create::button('Submit')
     ->toggle_class('disabled', !$form_is_valid)
     ->toggle_attribute('disabled', true, !$form_is_valid);
 ```
 
-### Asset Management
+### Working with Collections
 
 ```php
-// Components automatically load their CSS/JS
-Create::datepicker('date'); // Loads datepicker.css and datepicker.js
+// Create multiple similar elements
+$listItems = [];
+foreach ($menuItems as $item) {
+    $listItems[] = Create::li(
+        Create::a($item['url'], $item['title'])
+            ->toggle_class('active', $item['is_current'])
+    );
+}
+
+$menu = Create::ul($listItems, ['class' => 'main-nav']);
+```
+
+### Custom Attributes and Data
+
+```php
+$element = Create::div('Content')
+    ->set_data('component', 'modal')
+    ->set_data('config', json_encode(['autoClose' => true]))
+    ->set_aria('hidden', 'true')
+    ->set_aria('labelledby', 'modal-title')
+    ->add_tooltip('Click to interact');
+```
+
+### Asset Management
+
+Components automatically load their required CSS and JavaScript:
+
+```php
+// These components will automatically enqueue their assets
+$progressBar = Create::progress_bar(50); // Loads progress-bar.css
+$rangeSlider = Create::range('volume', '50'); // Loads range.css and range.js
+$clipboard = Create::clipboard('text'); // Loads clipboard.css and clipboard.js
 
 // Manual asset loading
-\Elementify\Assets::enqueue(['modal', 'tabs', 'tooltip']);
+\Elementify\Assets::enqueue(['card', 'notice', 'progress-bar']);
 \Elementify\Assets::enqueue('all'); // Load all component assets
 ```
 
@@ -552,14 +516,17 @@ Create::div([
 ]);
 ```
 
-## 🧪 Testing
+## 🧪 Element Inspection
 
 ```php
-// Element inspection
-$element = Create::div('Content');
-$element->has_class('container'); // false
-$element->get_attribute('id', 'default'); // 'default'
-$element->get_children(); // array of child elements
+// Element inspection methods
+$element = Create::div('Content')->add_class('container');
+
+// Check properties
+$hasClass = $element->has_class('container'); // true
+$id = $element->get_attribute('id', 'default'); // 'default'
+$children = $element->get_children(); // array of child elements
+$tag = $element->get_tag(); // 'div'
 
 // Content extraction
 $content = $element->get_content_string();
@@ -577,9 +544,11 @@ echo Create::card(
     'Posted on ' . get_the_date()
 );
 
-// Navigation menus
-$menu_items = wp_get_nav_menu_items('primary');
-echo Create::menu($menu_items);
+// User display in author bio
+echo Create::user(get_the_author_meta('ID'), [
+    'show_avatar' => true,
+    'show_role' => true
+]);
 ```
 
 ### Plugin Development
@@ -590,16 +559,50 @@ add_action('admin_notices', function() {
     Create::success_notice('Plugin activated successfully!', true)->output();
 });
 
-// Settings forms
+// Settings forms with nonce
 function render_settings_form() {
     $form = Create::form('options.php', 'post');
-    settings_fields('my_plugin_settings');
+    $form->add_nonce('my_plugin_settings', '_wpnonce');
     
     $form->add_child(Create::field('api_key', 'API Key', 'Enter your API key'));
     $form->add_child(Create::submit('Save Settings'));
     
     return $form->render();
 }
+```
+
+## 🔗 Links & Media
+
+### Link Types
+
+```php
+// Basic links
+$link = Create::a('https://example.com', 'Visit Example');
+$external = Create::external_link('https://google.com', 'Google', ['class' => 'external']);
+
+// Communication links
+$email = Create::mailto('contact@example.com', 'Email Us');
+$phone = Create::tel('+1-555-123-4567', 'Call Now');
+
+// Download links
+$download = Create::download('/files/document.pdf', 'document.pdf', 'Download PDF');
+```
+
+### Media Elements
+
+```php
+// Images
+$image = Create::img('/images/photo.jpg', 'Beautiful landscape');
+
+// Responsive images
+$picture = Create::picture([
+    ['src' => '/images/small.jpg', 'media' => '(max-width: 600px)'],
+    ['src' => '/images/medium.jpg', 'media' => '(max-width: 1200px)']
+], '/images/large.jpg', 'Responsive image');
+
+// Audio/Video
+$audio = Create::audio('/media/podcast.mp3', true); // With controls
+$video = Create::video(['/video/demo.mp4', '/video/demo.webm'], true);
 ```
 
 ## 🤝 Contributing

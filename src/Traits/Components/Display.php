@@ -20,6 +20,7 @@ defined( 'ABSPATH' ) || exit;
 use Elementify\Components\Display\ColorSwatch;
 use Elementify\Components\Display\FileSize;
 use Elementify\Components\Display\NumberFormat;
+use Elementify\Components\Display\User;
 
 /**
  * Display Components Trait
@@ -66,6 +67,19 @@ trait Display {
 	 */
 	public static function number_format( $value, array $options = [], array $attributes = [] ): NumberFormat {
 		return new NumberFormat( $value, $options, $attributes );
+	}
+
+	/**
+	 * Create a user display component
+	 *
+	 * @param int|string|\WP_User $user        User ID, username, email, or WP_User object
+	 * @param array               $options     Additional options
+	 * @param array               $attributes  Element attributes
+	 *
+	 * @return User
+	 */
+	public static function user( $user, array $options = [], array $attributes = [] ): User {
+		return new User( $user, $options, $attributes );
 	}
 
 }
