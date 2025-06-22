@@ -44,4 +44,5 @@ class Create {
 	use Traits\Components\Messaging;
 	use Traits\Components\Navigation;
 	use Traits\Components\Utility;
+	use Traits\Components\Builder;
 }
