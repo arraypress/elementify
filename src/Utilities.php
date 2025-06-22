@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
 use Elementify\Create;
 use Elementify\Element;
 
-if ( ! function_exists( 'el_element' ) ) {
+if ( ! function_exists( 'el_create_element' ) ) {
 	/**
 	 * Create a generic HTML element.
 	 *
@@ -28,12 +28,12 @@ if ( ! function_exists( 'el_element' ) ) {
 	 *
 	 * @return Element
 	 */
-	function el_element( string $tag, $content = null, array $attributes = [] ): Element {
+	function el_create_element( string $tag, $content = null, array $attributes = [] ): Element {
 		return Create::element( $tag, $content, $attributes );
 	}
 }
 
-if ( ! function_exists( 'el_link' ) ) {
+if ( ! function_exists( 'el_create_link' ) ) {
 	/**
 	 * Create a link element (alias for el_a).
 	 *
@@ -43,7 +43,7 @@ if ( ! function_exists( 'el_link' ) ) {
 	 *
 	 * @return Element
 	 */
-	function el_link( string $href, $content = null, array $attributes = [] ): Element {
+	function el_create_link( string $href, $content = null, array $attributes = [] ): Element {
 		return Create::a( $href, $content, $attributes );
 	}
 }

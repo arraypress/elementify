@@ -1,8 +1,8 @@
 <?php
 /**
- * Elementify Library - Utilities
+ * Elementify Library - File Trait
  *
- * A collection of utility methods for common operations.
+ * A trait containing file-related utility methods.
  *
  * @package     ArrayPress\Elementify
  * @copyright   Copyright (c) 2025, ArrayPress Limited
@@ -12,17 +12,17 @@
 
 declare( strict_types=1 );
 
-namespace Elementify;
+namespace Elementify\Utils;
 
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Utilities Class
+ * File Trait
  *
- * Provides utility methods for common operations.
+ * Provides file-related utility methods.
  */
-class Helpers {
+class File {
 
 	/**
 	 * Helper method to get MIME type from file extension
@@ -55,17 +55,6 @@ class Helpers {
 		];
 
 		return $mime_types[ $extension ] ?? 'application/octet-stream';
-	}
-
-	/**
-	 * Clean a phone number to keep only digits and plus sign
-	 *
-	 * @param string $phone The phone number to clean
-	 *
-	 * @return string The cleaned phone number
-	 */
-	public static function clean_phone_number( string $phone ): string {
-		return preg_replace( '/[^0-9+]/', '', $phone );
 	}
 
 }

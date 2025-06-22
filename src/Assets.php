@@ -70,11 +70,6 @@ class Assets {
 	 * @return void
 	 */
 	public static function enqueue( $components = 'all' ) {
-		// Check if we have WordPress functions available
-		if ( ! function_exists( 'wp_enqueue_style_from_composer_file' ) ) {
-			return;
-		}
-
 		// Determine which components to load
 		$components_to_load = self::resolve_components( $components );
 

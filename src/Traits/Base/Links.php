@@ -18,7 +18,7 @@ namespace Elementify\Traits\Base;
 defined( 'ABSPATH' ) || exit;
 
 use Elementify\Element;
-use Elementify\Helpers;
+use Elementify\Utils\Sanitize;
 
 /**
  * Links Elements Trait
@@ -77,7 +77,7 @@ trait Links {
 		}
 
 		// Remove any non-numeric characters for the href but keep them for display
-		$clean_phone = Helpers::clean_phone_number( $phone );
+		$clean_phone = Sanitize::clean_phone_number( $phone );
 
 		return self::a( 'tel:' . $clean_phone, $content, $attributes );
 	}
@@ -99,7 +99,7 @@ trait Links {
 		}
 
 		// Remove any non-numeric characters for the href
-		$clean_phone = Helpers::clean_phone_number( $phone );
+		$clean_phone = Sanitize::clean_phone_number( $phone );
 		$href        = 'sms:' . $clean_phone;
 
 		// Add message if provided
